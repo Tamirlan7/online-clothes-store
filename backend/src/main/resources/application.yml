@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    password: 1954623790
+    username: postgres
+    url: jdbc:postgresql://localhost:8080/online-clothes-store
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+logging:
+  level:
+    org.springframework.security: trace
