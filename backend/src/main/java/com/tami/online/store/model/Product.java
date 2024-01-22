@@ -11,7 +11,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +29,7 @@ public class Product {
 
     @PositiveOrZero(message = "Цена должна быть больше либо равна нулю")
     @Column(nullable = false)
-    private Integer price;
+    private double price;
 
     @Column(nullable = false, length = 25)
     private String size;
@@ -38,8 +37,15 @@ public class Product {
     @Column(name = "clothing_type", nullable = false, length = 100)
     private String clothingType;
 
+    @ManyToOne
+    @JoinColumn(name = "collection_id")
+    private Collection collection;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE })
     private List<ProductMediaFile> productMediaFiles;
+
+    @Column(name = "discount_percentage")
+    private double discountPercentage;
 
     @UpdateTimestamp
     @Column(name = "updated_at")

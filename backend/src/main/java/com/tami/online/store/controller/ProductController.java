@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("api/v1/product")
 @EnableMethodSecurity(prePostEnabled = true)
 public class ProductController {
-    private final FileService fileService;
     private final ProductService productService;
 
     @GetMapping
@@ -32,7 +31,7 @@ public class ProductController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public void createProduct(@RequestPart @Valid ProductDto product) {
+    public void createProduct(ProductDto product) {
         productService.createProduct(product);
     }
 }

@@ -2,28 +2,33 @@ package com.tami.online.store.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Builder
 public record ProductDto(
-    @NotBlank(message = "name is required.")
-    @RequestParam
+    @NotBlank(message = "Укажите название продукта")
     String name,
-    @NotNull(message = "price is required.")
+
+    @NotNull(message = "Укажите цену продукта")
     @PositiveOrZero(message = "Цена должна быть больше либо равна нулю")
-    @RequestParam
-    Integer price,
-    @NotBlank(message = "size is required.")
-    @RequestParam
+    double price,
+
+    @NotBlank(message = "Укажите размер продукта")
     String size,
-    @NotBlank(message = "clothingType is required.")
-    @RequestParam
+
+    @Positive(message = "Скидка должна быть больше нуля")
+    double discountPercentage,
+
+    @NotBlank(message = "Укажите коллекцию продукта")
+    String collectionName,
+
+    @NotBlank(message = "Укажите тип одежды")
     String clothingType,
-    @NotNull(message = "mediaFiles is required.")
-    @RequestParam
+
+    @NotNull(message = "У продукта должно быть минимум одно изображение")
     MultipartFile[] mediaFiles
 ) {
 }

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -20,4 +22,7 @@ public class Collection {
 
     @Column(nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "collection", fetch = FetchType.LAZY)
+    private List<Product> products;
 }
