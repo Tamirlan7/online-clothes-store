@@ -2,11 +2,15 @@ package com.tami.online.store.controller;
 
 import com.tami.online.store.dto.ProductDto;
 import com.tami.online.store.model.Product;
+import com.tami.online.store.service.FileService;
 import com.tami.online.store.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +18,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/product")
+@EnableMethodSecurity(prePostEnabled = true)
 public class ProductController {
-
+    private final FileService fileService;
     private final ProductService productService;
 
     @GetMapping
@@ -24,10 +29,10 @@ public class ProductController {
                 .ok(productService.getAllProducts());
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    @PostAuthorize("hasAnyRole('ADMIN')")
-    public void createProduct(ProductDto product) {
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public void createProduct(@RequestPart @Valid ProductDto product) {
         productService.createProduct(product);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 
 @Component
 public class AccessTokenFactory {
@@ -34,11 +35,15 @@ public class AccessTokenFactory {
     public AccessToken generate(RefreshToken refreshToken) {
         Instant now = Instant.now();
 
+        List<String> authorities = refreshToken.authorities()
+                .stream()
+                .filter(authority -> !authority.startsWith("JWT")).toList();
+
         return AccessToken.builder()
                 .id(refreshToken.id())
                 .expiresAt(now.plus(tokenTtl))
                 .issuedAt(now)
-                .authorities(refreshToken.authorities())
+                .authorities(authorities)
                 .userId(refreshToken.userId())
                 .build();
     }

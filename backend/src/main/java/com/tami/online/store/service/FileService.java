@@ -1,6 +1,6 @@
 package com.tami.online.store.service;
 
-import lombok.RequiredArgsConstructor;
+import com.tami.online.store.dto.FileDtoResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -13,21 +13,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-@RequiredArgsConstructor
 public class FileService {
     private static final Path root = Paths.get("files");
     private static final Logger LOGGER = LoggerFactory.getLogger(FileService.class);
 
-    public void init() {
-        try {
-            Files.createDirectory(root);
-        } catch (IOException e) {
-            LOGGER.error("Could not initialize folder for upload!", e);
-            throw new RuntimeException("Could not initialize folder for upload!");
-        }
-    }
-
-    public void save(MultipartFile file) {
+    public FileDtoResponse save(MultipartFile file) {
         String fileName = file.getOriginalFilename();
         String fileType = file.getContentType();
 
@@ -40,9 +30,24 @@ public class FileService {
         }
 
         try {
+            String filePathToStore = fileName;
+
             if (file.getContentType().startsWith("image")) {
-                Files.copy(file.getInputStream(), root.resolve(fileName));
+                filePathToStore = "images/" + filePathToStore;
             }
+
+            if (file.getContentType().startsWith("video")) {
+                filePathToStore = "videos/" + filePathToStore;
+            }
+
+            Files.copy(file.getInputStream(), root.resolve(filePathToStore));
+
+            return FileDtoResponse.builder()
+                    .name(file.getName())
+                    .type(fileType)
+                    .path(filePathToStore)
+                    .build();
+
         } catch (IOException e) {
             LOGGER.error("Could not store the file. Error: " + e.getMessage(), e);
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
