@@ -1,9 +1,11 @@
 package com.tami.online.store.service;
 
 import com.tami.online.store.dto.ProductDto;
+import com.tami.online.store.exception.ProductException;
 import com.tami.online.store.model.Product;
 import com.tami.online.store.model.ProductMediaFile;
 import com.tami.online.store.repository.ProductRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +26,40 @@ public class ProductService {
     }
 
     public void createProduct(ProductDto productDto) {
+        if (productDto.getName() == null) {
+            throw new ProductException("Укажите название продукта (поле name)");
+        }
+
+        if (productDto.getPrice() < 0) {
+            throw new ProductException("Цена должна быть больше либо равна нулю (поле price)");
+        }
+
+        if (productDto.getSize() == null) {
+            throw new ProductException("Укажите размер продукта (поле size)");
+        }
+
+//        if (productDto.getDiscountPercentage() > 0) {
+//            throw new ProductException("Цена должна быть больше либо равна нулю (поле price)");
+//        }
+
+        if (productDto.getClothingType() == null) {
+            throw new ProductException("Укажите тип одежды (поле clothingType)");
+        }
+
+        if (productDto.getCollectionName() == null) {
+            throw new ProductException("Укажите коллекцию продукта (поле collectionName)");
+        }
+
         var product = Product.builder()
-                .name(productDto.name())
-                .clothingType(productDto.clothingType())
-                .price(productDto.price())
-                .size(productDto.size())
+                .name(productDto.getName())
+                .clothingType(productDto.getClothingType())
+                .price(productDto.getPrice())
+                .size(productDto.getSize())
                 .build();
 
-        List<ProductMediaFile> productMediaFiles = productMediaFileService.createMediaFiles(productDto.mediaFiles(), product);
-        product.setProductMediaFiles(productMediaFiles);
         productRepository.save(product);
+
+        List<ProductMediaFile> productMediaFiles = productMediaFileService.createMediaFiles(productDto.getMediaFiles(), product);
+        product.setProductMediaFiles(productMediaFiles);
     }
 }

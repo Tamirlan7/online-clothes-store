@@ -12,10 +12,10 @@ public class ProductMapper {
 
     public static Product toProduct(ProductDto productDto) {
         var product = Product.builder()
-                .name(productDto.name())
-                .clothingType(productDto.clothingType())
-                .price(productDto.price())
-                .size(productDto.size())
+                .name(productDto.getName())
+                .clothingType(productDto.getClothingType())
+                .price(productDto.getPrice())
+                .size(productDto.getSize())
                 .build();
 
         return product;

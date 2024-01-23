@@ -1,6 +1,7 @@
 package com.tami.online.store.service;
 
 import com.tami.online.store.dto.FileDtoResponse;
+import com.tami.online.store.exception.ProductException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -18,6 +19,10 @@ public class FileService {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileService.class);
 
     public FileDtoResponse save(MultipartFile file) {
+        return this.save(file, "");
+    }
+
+    public FileDtoResponse save(MultipartFile file, String prefixPath) {
         String fileName = file.getOriginalFilename();
         String fileType = file.getContentType();
 
@@ -30,22 +35,40 @@ public class FileService {
         }
 
         try {
-            String filePathToStore = fileName;
+            String directoryToStore = "";
+
+            if (prefixPath.charAt(0) == '/') {
+                prefixPath = prefixPath.substring(1);
+            }
+
+            if (prefixPath.charAt(prefixPath.length() - 1) != '/') {
+                prefixPath += '/';
+            }
 
             if (file.getContentType().startsWith("image")) {
-                filePathToStore = "images/" + filePathToStore;
+                directoryToStore = "images/" + prefixPath;
             }
 
             if (file.getContentType().startsWith("video")) {
-                filePathToStore = "videos/" + filePathToStore;
+                directoryToStore = "videos/" + prefixPath;
             }
 
-            Files.copy(file.getInputStream(), root.resolve(filePathToStore));
+            final Path finalPath = root.resolve(directoryToStore);
+
+            if (!Files.exists(finalPath)) {
+                 Files.createDirectories(finalPath);
+            }
+
+            if (Files.exists(finalPath.resolve(fileName))) {
+                throw new ProductException("Файл с именем " + fileName + " Уже существует");
+            }
+
+            Files.copy(file.getInputStream(), finalPath.resolve(fileName));
 
             return FileDtoResponse.builder()
-                    .name(file.getName())
+                    .name(fileName)
                     .type(fileType)
-                    .path(filePathToStore)
+                    .path(finalPath.resolve(fileName).toString())
                     .build();
 
         } catch (IOException e) {

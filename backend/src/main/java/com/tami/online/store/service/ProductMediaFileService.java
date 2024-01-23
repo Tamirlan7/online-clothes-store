@@ -20,7 +20,7 @@ public class ProductMediaFileService {
     private final ProductMediaFileRepository productMediaFileRepository;
 
     public ProductMediaFile create(MultipartFile file, Product product) {
-        FileDtoResponse response = fileService.save(file);
+        FileDtoResponse response = fileService.save(file, "product/" + product.getId());
 
         var productMediaFile = ProductMediaFile.builder()
                 .type(response.type())

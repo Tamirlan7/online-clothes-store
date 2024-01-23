@@ -46,4 +46,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleInvalidTokenException(InvalidTokenException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
     }
+
+    @ExceptionHandler(ProductException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidTokenException(ProductException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
+    }
+
 }
