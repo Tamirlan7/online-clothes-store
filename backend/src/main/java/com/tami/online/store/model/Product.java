@@ -39,8 +39,9 @@ public class Product {
     )
     private List<ProductSize> sizes;
 
-    @Column(name = "clothing_type", nullable = false, length = 100)
-    private String clothingType;
+    @ManyToOne
+    @JoinColumn(name = "clothing_type_id")
+    private ClothingType clothingType;
 
     @ManyToOne
     @JoinColumn(name = "collection_id")

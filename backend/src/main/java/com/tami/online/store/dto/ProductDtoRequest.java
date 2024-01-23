@@ -2,7 +2,6 @@ package com.tami.online.store.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto {
+public class ProductDtoRequest {
     @NotBlank(message = "Укажите название продукта")
     private String name;
 
@@ -25,7 +24,7 @@ public class ProductDto {
     @NotBlank(message = "Укажите размер продукта")
     private String size;
 
-    @Positive(message = "Скидка должна быть больше нуля")
+    @PositiveOrZero(message = "Скидка должна быть больше нуля")
     private double discountPercentage;
 
     @NotBlank(message = "Укажите коллекцию продукта")
