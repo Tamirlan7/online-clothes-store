@@ -33,14 +33,14 @@ public class ProductMediaFileService {
         return productMediaFile;
     }
 
-    public List<ProductMediaFile> createMediaFiles(MultipartFile[] files, Product product) {
+    public void createMediaFiles(MultipartFile[] files, Product product) {
         List<ProductMediaFile> productMediaFiles = new ArrayList<>();
 
         for (MultipartFile file : files) {
             productMediaFiles.add(this.create(file, product));
         }
 
-        return productMediaFiles;
+        product.setProductMediaFiles(productMediaFiles);
     }
 
 }

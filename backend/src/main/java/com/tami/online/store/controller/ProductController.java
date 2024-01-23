@@ -32,7 +32,7 @@ public class ProductController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Product> createProduct(
             @RequestParam String name,
-            @RequestParam String size,
+            @RequestParam List<String> size,
             @RequestParam double price,
             @RequestParam(required = false, defaultValue = "0") double discountPercentage,
             @RequestParam String collectionName,
@@ -41,7 +41,7 @@ public class ProductController {
     ) {
         ProductDtoRequest product = ProductDtoRequest.builder()
                 .name(name)
-                .size(size)
+                .sizes(size)
                 .price(price)
                 .discountPercentage(discountPercentage)
                 .collectionName(collectionName)

@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -21,8 +23,8 @@ public class ProductDtoRequest {
     @PositiveOrZero(message = "Цена должна быть больше либо равна нулю")
     private double price;
 
-    @NotBlank(message = "Укажите размер продукта")
-    private String size;
+    @NotNull(message = "Укажите размеры продукта")
+    private List<String> sizes;
 
     @PositiveOrZero(message = "Скидка должна быть больше нуля")
     private double discountPercentage;
