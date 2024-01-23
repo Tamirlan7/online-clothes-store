@@ -1,5 +1,6 @@
 package com.tami.online.store.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,5 +25,6 @@ public class Collection {
     private String name;
 
     @OneToMany(mappedBy = "collection", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Product> products;
 }

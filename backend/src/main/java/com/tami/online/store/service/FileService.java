@@ -1,7 +1,6 @@
 package com.tami.online.store.service;
 
 import com.tami.online.store.dto.FileDtoResponse;
-import com.tami.online.store.exception.ProductException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -60,7 +59,7 @@ public class FileService {
             }
 
             if (Files.exists(finalPath.resolve(fileName))) {
-                throw new ProductException("Файл с именем " + fileName + " Уже существует");
+//                throw new ProductException("Файл с именем " + fileName + " Уже существует");
             }
 
             Files.copy(file.getInputStream(), finalPath.resolve(fileName));
