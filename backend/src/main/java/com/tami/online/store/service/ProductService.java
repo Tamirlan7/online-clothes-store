@@ -48,7 +48,6 @@ public class ProductService {
                 .name(productDto.getName())
                 .clothingType(productDto.getClothingType())
                 .price(productDto.getPrice())
-                .size(productDto.getSize())
                 .build();
 
         productRepository.save(product);

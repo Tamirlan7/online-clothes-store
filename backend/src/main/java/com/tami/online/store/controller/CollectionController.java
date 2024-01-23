@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@EnableMethodSecurity(prePostEnabled = true)
 @RequestMapping("/api/v1/collection")
 public class CollectionController {
 

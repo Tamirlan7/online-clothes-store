@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tami.online.store.dto.ProductDto;
 import com.tami.online.store.model.Product;
-import com.tami.online.store.service.FileService;
 import com.tami.online.store.service.ProductService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +19,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/product")
-@EnableMethodSecurity(prePostEnabled = true)
 public class ProductController {
     private final ProductService productService;
 

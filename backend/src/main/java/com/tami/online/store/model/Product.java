@@ -31,8 +31,13 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
-    @Column(nullable = false, length = 25)
-    private String size;
+    @ManyToMany
+    @JoinTable(
+            name = "t_product_product_size",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_size_id")
+    )
+    private List<ProductSize> sizes;
 
     @Column(name = "clothing_type", nullable = false, length = 100)
     private String clothingType;
