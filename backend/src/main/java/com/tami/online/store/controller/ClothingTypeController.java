@@ -1,8 +1,8 @@
 package com.tami.online.store.controller;
 
-import com.tami.online.store.dto.ProductSizeDtoRequest;
-import com.tami.online.store.model.ProductSize;
-import com.tami.online.store.service.ProductSizeService;
+import com.tami.online.store.dto.ClothingTypeDtoRequest;
+import com.tami.online.store.model.ClothingType;
+import com.tami.online.store.service.ClothingTypeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,40 +14,41 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/product/size")
-public class ProductSizeController {
+@RequestMapping("/api/v1/product/clothing-type")
+public class ClothingTypeController {
 
-    private final ProductSizeService productSizeService;
+    private final ClothingTypeService clothingTypeService;
 
     @GetMapping
-    public ResponseEntity<List<ProductSize>> getAll() {
-        return ResponseEntity.ok(productSizeService.getAllSizes());
+    public ResponseEntity<List<ClothingType>> getAll() {
+        return ResponseEntity.ok(clothingTypeService.getAllClothingTypes());
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<ProductSize> create(@RequestBody @Valid ProductSizeDtoRequest productSizeDtoRequest) {
+    public ResponseEntity<ClothingType> create(@RequestBody @Valid ClothingTypeDtoRequest productSizeDtoRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(productSizeService.createSize(productSizeDtoRequest));
+                .body(clothingTypeService.createClothingType(productSizeDtoRequest));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<ProductSize> update(
-            @RequestBody ProductSizeDtoRequest productSizeDtoRequest,
+    public ResponseEntity<ClothingType> update(
+            @RequestBody ClothingTypeDtoRequest productSizeDtoRequest,
             @PathVariable("id") Long id
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(productSizeService.updateSize(productSizeDtoRequest, id));
+                .body(clothingTypeService.updateClothingType(productSizeDtoRequest, id));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ADMIN')")
     public void delete(@PathVariable("id") Long id) {
-        productSizeService.deleteSize(id);
+        clothingTypeService.deleteClothingType(id);
     }
+
 
 }

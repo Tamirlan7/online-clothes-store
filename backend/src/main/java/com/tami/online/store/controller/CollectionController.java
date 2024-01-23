@@ -21,13 +21,13 @@ public class CollectionController {
     private final CollectionService collectionService;
 
     @GetMapping
-    public ResponseEntity<List<Collection>> getAllCollections() {
+    public ResponseEntity<List<Collection>> getAll() {
         return ResponseEntity.ok(collectionService.getAllCollections());
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<Collection> createCollection(@RequestBody @Valid CollectionDtoRequest collectionDtoRequest) {
+    public ResponseEntity<Collection> create(@RequestBody @Valid CollectionDtoRequest collectionDtoRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(collectionService.createCollection(collectionDtoRequest));
@@ -35,7 +35,7 @@ public class CollectionController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<Collection> updateCollection(
+    public ResponseEntity<Collection> update(
         @RequestBody CollectionDtoRequest collectionDtoRequest,
         @PathVariable("id") Long id
     ) {
@@ -47,7 +47,7 @@ public class CollectionController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public void deleteCollection(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") Long id) {
         collectionService.deleteCollection(id);
     }
 }
