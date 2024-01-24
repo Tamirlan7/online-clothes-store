@@ -67,8 +67,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<Map<String, String>> handleBadRequestException(BadRequestException e) {
+    @ExceptionHandler(CustomBadRequestException.class)
+    public ResponseEntity<Map<String, String>> handleBadRequestException(CustomBadRequestException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
     }
 
@@ -77,4 +77,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
     }
 
+    @ExceptionHandler(InternalServerException.class)
+    public ResponseEntity<Map<String, String>> handleNotFoundException(InternalServerException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", e.getMessage()));
+    }
 }
