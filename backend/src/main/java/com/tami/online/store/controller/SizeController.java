@@ -1,8 +1,8 @@
 package com.tami.online.store.controller;
 
-import com.tami.online.store.dto.ProductSizeDtoRequest;
-import com.tami.online.store.model.ProductSize;
-import com.tami.online.store.service.ProductSizeService;
+import com.tami.online.store.dto.SizeDtoRequest;
+import com.tami.online.store.model.Size;
+import com.tami.online.store.service.SizeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,39 +15,39 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/product/size")
-public class ProductSizeController {
+public class SizeController {
 
-    private final ProductSizeService productSizeService;
+    private final SizeService sizeService;
 
     @GetMapping
-    public ResponseEntity<List<ProductSize>> getAll() {
-        return ResponseEntity.ok(productSizeService.getAllSizes());
+    public ResponseEntity<List<Size>> getAll() {
+        return ResponseEntity.ok(sizeService.getAllSizes());
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<ProductSize> create(@RequestBody @Valid ProductSizeDtoRequest productSizeDtoRequest) {
+    public ResponseEntity<Size> create(@RequestBody @Valid SizeDtoRequest sizeDtoRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(productSizeService.createSize(productSizeDtoRequest));
+                .body(sizeService.createSize(sizeDtoRequest));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<ProductSize> update(
-            @RequestBody ProductSizeDtoRequest productSizeDtoRequest,
+    public ResponseEntity<Size> update(
+            @RequestBody SizeDtoRequest sizeDtoRequest,
             @PathVariable("id") Long id
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(productSizeService.updateSize(productSizeDtoRequest, id));
+                .body(sizeService.updateSize(sizeDtoRequest, id));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ADMIN')")
     public void delete(@PathVariable("id") Long id) {
-        productSizeService.deleteSize(id);
+        sizeService.deleteSize(id);
     }
 
 }

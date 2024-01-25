@@ -3,14 +3,13 @@ package com.tami.online.store.config;
 import com.tami.online.store.model.*;
 import com.tami.online.store.repository.ClothingTypeRepository;
 import com.tami.online.store.repository.CollectionRepository;
-import com.tami.online.store.repository.ProductSizeRepository;
+import com.tami.online.store.repository.SizeRepository;
 import com.tami.online.store.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -21,7 +20,7 @@ public class AppInitializer implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final ClothingTypeRepository clothingTypeRepository;
     private final CollectionRepository collectionRepository;
-    private final ProductSizeRepository productSizeRepository;
+    private final SizeRepository sizeRepository;
 
     @Override
     public void run(String... args) {
@@ -47,8 +46,8 @@ public class AppInitializer implements CommandLineRunner {
         );
 
         sizes.forEach((size) -> {
-            productSizeRepository.save(
-                    ProductSize.builder()
+            sizeRepository.save(
+                    Size.builder()
                             .name(size)
                             .build()
             );

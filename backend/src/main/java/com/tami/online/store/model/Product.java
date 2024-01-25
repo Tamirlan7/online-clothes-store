@@ -31,14 +31,6 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
-    @ManyToMany
-    @JoinTable(
-            name = "t_product_product_size",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_size_id")
-    )
-    private List<ProductSize> sizes;
-
     @ManyToOne
     @JoinColumn(name = "clothing_type_id")
     private ClothingType clothingType;
@@ -46,6 +38,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "collection_id")
     private Collection collection;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductSize> productSizes;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE })
     private List<ProductMediaFile> productMediaFiles;
