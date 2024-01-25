@@ -2,19 +2,23 @@ package com.tami.online.store.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tami.online.store.dto.FileDtoRequest;
 import com.tami.online.store.dto.ProductDtoRequest;
 import com.tami.online.store.dto.ProductSizeDtoRequest;
 import com.tami.online.store.exception.CustomBadRequestException;
 import com.tami.online.store.model.Product;
 import com.tami.online.store.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,5 +69,10 @@ public class ProductController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(productService.createProduct(product));
+    }
+
+    @PostMapping(value = "/file", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
+    public ResponseEntity<Resource> getProductFile(@RequestBody FileDtoRequest fileDtoRequest) {
+        return ResponseEntity.ok(productService.getProductFiles(fileDtoRequest));
     }
 }

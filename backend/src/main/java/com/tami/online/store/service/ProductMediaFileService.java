@@ -6,11 +6,14 @@ import com.tami.online.store.model.ProductMediaFile;
 import com.tami.online.store.repository.ProductMediaFileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ public class ProductMediaFileService {
     private final FileService fileService;
     private final ProductMediaFileRepository productMediaFileRepository;
 
+    @Transactional
     public ProductMediaFile create(MultipartFile file, Product product) {
         FileDtoResponse response = fileService.save(file, "product/" + product.getId());
 
@@ -29,16 +33,14 @@ public class ProductMediaFileService {
                 .path(response.path())
                 .build();
 
-        productMediaFileRepository.save(productMediaFile);
-        return productMediaFile;
+        return productMediaFileRepository.save(productMediaFile);
     }
 
+    @Transactional
     public void createMediaFiles(MultipartFile[] files, Product product) {
-        List<ProductMediaFile> productMediaFiles = new ArrayList<>();
-
-        for (MultipartFile file : files) {
-            productMediaFiles.add(this.create(file, product));
-        }
+        List<ProductMediaFile> productMediaFiles = Arrays.stream(files)
+                .map(file -> create(file, product))
+                .collect(Collectors.toList());
 
         product.setProductMediaFiles(productMediaFiles);
     }

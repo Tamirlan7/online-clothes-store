@@ -3,16 +3,19 @@ package com.tami.online.store.service;
 import com.tami.online.store.dto.FileDtoResponse;
 import com.tami.online.store.exception.CustomBadRequestException;
 import com.tami.online.store.exception.InternalServerException;
-import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
-import org.springframework.dao.DataAccessException;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Service
 public class FileService {
@@ -78,7 +81,7 @@ public class FileService {
             return FileDtoResponse.builder()
                     .name(fileName)
                     .type(fileType)
-                    .path(finalPath.resolve(fileName).toString())
+                    .path(finalPath.resolve(fileName).toFile().getPath())
                     .build();
 
         } catch (IOException e) {
@@ -87,7 +90,17 @@ public class FileService {
         }
     }
 
-    public Resource load(String filename) {
-        throw new RuntimeException("");
+    public Resource load(String filePath) {
+        try {
+            Resource resource = new UrlResource(Paths.get(filePath).toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new CustomBadRequestException("Could not read the file!");
+            }
+        } catch (MalformedURLException e) {
+            throw new CustomBadRequestException("Error: " + e.getMessage());
+        }
     }
 }
