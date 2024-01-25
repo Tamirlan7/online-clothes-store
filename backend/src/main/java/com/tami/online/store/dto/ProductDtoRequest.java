@@ -17,18 +17,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDtoRequest {
+
     @NotBlank(message = "Укажите название продукта")
     private String name;
 
     @NotNull(message = "Укажите цену продукта")
     @PositiveOrZero(message = "Цена должна быть больше либо равна нулю")
-    private double price;
+    private double price = -1L;
 
     @NotNull(message = "Укажите размеры продукта")
     private List<ProductSizeDtoRequest> sizes;
 
     @PositiveOrZero(message = "Скидка должна быть больше нуля")
-    private double discountPercentage;
+    private double discountPercentage = -1L;
 
     @NotBlank(message = "Укажите коллекцию продукта")
     private String collectionName;

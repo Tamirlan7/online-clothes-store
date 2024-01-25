@@ -16,6 +16,6 @@ public class ProductSizeDtoRequest {
     @NotNull(message = "Укажите название размера (S, M, L, XL)")
     private String sizeName;
 
-    @PositiveOrZero(message = "Количество должно быть больше либо равно нулю")
+    @PositiveOrZero(message = "Количество должно быть больше либо равно нулю, sizes: [ { quantity: number } ]")
     private int quantity = -1;
 }

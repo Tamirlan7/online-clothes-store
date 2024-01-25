@@ -34,6 +34,11 @@ public class ProductController {
                 .ok(productService.getAllProducts());
     }
 
+    @PostMapping(value = "/file", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
+    public ResponseEntity<Resource> getProductFile(@RequestBody FileDtoRequest fileDtoRequest) {
+        return ResponseEntity.ok(productService.getProductFiles(fileDtoRequest));
+    }
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -71,8 +76,12 @@ public class ProductController {
                 .body(productService.createProduct(product));
     }
 
-    @PostMapping(value = "/file", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
-    public ResponseEntity<Resource> getProductFile(@RequestBody FileDtoRequest fileDtoRequest) {
-        return ResponseEntity.ok(productService.getProductFiles(fileDtoRequest));
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(
+            @RequestBody ProductDtoRequest productDtoRequest,
+            @PathVariable("id") Long id
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(productService.updateProduct(productDtoRequest, id));
     }
 }

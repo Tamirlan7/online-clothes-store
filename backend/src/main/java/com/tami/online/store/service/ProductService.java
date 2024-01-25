@@ -3,6 +3,7 @@ package com.tami.online.store.service;
 import com.tami.online.store.dto.FileDtoRequest;
 import com.tami.online.store.dto.ProductDtoRequest;
 import com.tami.online.store.dto.ProductSizeDtoRequest;
+import com.tami.online.store.exception.CustomBadRequestException;
 import com.tami.online.store.exception.NotFoundException;
 import com.tami.online.store.model.*;
 import com.tami.online.store.repository.ClothingTypeRepository;
@@ -19,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +36,85 @@ public class ProductService {
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    public Product updateProduct(ProductDtoRequest productDtoRequest, Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Продукт с id " + id + " не существует"));
+
+        if (productDtoRequest.getClothingType() != null) {
+            ClothingType clothingType = clothingTypeRepository
+                    .findByName(productDtoRequest.getClothingType())
+                    .orElseThrow(() -> new NotFoundException("Тип одежды под названием " + productDtoRequest.getClothingType() + " не найден (поле clothingType)"));
+
+            product.setClothingType(clothingType);
+        }
+
+        if (productDtoRequest.getCollectionName() != null) {
+            Collection collection = collectionRepository
+                    .findByName(productDtoRequest.getCollectionName())
+                    .orElseThrow(() -> new NotFoundException("Коллекция под названием " + productDtoRequest.getCollectionName() + " не найдена (поле collectionName)"));
+
+            product.setCollection(collection);
+        }
+
+        if (productDtoRequest.getPrice() > -1) {
+            product.setPrice(productDtoRequest.getPrice());
+        }
+
+        if (productDtoRequest.getDiscountPercentage() > -1) {
+            product.setPrice(productDtoRequest.getDiscountPercentage());
+        }
+
+        if (productDtoRequest.getName() != null) {
+            product.setName(productDtoRequest.getName());
+        }
+
+        if (productDtoRequest.getSizes() != null && !productDtoRequest.getSizes().isEmpty()) {
+            List<String> sizesName = productDtoRequest.getSizes().stream()
+                    .map(ProductSizeDtoRequest::getSizeName)
+                    .toList();
+
+            List<Size> sizes = sizeRepository.findAllByNameIn(sizesName);
+
+            List<ProductSize> productSizes = product.getProductSizes();
+            Map<String, Integer> sizeNameToQuantityMap = productDtoRequest.getSizes().stream()
+                    .collect(Collectors.toMap(ProductSizeDtoRequest::getSizeName, ProductSizeDtoRequest::getQuantity));
+
+            sizes.forEach(size -> {
+                if (sizeNameToQuantityMap.containsKey(size.getName())) {
+                    Integer quantity = sizeNameToQuantityMap.get(size.getName());
+
+                    if (quantity != null) {
+
+                        boolean isProductSizeExists = false;
+
+                        for (ProductSize productSize : productSizes) {
+                            if (Objects.equals(productSize.getSize().getName(), size.getName())) {
+                                productSize.setQuantity(quantity);
+                                isProductSizeExists = true;
+                                break;
+                            }
+                        }
+
+                        if (!isProductSizeExists) {
+                            productSizes.add(
+                                ProductSize.builder()
+                                    .size(size)
+                                    .quantity(quantity)
+                                    .product(product)
+                                    .build()
+                            );
+                        }
+                    }
+                }
+            });
+
+            product.setProductSizes(productSizes);
+        }
+
+        productRepository.save(product);
+        return product;
     }
 
     @Transactional
@@ -52,12 +133,15 @@ public class ProductService {
                 .collect(Collectors.toMap(ProductSizeDtoRequest::getSizeName, ProductSizeDtoRequest::getQuantity));
 
         sizes.forEach(size -> {
-            Integer quantity = sizeNameToQuantityMap.get(size.getName());
-            if (quantity != null) {
-                productSizes.add(ProductSize.builder()
-                        .size(size)
-                        .quantity(quantity)
-                        .build());
+            if (sizeNameToQuantityMap.containsKey(size.getName())) {
+                Integer quantity = sizeNameToQuantityMap.get(size.getName());
+
+                if (quantity != null) {
+                    productSizes.add(ProductSize.builder()
+                            .size(size)
+                            .quantity(quantity)
+                            .build());
+                }
             }
         });
 
@@ -77,6 +161,10 @@ public class ProductService {
         product = productRepository.save(product);
 
         productMediaFileService.createMediaFiles(productDtoRequest.getMediaFiles(), product);
+
+        for (ProductSize productSize : productSizes) {
+            productSize.setProduct(product);
+        }
 
         return product;
     }
