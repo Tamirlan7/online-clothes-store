@@ -169,6 +169,9 @@ public class ProductService {
         return product;
     }
 
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
 
     public Resource getProductFiles(FileDtoRequest fileDtoRequest) {
         return fileService.load(fileDtoRequest.getFilePath());
