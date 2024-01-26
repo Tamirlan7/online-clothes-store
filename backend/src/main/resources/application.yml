@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
   servlet:
     multipart:
@@ -19,7 +19,7 @@ jwt:
   #  m - minutes
   #  h - hours
   #  d - days
-  access-token-expiration: "15m"
+  access-token-expiration: "15d"
   refresh-token-expiration: "30d"
 
 logging:

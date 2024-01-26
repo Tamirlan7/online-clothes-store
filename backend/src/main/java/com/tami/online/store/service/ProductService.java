@@ -176,4 +176,12 @@ public class ProductService {
     public Resource getProductFiles(FileDtoRequest fileDtoRequest) {
         return fileService.load(fileDtoRequest.getFilePath());
     }
+
+    public List<Product> getProductsByCollection(String collection) {
+        return productRepository.findAllByCollectionName(collection);
+    }
+
+    public Resource getProductFileByFileName(Long productId, String fileName) {
+        return fileService.load("files/product/" + productId + "/" + fileName);
+    }
 }

@@ -52,8 +52,6 @@ public class FileService {
         }
 
         try {
-            String directoryToStore = "";
-
             if (prefixPath.charAt(0) == '/') {
                 prefixPath = prefixPath.substring(1);
             }
@@ -62,15 +60,7 @@ public class FileService {
                 prefixPath += '/';
             }
 
-            if (file.getContentType().startsWith("image")) {
-                directoryToStore = "images/" + prefixPath;
-            }
-
-            if (file.getContentType().startsWith("video")) {
-                directoryToStore = "videos/" + prefixPath;
-            }
-
-            final Path finalPath = root.resolve(directoryToStore);
+            final Path finalPath = root.resolve(prefixPath);
 
             if (!Files.exists(finalPath)) {
                  Files.createDirectories(finalPath);

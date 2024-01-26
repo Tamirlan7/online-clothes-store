@@ -1,11 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Footer from "../../components/Footer/Footer";
 import "./AeDrop.scss";
 import logo from "../../assets/images/bottomlogo2.svg";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { ITEM_CARD } from "../../data/ItemCardData";
+import Products from "../../components/Products/Products";
+import {useDispatch, useSelector} from "react-redux";
+import {collections} from "../../data/collections";
+import {getProductsByCollectionThunk} from "../../thunks/productThunks";
+import collectionService from "../../services/collectionService";
 
 export default function AeDrop() {
+  const dispatch = useDispatch()
+  const collection = collections.AE;
+  const products = useSelector(state => state.product.products[collection])
+
+  useEffect(() => {
+    dispatch(getProductsByCollectionThunk({ collection }))
+  }, [collection, dispatch])
+
   return (
     <>
       <section className='drop'>
@@ -47,13 +60,8 @@ export default function AeDrop() {
           </div>
         </div>
 
-        <div className='drop__items'>
-          {ITEM_CARD.slice(0, 12).map((card) => (
-            <ProductCard
-              key={card.id}
-              card={card}
-            />
-          ))}
+        <div>
+          <Products products={products} />
         </div>
 		<div className="drop__empty"></div>
       </section>

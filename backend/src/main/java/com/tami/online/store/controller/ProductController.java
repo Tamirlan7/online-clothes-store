@@ -14,11 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +26,25 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
+    @GetMapping(value = "{productId}/file/{fileName}", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
+    public ResponseEntity<Resource> getProductFileByFileName(
+            @PathVariable("productId") Long productId,
+            @PathVariable("fileName") String fileName
+    ) {
+        return ResponseEntity.ok(productService.getProductFileByFileName(productId, fileName));
+    }
+
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity
                 .ok(productService.getAllProducts());
+    }
+
+    @GetMapping("collection/{collection}")
+    public ResponseEntity<List<Product>> getProductsByCollection(
+            @PathVariable("collection") String collection
+    ) {
+        return ResponseEntity.ok(productService.getProductsByCollection(collection));
     }
 
     @PostMapping(value = "/file", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })

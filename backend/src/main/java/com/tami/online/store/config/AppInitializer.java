@@ -24,17 +24,17 @@ public class AppInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        userRepository.save(
-                User.builder()
-                        .username("admin")
-                        .password(passwordEncoder.encode("admin"))
-                        .role(Role.ROLE_ADMIN)
-                        .build()
-        );
-
-        this.initClothingTypes();
-        this.initCollections();
-        this.initSizes();
+//        userRepository.save(
+//                User.builder()
+//                        .username("admin")
+//                        .password(passwordEncoder.encode("admin"))
+//                        .role(Role.ROLE_ADMIN)
+//                        .build()
+//        );
+//
+//        this.initClothingTypes();
+//        this.initCollections();
+//        this.initSizes();
     }
 
     private void initSizes() {
@@ -56,8 +56,9 @@ public class AppInitializer implements CommandLineRunner {
 
     private void initCollections() {
         List<String> collections = List.of(
-            "Alternative edge",
-            "Uncriders"
+            "Alternative Edge",
+            "Uncriders",
+            "Advanced Gear"
         );
 
         collections.forEach((collection) -> {

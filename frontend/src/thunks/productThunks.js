@@ -13,3 +13,21 @@ export const getProductsThunk = createAsyncThunk(
         }
     }
 )
+
+export const getProductsByCollectionThunk = createAsyncThunk(
+    'product/getProductsByCollectionThunk',
+    async ({ collection }) => {
+        try {
+            // collection: string (collectionName)
+
+            const res = await productService.getProductsByCollection(collection);
+            return {
+                data: res.data,
+                collection: collection
+            }
+        } catch (err) {
+            console.error(err)
+            return err.message
+        }
+    }
+)
