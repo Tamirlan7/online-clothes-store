@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ProductSizeDtoRequest {
 
     @NotNull(message = "Укажите название размера (S, M, L, XL)")
-    private String sizeName;
+    private String size;
 
     @PositiveOrZero(message = "Количество должно быть больше либо равно нулю, sizes: [ { quantity: number } ]")
     private int quantity = -1;

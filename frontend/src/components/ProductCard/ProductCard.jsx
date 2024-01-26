@@ -2,12 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Card from "../../assets/images/item-card.png";
 import './ProductCard.scss';
+import {API_URL} from "../../constants/AppConstants";
 
 export default function ProductCard({
     id,
     name,
     price,
-    discountPercentage
+    discountPercentage,
+    productMediaFiles,
                                     }) {
 
     const priceWithDiscount = discountPercentage > 0 ? price * (discountPercentage / 100) : null
@@ -18,7 +20,7 @@ export default function ProductCard({
             className='card'
         >
             <img
-                src={Card}
+                src={`${API_URL}/product/${id}/file/${productMediaFiles[0].name}`}
                 alt='item'
                 className='card__img'
             />

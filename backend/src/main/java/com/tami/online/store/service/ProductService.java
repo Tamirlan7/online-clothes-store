@@ -3,13 +3,11 @@ package com.tami.online.store.service;
 import com.tami.online.store.dto.FileDtoRequest;
 import com.tami.online.store.dto.ProductDtoRequest;
 import com.tami.online.store.dto.ProductSizeDtoRequest;
-import com.tami.online.store.exception.CustomBadRequestException;
 import com.tami.online.store.exception.NotFoundException;
 import com.tami.online.store.model.*;
 import com.tami.online.store.repository.ClothingTypeRepository;
 import com.tami.online.store.repository.CollectionRepository;
 import com.tami.online.store.repository.ProductRepository;
-import com.tami.online.store.repository.SizeRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +28,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMediaFileService productMediaFileService;
     private final ClothingTypeRepository clothingTypeRepository;
-    private final SizeRepository sizeRepository;
     private final CollectionRepository collectionRepository;
     private final FileService fileService;
 
@@ -71,42 +68,27 @@ public class ProductService {
         }
 
         if (productDtoRequest.getSizes() != null && !productDtoRequest.getSizes().isEmpty()) {
-            List<String> sizesName = productDtoRequest.getSizes().stream()
-                    .map(ProductSizeDtoRequest::getSizeName)
-                    .toList();
-
-            List<Size> sizes = sizeRepository.findAllByNameIn(sizesName);
-
             List<ProductSize> productSizes = product.getProductSizes();
-            Map<String, Integer> sizeNameToQuantityMap = productDtoRequest.getSizes().stream()
-                    .collect(Collectors.toMap(ProductSizeDtoRequest::getSizeName, ProductSizeDtoRequest::getQuantity));
 
-            sizes.forEach(size -> {
-                if (sizeNameToQuantityMap.containsKey(size.getName())) {
-                    Integer quantity = sizeNameToQuantityMap.get(size.getName());
+            productDtoRequest.getSizes().forEach(productDtoSize -> {
+                boolean isProductSizeExists = false;
 
-                    if (quantity != null) {
-
-                        boolean isProductSizeExists = false;
-
-                        for (ProductSize productSize : productSizes) {
-                            if (Objects.equals(productSize.getSize().getName(), size.getName())) {
-                                productSize.setQuantity(quantity);
-                                isProductSizeExists = true;
-                                break;
-                            }
-                        }
-
-                        if (!isProductSizeExists) {
-                            productSizes.add(
-                                ProductSize.builder()
-                                    .size(size)
-                                    .quantity(quantity)
-                                    .product(product)
-                                    .build()
-                            );
-                        }
+                for (ProductSize productSize : productSizes) {
+                    if (Objects.equals(productSize.getSize(), productDtoSize.getSize())) {
+                        productSize.setQuantity(productDtoSize.getQuantity());
+                        isProductSizeExists = true;
+                        break;
                     }
+                }
+
+                if (!isProductSizeExists) {
+                    productSizes.add(
+                        ProductSize.builder()
+                            .size(productDtoSize.getSize())
+                            .quantity(productDtoSize.getQuantity())
+                            .product(product)
+                            .build()
+                    );
                 }
             });
 
@@ -123,27 +105,10 @@ public class ProductService {
                 .findByName(productDtoRequest.getClothingType())
                 .orElseThrow(() -> new NotFoundException("Тип одежды под названием " + productDtoRequest.getClothingType() + " не найден (поле clothingType)"));
 
-        List<String> sizesName = productDtoRequest.getSizes().stream()
-                .map(ProductSizeDtoRequest::getSizeName)
-                .toList();
-        List<Size> sizes = sizeRepository.findAllByNameIn(sizesName);
-
-        List<ProductSize> productSizes = new ArrayList<>();
-        Map<String, Integer> sizeNameToQuantityMap = productDtoRequest.getSizes().stream()
-                .collect(Collectors.toMap(ProductSizeDtoRequest::getSizeName, ProductSizeDtoRequest::getQuantity));
-
-        sizes.forEach(size -> {
-            if (sizeNameToQuantityMap.containsKey(size.getName())) {
-                Integer quantity = sizeNameToQuantityMap.get(size.getName());
-
-                if (quantity != null) {
-                    productSizes.add(ProductSize.builder()
-                            .size(size)
-                            .quantity(quantity)
-                            .build());
-                }
-            }
-        });
+        List<ProductSize> productSizes = productDtoRequest.getSizes().stream().map((productSizeDto) -> ProductSize.builder()
+                .size(productSizeDto.getSize())
+                .quantity(productSizeDto.getQuantity())
+                .build()).toList();
 
         Collection collection = collectionRepository
                 .findByName(productDtoRequest.getCollectionName())
