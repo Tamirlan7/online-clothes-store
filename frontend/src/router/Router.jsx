@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { protectedRoutes, publicRoutes, unauthenticatedRoutes } from './routes';
+import AppRoute from "./AppRoute";
 
 
 const Router = () => {
@@ -13,7 +14,9 @@ const Router = () => {
                     path={route.path}
                     element={
                         <>
-                            {route.component}
+                            <AppRoute metaData={route.meta}>
+                                {route.component}
+                            </AppRoute>
                         </>
                     }
                 />
@@ -25,7 +28,9 @@ const Router = () => {
                     path={route.path}
                     element={
                         <>
-                            {route.component}
+                            <AppRoute metaData={route.meta}>
+                                {route.component}
+                            </AppRoute>
                         </>
                     }
                 />
@@ -37,7 +42,9 @@ const Router = () => {
                     path={route.path}
                     element={
                         <>
-                            {route.component}
+                            <AppRoute metaData={route.meta}>
+                                {route.component}
+                            </AppRoute>
                         </>
                     }
                 />

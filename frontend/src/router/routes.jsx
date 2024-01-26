@@ -2,43 +2,54 @@ import Home from "../pages/Home/Home";
 import AeDrop from "../pages/AeDrop/AeDrop";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Privacy from "../pages/Privacy/Privacy";
+import {RoutePaths} from "./RouteConstants";
 
 /* only user routes */
 export const protectedRoutes = [
 
 ]
 
+// meta default data
+// {
+//     headerEnabled: true,
+//     footerEnabled: true,
+// }
+//
+
 export const publicRoutes = [
     {
-        path: '/',
+        path: RoutePaths.HOME,
         component: <Home />,
+        meta: {
+            footerEnabled: false,
+        }
     },
     {
-        path: '/ae',
+        path: RoutePaths.ALTERNATIVE_EDGE,
         component: <AeDrop />,
     },
     {
-        path: '/ae/product/:productId',
+        path: RoutePaths.PRODUCT_DETAILS,
         component: <ProductDetails />,
     },
     {
-        path: '/catalog',
+        path: RoutePaths.CATALOG,
         component: <div>Каталог</div>,
     },
     {
-        path: '/album',
+        path: RoutePaths.ALBUM,
         component: <div>Альбом</div>,
     },
     {
-        path: '/contacts',
+        path: RoutePaths.CONTACTS,
         component: <div>Контакты</div>,
     },
     {
-        path: '/Privacy',
+        path: RoutePaths.PRIVACY,
         component: <Privacy />,
     },
     {
-        path: '/care',
+        path: RoutePaths.CARE,
         component: <div>Уход за изделиями</div>,
     },
 ];

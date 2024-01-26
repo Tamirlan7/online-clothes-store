@@ -24,7 +24,9 @@ const CollectionCard = ({ text, bottomLogoSrc, dropLogoSrc, dropImgSrc, href  })
                 <p
                     className='home__overlay-description'
                     id='overlay-description'
-                >{text}</p>
+                >
+                    {text}
+                </p>
                 <img
                     className='home__bottom-logo'
                     id='bottom-logo'

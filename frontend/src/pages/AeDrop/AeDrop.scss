@@ -1,49 +1,6 @@
 .drop {
   box-sizing: content-box;
 
-  &__top-container {
-    position: relative;
-  }
-  &__img {
-    display: block;
-    width: 100%;
-    height: calc(100vh - 70px);
-    object-fit: cover;
-  }
-  &__overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    z-index: 3;
-  }
-
-  &__overlay-logo {
-    position: absolute;
-    width: 326px;
-    height: 230px;
-    left: 5%;
-    bottom: 20%;
-    opacity: 0.6;
-  }
-
-  &__overlay-text {
-    color: #fff;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    text-transform: uppercase;
-    max-width: 972px;
-    opacity: 0.6;
-    position: absolute;
-    left: 5%;
-    bottom: 8%;
-  }
-
   &__buttons {
     display: flex;
     justify-content: center;

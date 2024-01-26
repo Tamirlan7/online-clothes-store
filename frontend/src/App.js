@@ -15,13 +15,7 @@ function App() {
 
     return (
         <>
-            <header>
-                <Navbar/>
-            </header>
-
-            <main>
-                <Router/>
-            </main>
+            <Router/>
         </>
     );
 }
