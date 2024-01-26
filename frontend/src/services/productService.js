@@ -10,4 +10,8 @@ productService.getProductsByCollection = (collection) => {
     return axiosClient.get(`/product/collection/${collection}`)
 }
 
+productService.getProductById = (productId) => {
+    return axiosClient.get(`/product/${productId}`)
+}
+
 export default productService;

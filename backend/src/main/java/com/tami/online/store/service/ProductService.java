@@ -149,4 +149,9 @@ public class ProductService {
     public Resource getProductFileByFileName(Long productId, String fileName) {
         return fileService.load("files/product/" + productId + "/" + fileName);
     }
+
+    public Product getProductById(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Продукт с id " + productId + " не найден"));
+    }
 }

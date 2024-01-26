@@ -34,6 +34,11 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductFileByFileName(productId, fileName));
     }
 
+    @GetMapping("{productId}")
+    public ResponseEntity<Product> getProductById(@PathVariable("productId") Long productId) {
+        return ResponseEntity.ok(productService.getProductById(productId));
+    }
+
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity

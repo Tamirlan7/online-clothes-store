@@ -31,3 +31,18 @@ export const getProductsByCollectionThunk = createAsyncThunk(
         }
     }
 )
+
+export const getProductById = createAsyncThunk(
+    "product/getProductById",
+    async (productId) => {
+        try {
+            // productId: number
+
+            const res = await productService.getProductById(productId);
+            return res.data
+        } catch (err) {
+            console.error(err)
+            return err.message
+        }
+    }
+)

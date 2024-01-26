@@ -16,7 +16,7 @@ export default function ProductCard({
 
     return (
         <Link
-            to={`${"/ae/item"}/${id}`}
+            to={`/ae/product/${id}`}
             className='card'
         >
             <img

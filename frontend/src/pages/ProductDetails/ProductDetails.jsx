@@ -3,23 +3,24 @@ import './ProductDetails.scss'
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import item from "../../assets/images/item-card.png";
-import { ITEM_CARD } from "../../data/ItemCardData";
+import {useDispatch, useSelector} from "react-redux";
+import {getProductById} from "../../thunks/productThunks";
 
-export default function Card() {
-  const { id } = useParams();
-  const [data, setData] = useState(null);
-  console.log(data);
+export default function ProductDetails() {
+  const dispatch = useDispatch()
+  const currentProduct = useSelector(state => state.product.currentProduct)
+  const { productId } = useParams();
 
   useEffect(() => {
-    if (id) {
-      const dataCard = ITEM_CARD.find((item) => item.id === Number(id));
-      setData(dataCard);
+    if (currentProduct?.id !== parseInt(productId)) {
+      dispatch(getProductById(productId))
     }
-  }, [id]);
+
+  }, [currentProduct?.id, dispatch, productId])
 
   return (
     <>
-      {data && Object.keys(data).length && (
+      {currentProduct && Object.keys(currentProduct).length && (
         <section className='item'>
           <div className='item__image-container'>
             <img
@@ -30,7 +31,7 @@ export default function Card() {
             <div></div>
           </div>
           <div className='item__container'>
-            <h1 className='item__title'>{data.title}</h1>
+            <h1 className='item__title'>{currentProduct.title}</h1>
             <ul className='item__info'>
               <li>
                 Коллекция:
@@ -46,7 +47,7 @@ export default function Card() {
               </li>
             </ul>
             <p className='item__price'>
-              {data.price}p. <span>{data.sale}p.</span>
+              {currentProduct.price}p. <span>600 p.</span>
             </p>
 
             <div className='item__size-buttons'>

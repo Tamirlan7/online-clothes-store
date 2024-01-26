@@ -1,6 +1,6 @@
 import Home from "../pages/Home/Home";
 import AeDrop from "../pages/AeDrop/AeDrop";
-import Card from "../pages/ProductDetails/ProductDetails";
+import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Privacy from "../pages/Privacy/Privacy";
 
 /* only user routes */
@@ -18,8 +18,8 @@ export const publicRoutes = [
         component: <AeDrop />,
     },
     {
-        path: '/ae/item/:id',
-        component: <Card />,
+        path: '/ae/product/:productId',
+        component: <ProductDetails />,
     },
     {
         path: '/catalog',
