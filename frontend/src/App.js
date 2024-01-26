@@ -1,10 +1,10 @@
 import "./App.scss";
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
-import Privacy from "./pages/privacy/Privacy";
-import AeDrop from "./pages/aeDrop/AeDrop";
-import Card from "./pages/card/Card";
+import Privacy from "./pages/Privacy/Privacy";
+import AeDrop from "./pages/AeDrop/AeDrop";
+import Card from "./pages/ProductDetails/ProductDetails";
 import Router from "./router/Router";
 
 function App() {

@@ -21,7 +21,7 @@ export const SidebarData = [
   },
   {
     title: "Политика конфиденциальности",
-    path: "/privacy",
+    path: "/Privacy",
     cName: "nav-text",
   },
   {

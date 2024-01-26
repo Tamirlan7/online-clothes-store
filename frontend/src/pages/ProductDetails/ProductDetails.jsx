@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import './ProductDetails.scss'
 import { useParams } from "react-router-dom";
-import Footer from "../../components/footer/Footer";
-import item from "../../images/item-card.png";
-import "./item.scss";
-import { ITEM_CARD } from "../../utils/ItemCardData";
+import Footer from "../../components/Footer/Footer";
+import item from "../../assets/images/item-card.png";
+import { ITEM_CARD } from "../../data/ItemCardData";
 
 export default function Card() {
   const { id } = useParams();

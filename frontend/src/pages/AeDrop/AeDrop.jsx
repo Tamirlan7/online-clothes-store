@@ -1,9 +1,9 @@
 import React from "react";
-import Footer from "../../components/footer/Footer";
-import "./aeDrop.scss";
-import logo from "../../images/bottomlogo2.svg";
-import ItemCard from "../../components/itemCard/ItemCard";
-import { ITEM_CARD } from "../../utils/ItemCardData";
+import Footer from "../../components/Footer/Footer";
+import "./AeDrop.scss";
+import logo from "../../assets/images/bottomlogo2.svg";
+import ProductCard from "../../components/ProductCard/ProductCard";
+import { ITEM_CARD } from "../../data/ItemCardData";
 
 export default function AeDrop() {
   return (
@@ -49,7 +49,7 @@ export default function AeDrop() {
 
         <div className='drop__items'>
           {ITEM_CARD.slice(0, 12).map((card) => (
-            <ItemCard
+            <ProductCard
               key={card.id}
               card={card}
             />

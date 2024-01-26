@@ -1,11 +1,11 @@
 import React from "react";
 import "./Home.scss";
-import drop1logo from "../../images/logodrop-1.svg";
-import drop2logo from "../../images/logodrop-2.svg";
-import drop3logo from "../../images/logodrop-3.svg";
-import bottomlogo1 from "../../images/bottomlogo1.svg";
-import bottomlogo2 from "../../images/bottomlogo2.svg";
-import bottomlogo3 from "../../images/bottomlogo-3.svg";
+import drop1logo from "../../assets/images/logodrop-1.svg";
+import drop2logo from "../../assets/images/logodrop-2.svg";
+import drop3logo from "../../assets/images/logodrop-3.svg";
+import bottomlogo1 from "../../assets/images/bottomlogo1.svg";
+import bottomlogo2 from "../../assets/images/bottomlogo2.svg";
+import bottomlogo3 from "../../assets/images/bottomlogo-3.svg";
 import CollectionCard from "../../components/CollectionCard/CollectionCard";
 
 const Home = () => {

@@ -1,7 +1,7 @@
 import React from "react";
-import "./privacy.scss";
-import Logo from "../../images/Vector.svg";
-import Footer from "../../components/footer/Footer";
+import "./Privacy.scss";
+import Logo from "../../assets/images/Vector.svg";
+import Footer from "../../components/Footer/Footer";
 
 export default function Privacy() {
   return (

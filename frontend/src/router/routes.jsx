@@ -1,7 +1,7 @@
 import Home from "../pages/Home/Home";
-import AeDrop from "../pages/aeDrop/AeDrop";
-import Card from "../pages/card/Card";
-import Privacy from "../pages/privacy/Privacy";
+import AeDrop from "../pages/AeDrop/AeDrop";
+import Card from "../pages/ProductDetails/ProductDetails";
+import Privacy from "../pages/Privacy/Privacy";
 
 /* only user routes */
 export const protectedRoutes = [
@@ -34,7 +34,7 @@ export const publicRoutes = [
         component: <div>Контакты</div>,
     },
     {
-        path: '/privacy',
+        path: '/Privacy',
         component: <Privacy />,
     },
     {

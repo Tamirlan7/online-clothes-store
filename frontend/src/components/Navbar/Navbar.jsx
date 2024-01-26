@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { SidebarData } from "../../utils/SidebarData";
-import "./navbar.scss";
-import Burgermenu from "../../images/burger-menu.svg";
-import CloseBtn from "../../images/clode-btn.svg";
-import LOGO from "../../images/logo.svg";
-import Cart from "../../images/cart.svg";
+import { SidebarData } from "../../data/SidebarData";
+import "./Navbar.scss";
+import Burgermenu from "../../assets/images/burger-menu.svg";
+import CloseBtn from "../../assets/images/clode-btn.svg";
+import LOGO from "../../assets/images/logo.svg";
+import Cart from "../../assets/images/cart.svg";
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);

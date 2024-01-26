@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Card from "../../images/item-card.png";
-import './itemCard.scss';
+import Card from "../../assets/images/item-card.png";
+import './ProductCard.scss';
 
-export default function ItemCard({ card }) {
+export default function ProductCard({ card }) {
   const { id } = card;
   const cardId = `${id}`;
   return (

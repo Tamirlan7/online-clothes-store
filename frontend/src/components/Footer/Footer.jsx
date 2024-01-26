@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import MIR from "../../images/mir.svg";
-import VISA from "../../images/visa.svg";
-import SPB from "../../images/spb.svg";
-import MASTERCARD from "../../images/mastercard.svg";
-import "./footer.scss";
+import MIR from "../../assets/images/mir.svg";
+import VISA from "../../assets/images/visa.svg";
+import SPB from "../../assets/images/spb.svg";
+import MASTERCARD from "../../assets/images/mastercard.svg";
+import "./Footer.scss";
 
 export default function Footer() {
   return (
