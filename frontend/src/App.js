@@ -1,22 +1,27 @@
-import "./App.scss";
-import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
-import Home from "./pages/Home/Home";
-import Privacy from "./pages/Privacy/Privacy";
-import AeDrop from "./pages/AeDrop/AeDrop";
-import Card from "./pages/ProductDetails/ProductDetails";
 import Router from "./router/Router";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
+import {getProductsThunk} from "./thunks/productThunks";
 
 function App() {
-  return (
-    <div className="app">
-      <Navbar />
+    const dispatch = useDispatch()
 
-      <main>
-        <Router />
-      </main>
-    </div>
-  );
+    useEffect(() => {
+        dispatch(getProductsThunk())
+    }, [dispatch])
+
+    return (
+        <>
+            <header>
+                <Navbar/>
+            </header>
+
+            <main>
+                <Router/>
+            </main>
+        </>
+    );
 }
 
 export default App;
