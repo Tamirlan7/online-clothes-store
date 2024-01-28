@@ -31,8 +31,12 @@ public class ProductService {
     private final CollectionRepository collectionRepository;
     private final FileService fileService;
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getProductsByName(String name) {
+        return productRepository.findAllByNameContainsIgnoreCase(name);
+    }
+
+    public List<Product> getAllProducts(String productName) {
+        return this.getProductsByName(productName);
     }
 
     public Product updateProduct(ProductDtoRequest productDtoRequest, Long id) {
@@ -133,6 +137,8 @@ public class ProductService {
 
         return product;
     }
+
+
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);

@@ -39,10 +39,12 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    @GetMapping()
+    public ResponseEntity<List<Product>> getAllProducts(
+            @RequestParam(name = "q", required = false, defaultValue = "") String query
+    ) {
         return ResponseEntity
-                .ok(productService.getAllProducts());
+                .ok(productService.getAllProducts(query));
     }
 
     @GetMapping("collection/{collection}")

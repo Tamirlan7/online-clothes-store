@@ -1,90 +1,9 @@
 .drop {
-  box-sizing: content-box;
+  background-color: #0A0A0A;
 
-  &__buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
-    height: 110px;
-    border-top: 2px solid #fff;
-  }
-
-  &__container {
-    width: calc(100vw - 80px);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &__input {
-    width: 605px;
-    padding: 10px 20px;
-    color: #121212;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 130%; /* 20.8px */
-    text-transform: uppercase;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    &::placeholder {
-      color: #121212;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 130%; /* 20.8px */
-      text-transform: uppercase;
-    }
-  }
-
-  &__buttons-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  &__button {
-    max-height: 107px;
-    padding: 10px 20px;
-    justify-content: center;
-    align-items: center;
-    color: #121212;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 130%; /* 20.8px */
-    text-transform: capitalize;
-    transition: all 0.3s ease-in-out;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 0.3;
-    }
-  }
-
-  &__items {
-    background-color: black;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    gap: 12px 12px;
-    grid-template-areas:
-      ". . ."
-      ". . ."
-      ". . ."
-      ". . .";
-    justify-content: stretch;
-    align-content: center;
-    justify-items: center;
-    align-items: center;
-  }
-  &__empty {
-    height: 400px;
-    background-color: black;
+  &__separator {
+    width: 100%;
+    height: 2px;
+    background-color: white;
   }
 }

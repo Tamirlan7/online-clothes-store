@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -14,5 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p JOIN p.collection c WHERE c.name = :categoryName")
     List<Product> findAllByCollectionName(@Param("categoryName") String categoryName);
+
+    List<Product> findAllByNameContainsIgnoreCase(String name);
 
 }

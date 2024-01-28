@@ -16,6 +16,7 @@
     flex-direction: column;
     max-width: 688px;
   }
+
   &__image {
     width: 100%;
     background-color: #fff;
@@ -43,12 +44,14 @@
     list-style: none;
     padding: 0;
     margin: 0;
+
     li {
       color: #fff;
       font-size: 20px;
       font-style: normal;
       font-weight: 400;
       line-height: 21.6px;
+
       span {
         color: #fff;
         font-size: 18px;
@@ -60,6 +63,7 @@
       }
     }
   }
+
   &__price {
     color: #fff;
     font-family: Arial;
@@ -69,6 +73,7 @@
     line-height: 21.6px;
     margin-right: 12px;
     margin: 32px 0 42px 0;
+
     span {
       color: #bdbdbd;
       font-family: Arial;
@@ -113,6 +118,7 @@
     flex-direction: row;
     gap: 10px;
     margin: 0 0 42px 0;
+
     p {
       width: 65px;
       color: #ef4d4d;
@@ -165,6 +171,7 @@
     text-transform: uppercase;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
+
     &:hover {
       color: #080808;
       background: #fff;
@@ -203,6 +210,6 @@
     font-style: normal;
     font-weight: 300;
     line-height: 21.6px;
-	margin: 0;
+    margin: 0;
   }
 }

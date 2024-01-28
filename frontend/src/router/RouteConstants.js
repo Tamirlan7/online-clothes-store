@@ -9,4 +9,5 @@ export const RoutePaths = {
     CONTACTS: '/contacts',
     PRIVACY: '/privacy',
     CARE: '/care',
+    NOT_FOUND: '/not-found'
 }

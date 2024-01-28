@@ -1,6 +1,6 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { protectedRoutes, publicRoutes, unauthenticatedRoutes } from './routes';
+import {Route, Routes} from 'react-router-dom';
+import {protectedRoutes, publicRoutes, unauthenticatedRoutes} from './routes';
 import AppRoute from "./AppRoute";
 
 

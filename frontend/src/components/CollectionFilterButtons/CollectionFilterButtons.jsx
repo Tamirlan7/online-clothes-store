@@ -1,19 +1,48 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import './CollectionFilterButtons.scss'
 
-const CollectionFilterButtons = () => {
+const CollectionFilterButtons = ({
+    buttonValue,
+    onButtonValueChange,
+    searchTextValue,
+    onSearchTextValueChange
+                                 }) => {
+
+    const buttonLastValue = useRef('');
+
+    const buttons = [
+        'HOODIE',
+        'T-SHIRT',
+        'SCARF',
+        'ACCESSORIES',
+        'SALE %%%',
+    ]
+
+    const handleOnBtnClick = (value) => {
+        if (buttonLastValue.current === value) {
+            value = ''
+        }
+
+        buttonLastValue.current = value
+        onButtonValueChange(value)
+    }
+
     return (
         <div className='drop__buttons'>
             <div className='drop__container'>
                 <input
                     className='drop__input'
                     placeholder='SEARCH'
-                ></input>
+                    value={searchTextValue}
+                    onChange={(e) => onSearchTextValueChange(e.target.value)}
+                />
+
                 <div className='drop__buttons-container'>
-                    <button className='drop__button'>HOODIE</button>
-                    <button className='drop__button'>T-SHIRTS</button>
-                    <button className='drop__button'>SCARF</button>
-                    <button className='drop__button'>ACCESSORIES</button>
-                    <button className='drop__button'>SALE %%%</button>
+                    {buttons.map((btn, idx) => (
+                        <button onClick={() => handleOnBtnClick(btn)} key={idx} className={buttonValue === btn ? 'drop__button drop__button__selected' : 'drop__button'}>
+                            {btn}
+                        </button>
+                    ))}
                 </div>
             </div>
         </div>
