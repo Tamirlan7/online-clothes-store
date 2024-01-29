@@ -2,7 +2,6 @@ package com.tami.online.store.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tami.online.store.dto.FileDtoRequest;
 import com.tami.online.store.dto.ProductDtoRequest;
 import com.tami.online.store.dto.ProductSizeDtoRequest;
 import com.tami.online.store.exception.CustomBadRequestException;
@@ -39,7 +38,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Product>> getAllProducts(
             @RequestParam(name = "q", required = false, defaultValue = "") String query,
             @RequestParam(name = "collection", required = false) String collection,
@@ -47,11 +46,6 @@ public class ProductController {
     ) {
         return ResponseEntity
                 .ok(productService.getAllProducts(collection, clothingType, query));
-    }
-
-    @PostMapping(value = "/file", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
-    public ResponseEntity<Resource> getProductFile(@RequestBody FileDtoRequest fileDtoRequest) {
-        return ResponseEntity.ok(productService.getProductFiles(fileDtoRequest));
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -72,7 +66,7 @@ public class ProductController {
             try {
                 productSizes.add(mapper.readValue(size, ProductSizeDtoRequest.class));
             } catch (JsonProcessingException e) {
-                throw new CustomBadRequestException("Ошибка при конвертации в ProductSizeDtoRequest, поле sizes должно быть массивом объектов { sizeName: string, quantity: int } ошибка: " + e.getMessage());
+                throw new CustomBadRequestException("Ошибка при конвертации в ProductSizeDtoRequest, поле sizes должно быть массивом объектов { sizeName: string, quantity: int, additionalInfo: string } ошибка: " + e.getMessage());
             }
         });
 

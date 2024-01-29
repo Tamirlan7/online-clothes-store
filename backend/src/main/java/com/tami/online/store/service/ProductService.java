@@ -113,6 +113,7 @@ public class ProductService {
         List<ProductSize> productSizes = productDtoRequest.getSizes().stream().map((productSizeDto) -> ProductSize.builder()
                 .size(productSizeDto.getSize())
                 .quantity(productSizeDto.getQuantity())
+                .additionalInfo(productSizeDto.getAdditionalInfo())
                 .build()).toList();
 
         Collection collection = collectionRepository
