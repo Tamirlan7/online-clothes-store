@@ -41,17 +41,12 @@ public class ProductController {
 
     @GetMapping()
     public ResponseEntity<List<Product>> getAllProducts(
-            @RequestParam(name = "q", required = false, defaultValue = "") String query
+            @RequestParam(name = "q", required = false, defaultValue = "") String query,
+            @RequestParam(name = "collection", required = false) String collection,
+            @RequestParam(name = "clothingType", required = false) String clothingType
     ) {
         return ResponseEntity
-                .ok(productService.getAllProducts(query));
-    }
-
-    @GetMapping("collection/{collection}")
-    public ResponseEntity<List<Product>> getProductsByCollection(
-            @PathVariable("collection") String collection
-    ) {
-        return ResponseEntity.ok(productService.getProductsByCollection(collection));
+                .ok(productService.getAllProducts(collection, clothingType, query));
     }
 
     @PostMapping(value = "/file", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })

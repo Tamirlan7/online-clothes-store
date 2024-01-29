@@ -32,4 +32,5 @@ public class ProductSize {
     @Column(nullable = false)
     private String size;
 
+    private String additionalInfo;
 }

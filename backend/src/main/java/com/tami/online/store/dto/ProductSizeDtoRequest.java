@@ -18,4 +18,6 @@ public class ProductSizeDtoRequest {
 
     @PositiveOrZero(message = "Количество должно быть больше либо равно нулю, sizes: [ { quantity: number } ]")
     private int quantity = -1;
+
+    private String additionalInfo;
 }

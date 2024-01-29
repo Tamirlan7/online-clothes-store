@@ -2,8 +2,14 @@ import {axiosClient} from "./axiosClient";
 
 const productService = {}
 
-productService.getProducts = () => {
-    return axiosClient.get('/product')
+productService.getProducts = ({
+    q,
+                              }) => {
+    let url = '/product'
+    if (!q && q !== '') {
+        url = url + `/q=${q}`
+    }
+    return axiosClient.get(url)
 }
 
 productService.getProductsByCollection = (collection) => {

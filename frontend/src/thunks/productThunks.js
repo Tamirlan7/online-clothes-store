@@ -3,9 +3,15 @@ import productService from "../services/productService";
 
 export const getProductsThunk = createAsyncThunk(
     'product/getProducts',
-    async () => {
+    async (
+        {
+            q,
+        }
+    ) => {
         try {
-            const res = await productService.getProducts();
+            const res = await productService.getProducts({
+                q,
+            });
             return res.data
         } catch (err) {
             console.error(err)

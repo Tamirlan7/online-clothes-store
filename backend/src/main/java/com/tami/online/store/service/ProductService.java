@@ -31,12 +31,13 @@ public class ProductService {
     private final CollectionRepository collectionRepository;
     private final FileService fileService;
 
-    public List<Product> getProductsByName(String name) {
-        return productRepository.findAllByNameContainsIgnoreCase(name);
+    public List<Product> getProductsByName(List<Product> products, String pName) {
+        return products.stream().filter((p) -> p.getName().contains(pName)).toList();
     }
 
-    public List<Product> getAllProducts(String productName) {
-        return this.getProductsByName(productName);
+    public List<Product> getAllProducts(String collection, String clothingType, String q) {
+        List<Product> products = productRepository.findByCollectionAndClothingTypeAndProductName(collection, clothingType, q);
+        return products;
     }
 
     public Product updateProduct(ProductDtoRequest productDtoRequest, Long id) {

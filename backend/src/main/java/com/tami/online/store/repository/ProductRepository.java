@@ -12,10 +12,20 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    @Query("SELECT p FROM Product p " +
+            "LEFT JOIN p.collection c " +
+            "LEFT JOIN p.clothingType ct " +
+            "WHERE " +
+            "(:categoryName IS NULL OR c.name = :categoryName OR c.id IS NULL) " +
+            "AND (:clothingTypeName IS NULL OR ct.name = :clothingTypeName OR ct.id IS NULL) " +
+            "AND (:productName IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :productName, '%')) OR p.id IS NULL)")
+    List<Product> findByCollectionAndClothingTypeAndProductName(
+            @Param("categoryName") String categoryName,
+            @Param("clothingTypeName") String clothingTypeName,
+            @Param("productName") String productName
+    );
 
     @Query("SELECT p FROM Product p JOIN p.collection c WHERE c.name = :categoryName")
     List<Product> findAllByCollectionName(@Param("categoryName") String categoryName);
-
-    List<Product> findAllByNameContainsIgnoreCase(String name);
 
 }
