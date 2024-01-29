@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getProductById, getProductsByCollectionThunk, getProductsThunk} from "../thunks/productThunks";
+import {getProductById, getProductsThunk} from "../thunks/productThunks";
 import {collections} from "../data/collections";
 
 const initialState = {
@@ -28,28 +28,15 @@ const productSlice = createSlice({
             })
             .addCase(getProductsThunk.fulfilled, (state, action) => {
                 state.loading = false
+                console.log('something')
+                console.log([action.payload?.collection ?? 'all'])
+
                 state.products = {
                     ...state.products,
-                    'all': action.payload,
+                    [action.payload?.collection ?? 'all']: action.payload?.products,
                 }
             })
             .addCase(getProductsThunk.rejected, (state, action) => {
-                state.loading = false
-                state.error = true
-                state.errorMessage = action.payload
-            })
-
-            .addCase(getProductsByCollectionThunk.pending, (state, action) => {
-                state.loading = true
-            })
-            .addCase(getProductsByCollectionThunk.fulfilled, (state, action) => {
-                state.loading = false
-                state.products = {
-                    ...state.products,
-                    [action.payload.collection]: action.payload.data,
-                }
-            })
-            .addCase(getProductsByCollectionThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = true
                 state.errorMessage = action.payload

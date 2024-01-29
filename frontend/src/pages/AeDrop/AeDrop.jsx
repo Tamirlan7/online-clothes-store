@@ -5,7 +5,7 @@ import logo from "../../assets/images/bottomlogo2.svg";
 import Products from "../../components/Products/Products";
 import {useDispatch, useSelector} from "react-redux";
 import {collections} from "../../data/collections";
-import {getProductsByCollectionThunk} from "../../thunks/productThunks";
+import {getProductsByCollectionThunk, getProductsThunk} from "../../thunks/productThunks";
 import CollectionLanding from "../../components/CollectionLanding/CollectionLanding";
 import CollectionFilterButtons from "../../components/CollectionFilterButtons/CollectionFilterButtons";
 import Container from "../../components/Container/Container";
@@ -32,7 +32,9 @@ export default function AeDrop() {
     }, [products, filterData.searchText, filterData.selectedClothingType])
 
     useEffect(() => {
-        dispatch(getProductsByCollectionThunk({ collection }))
+        dispatch(getProductsThunk({
+            collection
+        }))
     }, [collection, dispatch])
 
     return (

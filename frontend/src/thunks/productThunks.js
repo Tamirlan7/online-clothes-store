@@ -6,41 +6,39 @@ export const getProductsThunk = createAsyncThunk(
     async (
         {
             q,
+            collection,
+            clothingType
+        },
+        {
+            rejectWithValue
         }
     ) => {
         try {
             const res = await productService.getProducts({
                 q,
+                collection,
+                clothingType
             });
-            return res.data
-        } catch (err) {
-            console.error(err)
-            return err.message
-        }
-    }
-)
 
-export const getProductsByCollectionThunk = createAsyncThunk(
-    'product/getProductsByCollectionThunk',
-    async ({ collection }) => {
-        try {
-            // collection: string (collectionName)
-
-            const res = await productService.getProductsByCollection(collection);
             return {
-                data: res.data,
-                collection: collection
+                collection,
+                products: res.data
             }
         } catch (err) {
             console.error(err)
-            return err.message
+            rejectWithValue(err.message)
         }
     }
 )
 
 export const getProductById = createAsyncThunk(
     "product/getProductById",
-    async (productId) => {
+    async (
+        productId,
+        {
+            rejectWithValue,
+        }
+    ) => {
         try {
             // productId: number
 
@@ -48,7 +46,7 @@ export const getProductById = createAsyncThunk(
             return res.data
         } catch (err) {
             console.error(err)
-            return err.message
+            rejectWithValue(err.message)
         }
     }
 )

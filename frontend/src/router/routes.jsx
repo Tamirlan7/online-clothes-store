@@ -3,10 +3,20 @@ import AeDrop from "../pages/AeDrop/AeDrop";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Privacy from "../pages/Privacy/Privacy";
 import {RoutePaths} from "./RouteConstants";
+import {lazy} from "react";
+const AdminPage = lazy(() => import("../pages/AdminPage/AdminPage"))
 
 /* only user routes */
 export const protectedRoutes = [
-
+    {
+        path: RoutePaths.ADMIN,
+        component: <AdminPage />,
+        enabledRoles: ['admin'],
+        meta: {
+            headerEnabled: false,
+            footerEnabled: false,
+        }
+    }
 ]
 
 // meta default data
