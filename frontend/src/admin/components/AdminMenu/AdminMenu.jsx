@@ -1,14 +1,19 @@
-import React from 'react';
-import c from './AdminAside.module.scss'
+import React, {useEffect, useRef} from 'react';
+import c from './AdminMenu.module.scss'
 import {Link} from "react-router-dom";
-import { ReactComponent as Catalog } from '../../assets/icons/carbon_catalog.svg'
-import { ReactComponent as BookContent } from '../../assets/icons/bx_book-content.svg'
-import { ReactComponent as User } from '../../assets/icons/user.svg'
-import { ReactComponent as Logout } from '../../assets/icons/log-out.svg'
+import { ReactComponent as Catalog } from '../../../assets/icons/carbon_catalog.svg'
+import { ReactComponent as BookContent } from '../../../assets/icons/bx_book-content.svg'
+import { ReactComponent as User } from '../../../assets/icons/user.svg'
+import { ReactComponent as Logout } from '../../../assets/icons/log-out.svg'
 
-function AdminAside() {
+function AdminMenu() {
+    const componentRef = useRef()
+
     return (
-        <div className={c.component}>
+        <div
+            ref={componentRef}
+            className={c.component}
+        >
             <div className={c.block}>
                 <ul className={c.menu}>
                     <li className={`${c['menu-item']} ${c['menu-item__selected']}`}>
@@ -54,4 +59,4 @@ function AdminAside() {
     );
 }
 
-export default AdminAside;
+export default AdminMenu;

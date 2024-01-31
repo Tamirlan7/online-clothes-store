@@ -1,0 +1,11 @@
+.content {
+  width: 100%;
+  padding-left: calc(31.3rem + 6.8rem);
+  padding-top: 56px;
+
+  @media screen and (min-width: 1200px) {
+    padding-right: 16.1rem;
+  }
+
+}
+

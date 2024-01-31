@@ -8,10 +8,6 @@ function AdminFilter() {
                 <ul className={c.list}>
                     <li className={c.item}>Сортировать по:</li>
                     <li className={c.item}>Все</li>
-                    <li className={c.item}>T-shirts/long</li>
-                    <li className={c.item}>Jersey</li>
-                    <li className={c.item}>Hoodie/Zip-hoodie</li>
-                    <li className={c.item}>Pants/Shorts</li>
                 </ul>
             </div>
             <div className={c.right}>

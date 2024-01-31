@@ -4,7 +4,7 @@ import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Privacy from "../pages/Privacy/Privacy";
 import {RoutePaths} from "./RouteConstants";
 import {lazy} from "react";
-const AdminPage = lazy(() => import("../pages/AdminPage/AdminPage"))
+const AdminPage = lazy(() => import("../admin/pages/AdminCatalogPage/AdminCatalogPage"))
 
 /* only user routes */
 export const protectedRoutes = [
