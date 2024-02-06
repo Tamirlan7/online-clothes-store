@@ -1,0 +1,31 @@
+.btns {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 10px;
+  border: none;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 #1018280D;
+}
+
+.btn-cancel {
+  background-color: transparent;
+}
+
+.btn-confirm {
+  color: #FFFFFF;
+  background-color: #232323;
+
+  &:disabled {
+    background-color: #BDBDBD;
+  }
+}

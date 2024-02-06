@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import c from './ProductsTableRow.module.scss'
 import cTable from '../ProductsTable/ProductsTable.module.scss'
 import { ReactComponent as TableDots } from "../../../assets/icons/table-dots.svg";
 import { ReactComponent as Copy } from "../../../assets/icons/copy.svg";
 import { ReactComponent as Trash } from "../../../assets/icons/trash.svg";
 import pImage from '../../../assets/temp/Rectangle 21.png'
+import Switch from "../../../UI/Switch/Switch";
 
 
 function ProductsTableRow({
@@ -13,15 +14,18 @@ function ProductsTableRow({
     productSizes,
     price,
                           }) {
+
+    const [isSwitched, setIsSwitched] = useState()
+
     return (
-        <div className={c.row}>
-            <div className={`${c.cell} ${cTable['checkbox-cell']}`}>
+        <tr className={c.row}>
+            <td className={`${c.cell} ${cTable['limited-cell-100']}`}>
                 <figure><TableDots/></figure>
-            </div>
-            <div className={`${c.cell} ${cTable['image-cell']}`}>
+            </td>
+            <td className={`${c.cell} ${cTable['limited-cell-121']}`}>
                 <img src={pImage} alt="product"/>
-            </div>
-            <div className={`${c.cell} ${cTable['name-cell']}`}>
+            </td>
+            <td className={c.cell}>
                 <div className={c['name-inner-cell']}>
                     <span className={c.name}>Jersey CAMO</span>
                     <div className={c.options}>
@@ -29,34 +33,34 @@ function ProductsTableRow({
                         <span>+</span>
                     </div>
                 </div>
-            </div>
-            <div className={`${c.cell} ${cTable['description-cell']}`}>
+            </td>
+            <td className={c.cell}>
                 <button className={c['description-btn']}>Открыть описание</button>
-            </div>
-            <div className={`${c.cell} ${cTable['collection-cell']}`}>
+            </td>
+            <td className={c.cell}>
                 <div className={c.dropdown}>
                     Advanced Gear
                 </div>
-            </div>
-            <div className={`${c.cell} ${cTable['price-cell']}`}>
+            </td>
+            <td className={c.cell}>
                 <div>2 500</div>
-            </div>
-            <div className={`${c.cell} ${cTable['discount-cell']}`}>
+            </td>
+            <td className={c.cell}>
                 <div>2 300</div>
-            </div>
-            <div className={`${c.cell} ${cTable['count-cell']}`}>
+            </td>
+            <td className={c.cell}>
                 <div>33</div>
-            </div>
-            <div className={`${c.cell} ${cTable['copy-cell']}`}>
+            </td>
+            <td className={`${c.cell} ${cTable['limited-cell-83']}`}>
                 <figure><Copy /></figure>
-            </div>
-            <div className={`${c.cell} ${cTable['visible-cell']}`}>
-                switch
-            </div>
-            <div className={`${c.cell} ${cTable['delete-cell']}`}>
+            </td>
+            <td className={`${c.cell} ${cTable['limited-cell-83']}`}>
+                <Switch switched={isSwitched} onSwitch={(v) => setIsSwitched(v)} />
+            </td>
+            <td className={`${c.cell} ${cTable['limited-cell-83']}`}>
                 <figure><Trash /></figure>
-            </div>
-        </div>
+            </td>
+        </tr>
     );
 }
 

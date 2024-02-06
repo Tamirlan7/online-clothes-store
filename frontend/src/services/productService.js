@@ -1,4 +1,5 @@
 import {axiosClient} from "./axiosClient";
+import {axiosAdmin} from "./axiosAdmin";
 
 const productService = {}
 
@@ -38,6 +39,10 @@ productService.getProductsByCollection = (collection) => {
 
 productService.getProductById = (productId) => {
     return axiosClient.get(`/product/${productId}`)
+}
+
+productService.createProduct = (data) => {
+    return axiosAdmin.post(`/product`, data);
 }
 
 export default productService;

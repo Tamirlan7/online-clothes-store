@@ -1,7 +1,8 @@
 import React from 'react';
 import c from './AdminFilter.module.scss'
 
-function AdminFilter() {
+function AdminFilter({ onAddProduct }) {
+
     return (
         <div className={c.component}>
             <div className={c.left}>
@@ -13,7 +14,7 @@ function AdminFilter() {
             <div className={c.right}>
                 <div className={c.btns}>
                     <input className={c.input} type="text" placeholder={'Поиск'} />
-                    <button className={c.btn}>Добавить товар</button>
+                    <button className={c.btn} onClick={onAddProduct}>Добавить товар</button>
                 </div>
             </div>
         </div>

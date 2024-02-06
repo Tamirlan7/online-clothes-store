@@ -1,0 +1,29 @@
+.block {
+  max-width: 589px;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 3.2rem;
+}
+
+.text {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+
+  span {
+    color: #DB242F;
+  }
+}
+
+.note {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+}

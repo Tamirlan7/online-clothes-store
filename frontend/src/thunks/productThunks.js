@@ -2,7 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import productService from "../services/productService";
 
 export const getProductsThunk = createAsyncThunk(
-    'product/getProducts',
+    'product/getProductsThunk',
     async (
         {
             q,
@@ -31,8 +31,8 @@ export const getProductsThunk = createAsyncThunk(
     }
 )
 
-export const getProductById = createAsyncThunk(
-    "product/getProductById",
+export const getProductByIdThunk = createAsyncThunk(
+    "product/getProductByIdThunk",
     async (
         productId,
         {
@@ -43,6 +43,24 @@ export const getProductById = createAsyncThunk(
             // productId: number
 
             const res = await productService.getProductById(productId);
+            return res.data
+        } catch (err) {
+            console.error(err)
+            rejectWithValue(err.message)
+        }
+    }
+)
+
+export const createProductThunk = createAsyncThunk(
+    "product/createProductThunk",
+    async (
+        data,
+        {
+            rejectWithValue,
+        }
+    ) => {
+        try {
+            const res = await productService.createProduct(data);
             return res.data
         } catch (err) {
             console.error(err)

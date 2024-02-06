@@ -1,39 +1,32 @@
 import React from 'react';
 import c from './ProductsTable.module.scss'
 import ProductsTableRow from "../ProductsTableRow/ProductsTableRow";
+import cTable from "./ProductsTable.module.scss";
 
 function ProductsTable() {
     return (
-        <div className={c.table}>
-            <div className={c.header}>
-                <div className={`${c['header-row']}`}>
-                    <div className={`${c['header-cell']} ${c['checkbox-cell']}`}></div>
-                    <div className={`${c['header-cell']} ${c['image-cell']}`}>Фото</div>
-                    <div className={`${c['header-cell']} ${c['name-cell']}`}>Название</div>
-                    <div className={`${c['header-cell']} ${c['description-cell']}`}>Описание</div>
-                    <div className={`${c['header-cell']} ${c['collection-cell']}`}>Коллекция</div>
-                    <div className={`${c['header-cell']} ${c['price-cell']}`}>Цена</div>
-                    <div className={`${c['header-cell']} ${c['discount-cell']}`}>Скидка</div>
-                    <div className={`${c['header-cell']} ${c['count-cell']}`}>Кол-во</div>
-                    <div className={`${c['header-cell']} ${c['copy-cell']}`}>Дубл.</div>
-                    <div className={`${c['header-cell']} ${c['visible-cell']}`}>Видимость</div>
-                    <div className={`${c['header-cell']} ${c['delete-cell']}`}>Удалить</div>
-                </div>
-            </div>
+        <table className={c.table}>
+            <thead>
+                <tr className={c['header-row']}>
+                    <td className={`${c.cell} ${c['limited-cell-100']}`}>Чекбокс</td>
+                    <td className={`${c.cell} ${c['limited-cell-121']}`}>Фото</td>
+                    <td className={c.cell}>Название</td>
+                    <td className={c.cell}>Описание</td>
+                    <td className={c.cell}>Коллекция</td>
+                    <td className={c.cell}>Цена</td>
+                    <td className={c.cell}>Скидка</td>
+                    <td className={c.cell}>Кол-во</td>
+                    <td className={`${c.cell} ${c['limited-cell-83']}`}>Дубл.</td>
+                    <td className={`${c.cell} ${c['limited-cell-83']}`}>Видимость</td>
+                    <td className={`${c.cell} ${c['limited-cell-83']}`}>Удалить</td>
+                </tr>
+            </thead>
 
-            <ul className={c.body}>
-                <li className={c.row}>
-                    <ProductsTableRow/>
-                </li>
-                <li className={c.row}>
-                    <ProductsTableRow/>
-                </li>
-            </ul>
-
-            <div className={c.pagination}>
-
-            </div>
-        </div>
+            <tbody>
+                <ProductsTableRow/>
+                <ProductsTableRow/>
+            </tbody>
+        </table>
     );
 }
 

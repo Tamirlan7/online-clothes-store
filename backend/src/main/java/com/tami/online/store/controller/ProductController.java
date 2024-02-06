@@ -66,7 +66,7 @@ public class ProductController {
             try {
                 productSizes.add(mapper.readValue(size, ProductSizeDtoRequest.class));
             } catch (JsonProcessingException e) {
-                throw new CustomBadRequestException("Ошибка при конвертации в ProductSizeDtoRequest, поле sizes должно быть массивом объектов { sizeName: string, quantity: int, additionalInfo: string } ошибка: " + e.getMessage());
+                throw new CustomBadRequestException("Ошибка при конвертации в ProductSizeDtoRequest, поле sizes должно быть массивом объектов { size: string, quantity: int, additionalInfo: string } ошибка: " + e.getMessage());
             }
         });
 

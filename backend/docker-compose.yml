@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:alpine3.19
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1954623790
+      POSTGRES_DB: online_clothes_store
+    ports:
+      - "5432:5432"
+
+
+  app:
+    container_name: online-clothes-store
+    image: tami/online-clothes-store
+    volumes:
+      - backend-files:/files
+
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/online_clothes_store
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=1954623790
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
+  backend-files:
+

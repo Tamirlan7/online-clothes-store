@@ -1,5 +1,8 @@
 .table {
   width: 100%;
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
 }
 
 .body {
@@ -9,22 +12,17 @@
 }
 
 .header-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
   min-height: 45px;
   border-bottom: 1px solid #E5E5E5;
-  width: 100%;
-  display: flex;
-  align-items: center;
 }
 
-.row {
-  min-height: 73px;
-  &:not(&:last-child) {
-    border-bottom: 1px solid #E5E5E5;
+.cell {
+  text-align: left;
+  flex: 1;
 
-  }
-}
-
-.header-cell {
   color: #232323;
   font-family: Gotham, sans-serif;
   font-size: 14px;
@@ -34,82 +32,18 @@
   line-height: normal;
 
   flex-shrink: 0;
-  padding: 12px 0;
+  padding: 12px 8px;
 }
 
-.checkbox-cell {
+.limited-cell-83 {
+  max-width: 83px;
+  cursor: pointer;
+}
+
+.limited-cell-100 {
   max-width: 100px;
-  width: 100%;
-  padding-left: 4rem;
 }
 
-.image-cell {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.limited-cell-121 {
   max-width: 121px;
-  width: 100%;
 }
-
-.name-cell {
-  max-width: 253px;
-  width: 100%;
-  padding-left: 2rem;
-}
-
-.description-cell {
-  max-width: 164px;
-  width: 100%;
-}
-
-.collection-cell {
-  max-width: 197px;
-  width: 100%;
-  padding-left: 2.4rem;
-}
-
-.price-cell {
-  max-width: 83px;
-  width: 100%;
-}
-
-.discount-cell {
-  max-width: 92px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.count-cell {
-  max-width: 120px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.copy-cell {
-  max-width: 83px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.visible-cell {
-  max-width: 83px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.delete-cell {
-  max-width: 83px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-

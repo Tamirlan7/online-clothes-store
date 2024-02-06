@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import './ProductDetails.scss'
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getProductById} from "../../thunks/productThunks";
+import {getProductByIdThunk} from "../../thunks/productThunks";
 import {API_URL} from "../../constants/AppConstants";
 
 export default function ProductDetails() {
@@ -12,7 +12,7 @@ export default function ProductDetails() {
 
     useEffect(() => {
         if (currentProduct?.id !== parseInt(productId)) {
-            dispatch(getProductById(productId))
+            dispatch(getProductByIdThunk(productId))
         }
 
     }, [currentProduct?.id, dispatch, productId])

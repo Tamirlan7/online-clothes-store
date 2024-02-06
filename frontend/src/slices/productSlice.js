@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getProductById, getProductsThunk} from "../thunks/productThunks";
+import {createProductThunk, getProductByIdThunk, getProductsThunk} from "../thunks/productThunks";
 import {collections} from "../data/collections";
 
 const initialState = {
@@ -42,14 +42,35 @@ const productSlice = createSlice({
                 state.errorMessage = action.payload
             })
 
-            .addCase(getProductById.pending, (state, action) => {
+            .addCase(getProductByIdThunk.pending, (state, action) => {
                 state.loading = true
             })
-            .addCase(getProductById.fulfilled, (state, action) => {
+            .addCase(getProductByIdThunk.fulfilled, (state, action) => {
                 state.loading = false
                 state.currentProduct = action.payload
             })
-            .addCase(getProductById.rejected, (state, action) => {
+            .addCase(getProductByIdThunk.rejected, (state, action) => {
+                state.loading = false
+                state.error = true
+                state.errorMessage = action.payload
+            })
+
+            .addCase(createProductThunk.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(createProductThunk.fulfilled, (state, action) => {
+                const {
+                    collection
+                } = action.payload
+
+                if (collection?.name) {
+                    state.products[collection.name].push(action.payload)
+                    state.products['all'].push(action.payload)
+                }
+
+                state.loading = false
+            })
+            .addCase(createProductThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = true
                 state.errorMessage = action.payload

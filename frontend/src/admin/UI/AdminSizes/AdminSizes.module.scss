@@ -1,0 +1,24 @@
+.sizes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.size {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 80px;
+  gap: 6px;
+}
+
+.size-name {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.input {
+  text-align: center;
+}
