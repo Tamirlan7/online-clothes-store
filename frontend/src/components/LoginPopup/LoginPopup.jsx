@@ -1,20 +1,32 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import c from './LoginPopup.module.scss'
 import Popup from "../../UI/Popup/Popup";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {changeShowAuthenticationPopup} from "../../slices/userSlice";
 import ModalTitle from "../../UI/ModalTitle/ModalTitle";
 import FormControl from "../../UI/FormControl/FormControl";
 import Input from "../../UI/Input/Input";
 import ModalBtns from "../../UI/ModalBtns/ModalBtns";
 import {loginThunk} from "../../thunks/userThunks";
+import {useLocation, useNavigate} from "react-router-dom";
+import {TOKENS} from "../../constants/AppConstants";
 
 function LoginPopup() {
     const dispatch = useDispatch()
+    const location = useLocation()
+    const navigate = useNavigate()
+    const tokens = JSON.parse(localStorage.getItem(TOKENS)) ?? {}
+    const {loading} = useSelector(state => state.user)
     const [loginData, setLoginData] = useState({
         username: '',
         password: '',
     })
+
+    useEffect(() => {
+        if (!loading && location.state?.redirected && tokens.accessToken) {
+            navigate(location.state.from)
+        }
+    }, [loading, location, navigate, tokens.accessToken])
 
     const hidePopup = () => {
         dispatch(changeShowAuthenticationPopup(false))
@@ -22,7 +34,6 @@ function LoginPopup() {
 
     const login = (e) => {
         e.preventDefault()
-
         dispatch(loginThunk({ data: loginData }))
     }
 

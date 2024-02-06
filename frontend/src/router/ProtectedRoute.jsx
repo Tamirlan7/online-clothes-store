@@ -1,10 +1,11 @@
 import React from 'react';
-import {Navigate} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import {UNAUTHENTICATED_ENTRY} from "../constants/AppConstants";
 import useUserInitialization from "../hooks/useUserInitialization";
 
 
 const ProtectedRoute = ({ children, enabledRoles  }) => {
+    const { pathname } = useLocation()
     const { roles, loading, initialized } = useUserInitialization();
 
     if (loading || !initialized) {
@@ -19,7 +20,7 @@ const ProtectedRoute = ({ children, enabledRoles  }) => {
         }
     }
 
-    return <Navigate to={UNAUTHENTICATED_ENTRY} />;
+    return <Navigate to={UNAUTHENTICATED_ENTRY} state={{ redirected: true, from: pathname }} />;
 }
 
 export default ProtectedRoute;

@@ -2,6 +2,7 @@ import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import {useSelector} from "react-redux";
 import LoginPopup from "../components/LoginPopup/LoginPopup";
+import {useLocation} from "react-router-dom";
 
 
 const AppRoute = ({ metaData, children }) => {
