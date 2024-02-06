@@ -1,8 +1,8 @@
 import React from 'react';
 import c from './ProductDeleteModal.module.scss'
-import ModalTitle from "../../UI/ModalTitle/ModalTitle";
+import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
 import Modal from "../../../UI/Modal/Modal";
-import AdminModalBtns from "../../UI/AdminModalBtns/AdminModalBtns";
+import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
 
 function ProductDeleteModal({isActive, setIsActive}) {
     return (
@@ -20,7 +20,7 @@ function ProductDeleteModal({isActive, setIsActive}) {
                     <p className={c.note}>Отменить это действие будет невозможно</p>
                 </div>
 
-                <AdminModalBtns
+                <ModalBtns
                     confirmBtnText={'Подтвердить'}
                 />
             </div>

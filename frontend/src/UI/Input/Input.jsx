@@ -1,7 +1,7 @@
 import React from 'react';
-import c from './AdminInput.module.scss'
+import c from './Input.module.scss'
 
-function AdminInput({ className, mode, invalid, ...props }) {
+function Input({ className, mode, invalid, ...props }) {
     // mode: default || numeric
 
     function handleOnNumericInputChange(e) {
@@ -33,4 +33,4 @@ function AdminInput({ className, mode, invalid, ...props }) {
     );
 }
 
-export default AdminInput;
+export default Input;

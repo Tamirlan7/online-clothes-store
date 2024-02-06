@@ -4,6 +4,7 @@ import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Privacy from "../pages/Privacy/Privacy";
 import {RoutePaths} from "./RouteConstants";
 import {lazy} from "react";
+import {userRole} from "../data/userRole";
 const AdminPage = lazy(() => import("../admin/pages/AdminCatalogPage/AdminCatalogPage"))
 
 /* only user routes */
@@ -11,7 +12,7 @@ export const protectedRoutes = [
     {
         path: RoutePaths.ADMIN,
         component: <AdminPage />,
-        enabledRoles: ['admin'],
+        enabledRoles: [userRole.admin],
         meta: {
             headerEnabled: false,
             footerEnabled: false,

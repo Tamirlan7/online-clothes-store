@@ -1,8 +1,8 @@
 import React from 'react';
 import c from './ProductFileAdditionModal.module.scss'
 import Modal from "../../../UI/Modal/Modal";
-import ModalTitle from "../../UI/ModalTitle/ModalTitle";
-import AdminModalBtns from "../../UI/AdminModalBtns/AdminModalBtns";
+import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
+import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
 import { ReactComponent as UploadFile } from "../../../assets/icons/upload-file.svg";
 
 function ProductFileAdditionModal({isActive, setIsActive}) {
@@ -31,7 +31,7 @@ function ProductFileAdditionModal({isActive, setIsActive}) {
                     <button className={c.btn}>Вложить фото</button>
                 </div>
 
-                <AdminModalBtns/>
+                <ModalBtns/>
             </div>
         </Modal>
     );

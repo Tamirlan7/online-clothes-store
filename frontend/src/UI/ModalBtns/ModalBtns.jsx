@@ -1,7 +1,7 @@
 import React from 'react';
-import c from './AdminModalBtns.module.scss'
+import c from './ModalBtns.module.scss'
 
-function AdminModalBtns({onCancel, onNext, cancelBtnText, confirmBtnText, isConfirmBtnDisabled}) {
+function ModalBtns({onCancel, onNext, cancelBtnText, confirmBtnText, isConfirmBtnDisabled}) {
     function handleOnCancelClick() {
         if (onCancel) {
             onCancel()
@@ -20,7 +20,7 @@ function AdminModalBtns({onCancel, onNext, cancelBtnText, confirmBtnText, isConf
 
     return (
         <div className={c.btns}>
-            <button onClick={() => handleOnCancelClick()}
+            <button type={'button'} onClick={() => handleOnCancelClick()}
                     className={`${c.btn} ${c['btn-cancel']}`}>{cancelBtnText ?? 'Отмена'}</button>
             <button onClick={() => handleOnConfirmClick()}
                     disabled={isConfirmBtnDisabled}
@@ -29,4 +29,4 @@ function AdminModalBtns({onCancel, onNext, cancelBtnText, confirmBtnText, isConf
     );
 }
 
-export default AdminModalBtns;
+export default ModalBtns;

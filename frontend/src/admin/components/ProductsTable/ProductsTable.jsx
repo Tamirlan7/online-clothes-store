@@ -10,8 +10,8 @@ function ProductsTable() {
                 <tr className={c['header-row']}>
                     <td className={`${c.cell} ${c['limited-cell-100']}`}>Чекбокс</td>
                     <td className={`${c.cell} ${c['limited-cell-121']}`}>Фото</td>
-                    <td className={c.cell}>Название</td>
-                    <td className={c.cell}>Описание</td>
+                    <td className={`${c.cell} ${c['priority-cell']}`}>Название</td>
+                    <td className={`${c.cell} ${c['priority-cell']}`}>Описание</td>
                     <td className={c.cell}>Коллекция</td>
                     <td className={c.cell}>Цена</td>
                     <td className={c.cell}>Скидка</td>

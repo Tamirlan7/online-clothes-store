@@ -1,8 +1,11 @@
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
+import {useSelector} from "react-redux";
+import LoginPopup from "../components/LoginPopup/LoginPopup";
 
 
 const AppRoute = ({ metaData, children }) => {
+    const { showAuthenticationPopup } = useSelector(state => state.user)
 
     metaData = {
         headerEnabled: metaData?.headerEnabled ?? true,
@@ -11,21 +14,29 @@ const AppRoute = ({ metaData, children }) => {
 
     return (
         <>
-            {metaData.headerEnabled && (
-                <header>
-                    <Navbar />
-                </header>
+            {showAuthenticationPopup && (
+                <LoginPopup />
             )}
 
-            <main>
-                {children}
-            </main>
+            <div style={showAuthenticationPopup ? {
+                filter: 'blur(6px)'
+            } : {}}>
+                {metaData.headerEnabled && (
+                    <header>
+                        <Navbar />
+                    </header>
+                )}
 
-            {metaData.footerEnabled && (
-                <footer>
-                    <Footer />
-                </footer>
-            )}
+                <main>
+                    {children}
+                </main>
+
+                {metaData.footerEnabled && (
+                    <footer>
+                        <Footer />
+                    </footer>
+                )}
+            </div>
         </>
     )
 }

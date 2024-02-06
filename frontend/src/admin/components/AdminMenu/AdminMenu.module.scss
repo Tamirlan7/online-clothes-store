@@ -5,12 +5,15 @@
   top: 0;
   bottom: 0;
   max-width: 313px;
+  height: 100%;
 
   @media screen and (min-width: 1024px) {
     width: 31.3rem;
   }
 
-  height: 100%;
+  @media (max-width: 1200px) {
+    width: 250px;
+  }
 }
 
 .block {

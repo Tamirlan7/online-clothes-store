@@ -11,14 +11,6 @@ html {
     font-size: calc(100vw / 1024 * 10);
   }
 
-  @media (max-width: 1024px) {
-    font-size: calc(100vw / 768 * 10);
-  }
-
-  @media (max-width: 768px) {
-    font-size: calc(100vw / 500 * 10);
-  }
-
 }
 
 body {

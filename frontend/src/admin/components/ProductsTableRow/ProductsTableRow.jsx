@@ -25,7 +25,7 @@ function ProductsTableRow({
             <td className={`${c.cell} ${cTable['limited-cell-121']}`}>
                 <img src={pImage} alt="product"/>
             </td>
-            <td className={c.cell}>
+            <td className={`${c.cell} ${cTable['priority-cell']}`}>
                 <div className={c['name-inner-cell']}>
                     <span className={c.name}>Jersey CAMO</span>
                     <div className={c.options}>
@@ -34,7 +34,7 @@ function ProductsTableRow({
                     </div>
                 </div>
             </td>
-            <td className={c.cell}>
+            <td className={`${c.cell} ${cTable['priority-cell']}`}>
                 <button className={c['description-btn']}>Открыть описание</button>
             </td>
             <td className={c.cell}>

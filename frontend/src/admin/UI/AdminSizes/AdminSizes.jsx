@@ -1,6 +1,6 @@
 import React from 'react';
 import c from './AdminSizes.module.scss'
-import AdminInput from "../AdminInput/AdminInput";
+import Input from "../../../UI/Input/Input";
 
 function AdminSizes({ sizes, onChange }) {
 
@@ -31,11 +31,11 @@ function AdminSizes({ sizes, onChange }) {
                 <div className={c.size} key={idx}>
                     <div className={c['size-name']}>{size.sizeLabel}</div>
                     <div>
-                        <AdminInput value={size.value}
-                                    invalid={size.invalid}
-                                    className={c.input}
-                                    mode={'numeric'}
-                                    onChange={(e) => handleOnChange(size, e.target.value)} />
+                        <Input value={size.value}
+                               invalid={size.invalid}
+                               className={c.input}
+                               mode={'numeric'}
+                               onChange={(e) => handleOnChange(size, e.target.value)} />
                     </div>
                 </div>
             ))}

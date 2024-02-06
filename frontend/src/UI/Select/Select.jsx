@@ -1,9 +1,9 @@
 import React, {useMemo, useState} from 'react';
-import c from './AdminSelect.module.scss'
-import { ReactComponent as ArrayDown } from "../../../assets/icons/arrow-down.svg";
-import {useOutsideClick} from "../../../hooks/useOutsideClick";
+import c from './Select.module.scss'
+import { ReactComponent as ArrayDown } from "../../assets/icons/arrow-down.svg";
+import {useOutsideClick} from "../../hooks/useOutsideClick";
 
-function AdminSelect({ options, value, onChange }) {
+function Select({ options, value, onChange }) {
     const [isOptionsVisible, setIsOptionsVisible] = useState(false)
     const [isFocused, setIsFocused] = useState(false)
     const ref = useOutsideClick(() => {
@@ -80,4 +80,4 @@ function AdminSelect({ options, value, onChange }) {
     );
 }
 
-export default AdminSelect;
+export default Select;

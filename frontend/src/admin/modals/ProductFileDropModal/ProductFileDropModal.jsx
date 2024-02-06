@@ -1,7 +1,7 @@
 import React from 'react';
 import c from './ProductFileDropModal.module.scss'
 import Modal from "../../../UI/Modal/Modal";
-import ModalTitle from "../../UI/ModalTitle/ModalTitle";
+import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
 import { ReactComponent as File } from "../../../assets/icons/file.svg";
 
 function ProductFileDropModal({isActive, setIsActive}) {

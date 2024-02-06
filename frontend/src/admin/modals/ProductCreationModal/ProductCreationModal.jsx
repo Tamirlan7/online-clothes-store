@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import c from './ProductCreationModal.module.scss'
 import Modal from "../../../UI/Modal/Modal";
-import ModalTitle from "../../UI/ModalTitle/ModalTitle";
-import FormControl from "../../UI/FormControl/FormControl";
-import AdminInput from "../../UI/AdminInput/AdminInput";
-import AdminSelect from "../../UI/AdminSelect/AdminSelect";
+import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
+import FormControl from "../../../UI/FormControl/FormControl";
+import Input from "../../../UI/Input/Input";
+import Select from "../../../UI/Select/Select";
 import AdminSizes from "../../UI/AdminSizes/AdminSizes";
-import AdminModalBtns from "../../UI/AdminModalBtns/AdminModalBtns";
+import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
 
 function ProductCreationModal({isActive, setIsActive}) {
     const [formData, setFormData] = useState({
@@ -38,11 +38,11 @@ function ProductCreationModal({isActive, setIsActive}) {
 
                 <form className={c.form}>
                     <FormControl labelText={'Введите название'}>
-                        <AdminInput/>
+                        <Input/>
                     </FormControl>
                     <FormControl labelText={'Тип одежды'}>
-                        <AdminSelect onChange={(value) => setFormData((prev) => ({...prev, clothingType: value}))}
-                                     value={formData.clothingType} options={[
+                        <Select onChange={(value) => setFormData((prev) => ({...prev, clothingType: value}))}
+                                value={formData.clothingType} options={[
                             {
                                 text: 'Джерси',
                                 value: 'Джерси'
@@ -59,8 +59,8 @@ function ProductCreationModal({isActive, setIsActive}) {
                         ]}/>
                     </FormControl>
                     <FormControl labelText={'Выберите коллекцию'}>
-                        <AdminSelect onChange={(value) => setFormData((prev) => ({...prev, collection: value}))}
-                                     value={formData.collection} options={[
+                        <Select onChange={(value) => setFormData((prev) => ({...prev, collection: value}))}
+                                value={formData.collection} options={[
                             {
                                 text: 'AG',
                                 value: 'ag'
@@ -77,10 +77,10 @@ function ProductCreationModal({isActive, setIsActive}) {
                         ]}/>
                     </FormControl>
                     <FormControl labelText={'Введите стоимость'}>
-                        <AdminInput mode={'numeric'} />
+                        <Input mode={'numeric'} />
                     </FormControl>
                     <FormControl labelText={'Введите количество товара'}>
-                        <AdminInput mode={'numeric'} />
+                        <Input mode={'numeric'} />
                     </FormControl>
 
                     <AdminSizes
@@ -93,7 +93,7 @@ function ProductCreationModal({isActive, setIsActive}) {
                     />
                 </form>
 
-                <AdminModalBtns isConfirmBtnDisabled={true}/>
+                <ModalBtns isConfirmBtnDisabled={true}/>
             </div>
         </Modal>
     );

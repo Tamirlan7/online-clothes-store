@@ -1,9 +1,9 @@
 import axios from "axios";
-import {API_URL} from "../constants/AppConstants";
+import {API_URL, TOKENS} from "../constants/AppConstants";
 
 const {
     accessToken,
-} = JSON.parse(localStorage.getItem('tokens')) ?? {};
+} = JSON.parse(localStorage.getItem(TOKENS)) ?? {};
 
 
 export const axiosAdmin = axios.create({
