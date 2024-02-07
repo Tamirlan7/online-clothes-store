@@ -1,10 +1,13 @@
 package com.tami.online.store.service;
 
 import com.tami.online.store.dto.FileDtoRequest;
+import com.tami.online.store.dto.GetProductsArgs;
 import com.tami.online.store.dto.ProductDtoRequest;
-import com.tami.online.store.dto.ProductSizeDtoRequest;
 import com.tami.online.store.exception.NotFoundException;
-import com.tami.online.store.model.*;
+import com.tami.online.store.model.ClothingType;
+import com.tami.online.store.model.Collection;
+import com.tami.online.store.model.Product;
+import com.tami.online.store.model.ProductSize;
 import com.tami.online.store.repository.ClothingTypeRepository;
 import com.tami.online.store.repository.CollectionRepository;
 import com.tami.online.store.repository.ProductRepository;
@@ -12,14 +15,13 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @Validated
@@ -35,8 +37,13 @@ public class ProductService {
         return products.stream().filter((p) -> p.getName().contains(pName)).toList();
     }
 
-    public List<Product> getAllProducts(String collection, String clothingType, String q) {
-        List<Product> products = productRepository.findByCollectionAndClothingTypeAndProductName(collection, clothingType, q);
+    public Page<Product> getAllProducts(GetProductsArgs args) {
+        Page<Product> products = productRepository.findByCollectionAndClothingTypeAndProductName(
+                args.getCollection(),
+                args.getClothingType(),
+                args.getName(),
+                PageRequest.of(args.getPage(), args.getSize())
+        );
         return products;
     }
 

@@ -2,6 +2,7 @@ package com.tami.online.store.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tami.online.store.dto.GetProductsArgs;
 import com.tami.online.store.dto.ProductDtoRequest;
 import com.tami.online.store.dto.ProductSizeDtoRequest;
 import com.tami.online.store.exception.CustomBadRequestException;
@@ -9,6 +10,7 @@ import com.tami.online.store.model.Product;
 import com.tami.online.store.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,13 +41,23 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts(
-            @RequestParam(name = "q", required = false, defaultValue = "") String query,
+    public ResponseEntity<Page<Product>> getAllProducts(
+            @RequestParam(name = "name", required = false, defaultValue = "") String name,
             @RequestParam(name = "collection", required = false) String collection,
-            @RequestParam(name = "clothingType", required = false) String clothingType
+            @RequestParam(name = "clothingType", required = false) String clothingType,
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size
     ) {
         return ResponseEntity
-                .ok(productService.getAllProducts(collection, clothingType, query));
+                .ok(productService.getAllProducts(
+                        GetProductsArgs.builder()
+                                .collection(collection)
+                                .clothingType(clothingType)
+                                .name(name)
+                                .page(page)
+                                .size(size)
+                                .build()
+                ));
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

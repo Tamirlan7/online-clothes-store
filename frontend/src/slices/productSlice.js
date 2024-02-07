@@ -1,18 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {createProductThunk, getProductByIdThunk, getProductsThunk} from "../thunks/productThunks";
-import {collections} from "../data/collections";
 
 const initialState = {
-    products: {
-        'all': [],
-        [collections.AE]: [],
-        [collections.UR]: [],
-        [collections.AG]: [],
-    },
+    products: [],
     currentProduct: null,
     loading: false,
     error: false,
-    errorMessage: null
+    errorMessage: null,
+    totalPages: null,
 }
 
 const productSlice = createSlice({
@@ -28,13 +23,8 @@ const productSlice = createSlice({
             })
             .addCase(getProductsThunk.fulfilled, (state, action) => {
                 state.loading = false
-                console.log('something')
-                console.log([action.payload?.collection ?? 'all'])
-
-                state.products = {
-                    ...state.products,
-                    [action.payload?.collection ?? 'all']: action.payload?.products,
-                }
+                state.products = action.payload?.content
+                state.totalPages = action.payload?.totalPages
             })
             .addCase(getProductsThunk.rejected, (state, action) => {
                 state.loading = false
@@ -59,15 +49,6 @@ const productSlice = createSlice({
                 state.loading = true
             })
             .addCase(createProductThunk.fulfilled, (state, action) => {
-                const {
-                    collection
-                } = action.payload
-
-                if (collection?.name) {
-                    state.products[collection.name].push(action.payload)
-                    state.products['all'].push(action.payload)
-                }
-
                 state.loading = false
             })
             .addCase(createProductThunk.rejected, (state, action) => {

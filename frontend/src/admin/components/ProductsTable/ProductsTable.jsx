@@ -1,9 +1,8 @@
 import React from 'react';
 import c from './ProductsTable.module.scss'
 import ProductsTableRow from "../ProductsTableRow/ProductsTableRow";
-import cTable from "./ProductsTable.module.scss";
 
-function ProductsTable() {
+function ProductsTable({ products }) {
     return (
         <table className={c.table}>
             <thead>
@@ -23,8 +22,9 @@ function ProductsTable() {
             </thead>
 
             <tbody>
-                <ProductsTableRow/>
-                <ProductsTableRow/>
+                {products?.map((p) => (
+                    <ProductsTableRow key={p.id} {...p} />
+                ))}
             </tbody>
         </table>
     );

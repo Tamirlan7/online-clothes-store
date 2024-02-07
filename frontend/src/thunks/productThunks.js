@@ -5,9 +5,11 @@ export const getProductsThunk = createAsyncThunk(
     'product/getProductsThunk',
     async (
         {
-            q,
+            name,
             collection,
-            clothingType
+            clothingType,
+            page,
+            size,
         },
         {
             rejectWithValue
@@ -15,15 +17,13 @@ export const getProductsThunk = createAsyncThunk(
     ) => {
         try {
             const res = await productService.getProducts({
-                q,
+                name,
                 collection,
-                clothingType
+                clothingType,
+                page,
+                size
             });
-
-            return {
-                collection,
-                products: res.data
-            }
+            return res.data
         } catch (err) {
             console.error(err)
             rejectWithValue(err.message)

@@ -2,6 +2,10 @@
   display: flex;
   width: 100%;
   align-items: center;
+
+  &:not(&:last-child) {
+    border-bottom: 1px solid #e5e5e5;
+  }
 }
 
 .cell {
@@ -17,6 +21,11 @@
 
 .name {
   font-weight: 500;
+}
+
+.image {
+  width: 50px;
+  height: 50px;
 }
 
 .options {

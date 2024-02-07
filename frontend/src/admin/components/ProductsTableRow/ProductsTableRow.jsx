@@ -6,13 +6,17 @@ import { ReactComponent as Copy } from "../../../assets/icons/copy.svg";
 import { ReactComponent as Trash } from "../../../assets/icons/trash.svg";
 import pImage from '../../../assets/temp/Rectangle 21.png'
 import Switch from "../../../UI/Switch/Switch";
+import {API_URL} from "../../../constants/AppConstants";
 
 
 function ProductsTableRow({
+    id,
     name,
+    collection,
     productMediaFiles,
     productSizes,
     price,
+    priceWithDiscount,
                           }) {
 
     const [isSwitched, setIsSwitched] = useState()
@@ -23,11 +27,11 @@ function ProductsTableRow({
                 <figure><TableDots/></figure>
             </td>
             <td className={`${c.cell} ${cTable['limited-cell-121']}`}>
-                <img src={pImage} alt="product"/>
+                <img className={c.image} src={`${API_URL}/product/${id}/file/${productMediaFiles[0].name}`} alt="product"/>
             </td>
             <td className={`${c.cell} ${cTable['priority-cell']}`}>
                 <div className={c['name-inner-cell']}>
-                    <span className={c.name}>Jersey CAMO</span>
+                    <span className={c.name}>{name}</span>
                     <div className={c.options}>
                         <div>4 варианта</div>
                         <span>+</span>
@@ -38,15 +42,13 @@ function ProductsTableRow({
                 <button className={c['description-btn']}>Открыть описание</button>
             </td>
             <td className={c.cell}>
-                <div className={c.dropdown}>
-                    Advanced Gear
-                </div>
+                <div className={c.dropdown}>{collection?.name}</div>
             </td>
             <td className={c.cell}>
-                <div>2 500</div>
+                <div>{price}</div>
             </td>
             <td className={c.cell}>
-                <div>2 300</div>
+                <div>{priceWithDiscount ?? '-'}</div>
             </td>
             <td className={c.cell}>
                 <div>33</div>

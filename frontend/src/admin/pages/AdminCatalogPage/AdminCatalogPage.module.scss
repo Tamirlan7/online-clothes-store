@@ -2,9 +2,10 @@
   width: 100%;
   padding-left: calc(31.3rem + 2.8rem);
   padding-top: 56px;
+  padding-bottom: 56px;
   padding-right: 20px;
 
-  @media screen and (min-width: 1400px) {
+  @media screen and (min-width: 1700px) {
     padding-right: 16.1rem;
   }
 
@@ -12,6 +13,10 @@
     padding-left: calc(250px + 2.8rem);
   }
 
+}
+
+.pagination {
+  margin-top: 10px;
 }
 
 .table {

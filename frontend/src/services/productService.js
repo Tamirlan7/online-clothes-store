@@ -4,25 +4,37 @@ import {axiosAdmin} from "./axiosAdmin";
 const productService = {}
 
 productService.getProducts = ({
-    q,
+    name,
     collection,
     clothingType,
+    page,
+    size,
                               }) => {
     let url = '/product'
     let urlChanged = false
 
-    if (q && q !== '') {
-        url = url + `?q=${q}&`
+    if (name) {
+        url = url + `?name=${name}&`
         urlChanged = true
     }
 
-    if (collection && collection !== '') {
+    if (collection) {
         url = url + `?collection=${collection}&`
         urlChanged = true
     }
 
-    if (clothingType && clothingType !== '') {
+    if (clothingType) {
         url = url + `?clothingType=${clothingType}&`
+        urlChanged = true
+    }
+
+    if (page >= 0) {
+        url = url + `?page=${page}&`
+        urlChanged = true
+    }
+
+    if (size) {
+        url = url + `?size=${size}&`
         urlChanged = true
     }
 
