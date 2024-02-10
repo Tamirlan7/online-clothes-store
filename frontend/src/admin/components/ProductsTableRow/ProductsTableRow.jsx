@@ -19,6 +19,7 @@ function ProductsTableRow(product) {
         productSizes,
         price,
         visible,
+        preOrder,
         priceWithDiscount,
         checked,
         onRowChecked
@@ -32,11 +33,12 @@ function ProductsTableRow(product) {
                 <div className={c.checkbox}>
                     <figure><TableDots/></figure>
                     {checked}
-                    <input type="checkbox" onChange={(e) => onRowChecked(id, e)} checked={checked} />
+                    <input type="checkbox" onChange={(e) => onRowChecked(id, e)} checked={checked}/>
                 </div>
             </td>
             <td className={`${c.cell} ${cTable['limited-cell-121']}`}>
-                <img className={c.image} src={`${API_URL}/product/${id}/file/${productMediaFiles[0].name}`} alt="product"/>
+                <img className={c.image} src={`${API_URL}/product/${id}/file/${productMediaFiles[0].name}`}
+                     alt="product"/>
             </td>
             <td className={`${c.cell} ${cTable['priority-cell']}`}>
                 <div className={c['name-inner-cell']}>
@@ -63,13 +65,16 @@ function ProductsTableRow(product) {
                 <div>33</div>
             </td>
             <td className={`${c.cell} ${cTable['limited-cell-83']}`}>
-                <figure><Copy /></figure>
+                <figure><Copy/></figure>
+            </td>
+            <td className={`${c.cell} ${cTable['limited-c ell-83']}`}>
+                <Switch switched={preOrder}/>
             </td>
             <td className={`${c.cell} ${cTable['limited-c ell-83']}`}>
                 <Switch switched={visible}/>
             </td>
             <td className={`${c.cell} ${cTable['limited-cell-83']}`} onClick={() => setDeleteModal(true)}>
-                <figure><Trash /></figure>
+                <figure><Trash/></figure>
             </td>
 
             <ProductDeleteModal

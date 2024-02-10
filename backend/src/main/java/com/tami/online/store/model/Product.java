@@ -1,11 +1,13 @@
 package com.tami.online.store.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -35,11 +37,10 @@ public class Product {
     @JoinColumn(name = "clothing_type_id")
     private ClothingType clothingType;
 
-    @Column(name = "pre_order", nullable = false, columnDefinition = "boolean default false")
+    @Column(name = "pre_order")
     private boolean preOrder;
 
-    @Column(name = "is_visible", nullable = false, columnDefinition = "boolean default true")
-    private boolean isVisible;
+    private boolean visible;
 
     @ManyToOne
     @JoinColumn(name = "collection_id")

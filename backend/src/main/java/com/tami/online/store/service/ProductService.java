@@ -133,6 +133,8 @@ public class ProductService {
                 .clothingType(clothingType)
                 .productSizes(productSizes)
                 .collection(collection)
+                .visible(productDtoRequest.isVisible())
+                .preOrder(productDtoRequest.isPreOrder())
                 .priceWithDiscount(productDtoRequest.getPriceWithDiscount())
                 .build();
 

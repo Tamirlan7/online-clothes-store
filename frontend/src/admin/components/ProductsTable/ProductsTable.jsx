@@ -48,6 +48,7 @@ function ProductsTable({products}) {
                 <td className={`${c.cell} ${c['centered-cell']}`}>Скидка</td>
                 <td className={c.cell}>Кол-во</td>
                 <td className={`${c.cell} ${c['limited-cell-83']}`}>Дубл.</td>
+                <td className={`${c.cell} ${c['limited-cell-83']}`}>Предзаказ</td>
                 <td className={`${c.cell} ${c['limited-cell-83']}`}>Видимость</td>
                 <td className={`${c.cell} ${c['limited-cell-83']}`}>Удалить</td>
             </tr>
@@ -61,7 +62,7 @@ function ProductsTable({products}) {
                     <>{transformedProducts?.map((p) => (
                         <ProductsTableRow key={p.id} onRowChecked={onRowChecked} {...p} />
                     ))}</>
-            )}
+                )}
 
             {(!products?.length && !loading) ? (
                 <Message className={c.message}>Список товаров пуст...</Message>

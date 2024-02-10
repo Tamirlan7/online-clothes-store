@@ -81,6 +81,7 @@ public class AppInitializer implements CommandLineRunner {
                 Product.builder()
                         .name("Jersey AEV2 // AW2023")
                         .price(3500)
+                        .visible(true)
                         .productSizes(List.of(
                                 ProductSize.builder()
                                         .size("S")
@@ -124,6 +125,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("Jersey Alternative Edge V2")
+                        .visible(true)
                         .price(3190)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -168,6 +170,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("Zip-Hoodie Enfrared Scared")
+                        .visible(true)
                         .price(6200)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -222,6 +225,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("Jersey Alternative Edge")
+                        .visible(true)
                         .price(3190)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -276,6 +280,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("T-shirt Invictus Mindset")
+                        .visible(true)
                         .price(2200)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -325,6 +330,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("T-shirt UNC2000")
+                        .visible(true)
                         .price(2200)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -374,6 +380,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("Jersey HOFv2 White")
+                        .visible(true)
                         .price(3190)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -423,6 +430,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("Jersey OutRace")
+                        .visible(true)
                         .price(3190)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -472,6 +480,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("Jersey HOF V2")
+                        .visible(true)
                         .price(3190)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -522,6 +531,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("Extra-Oversize Hoodie \"Падший Рыцарь\"")
+                        .visible(true)
                         .price(4890)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -571,6 +581,7 @@ public class AppInitializer implements CommandLineRunner {
         products.add(
                 Product.builder()
                         .name("Hoodie Expansion Gruppe")
+                        .visible(true)
                         .price(5790)
                         .productSizes(List.of(
                                 ProductSize.builder()
@@ -618,6 +629,7 @@ public class AppInitializer implements CommandLineRunner {
         // 12 - 12 - 12 - 12 - 12 - 12 - 12
         products.add(
                 Product.builder()
+                        .visible(true)
                         .name("Necktie CAMO")
                         .price(1790)
                         .productSizes(List.of(

@@ -38,4 +38,8 @@ public class ProductDtoRequest {
 
     @NotNull(message = "У продукта должно быть минимум одно изображение")
     private MultipartFile[] mediaFiles;
+
+    private boolean visible;
+    
+    private boolean preOrder;
 }

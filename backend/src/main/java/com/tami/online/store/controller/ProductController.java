@@ -68,6 +68,8 @@ public class ProductController {
             @RequestParam String name,
             @RequestParam List<String> sizes,
             @RequestParam double price,
+            @RequestParam(required = false, defaultValue = "true") boolean visible,
+            @RequestParam(required = false, defaultValue = "false") boolean preOrder,
             @RequestParam(required = false, defaultValue = "0") double priceWithDiscount,
             @RequestParam String collectionName,
             @RequestParam String clothingType,
@@ -87,6 +89,8 @@ public class ProductController {
                 .name(name)
                 .sizes(productSizes)
                 .price(price)
+                .preOrder(preOrder)
+                .visible(visible)
                 .priceWithDiscount(priceWithDiscount)
                 .collectionName(collectionName)
                 .clothingType(clothingType)
