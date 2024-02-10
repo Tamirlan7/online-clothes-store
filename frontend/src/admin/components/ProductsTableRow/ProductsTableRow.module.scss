@@ -13,6 +13,18 @@
   flex: 1;
 }
 
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  input {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 .name-inner-cell {
   display: flex;
   flex-direction: column;

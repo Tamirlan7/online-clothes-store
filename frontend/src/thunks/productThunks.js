@@ -23,6 +23,11 @@ export const getProductsThunk = createAsyncThunk(
                 page,
                 size
             });
+
+            if (res.status >= 400) {
+                rejectWithValue(res.data)
+            }
+
             return res.data
         } catch (err) {
             console.error(err)
@@ -62,6 +67,29 @@ export const createProductThunk = createAsyncThunk(
         try {
             const res = await productService.createProduct(data);
             return res.data
+        } catch (err) {
+            console.error(err)
+            rejectWithValue(err.message)
+        }
+    }
+)
+
+export const deleteProductThunk = createAsyncThunk(
+    "product/deleteProductThunk",
+    async (
+        {
+            id
+        },
+        {
+            rejectWithValue,
+        }
+    ) => {
+        try {
+            const res = await productService.deleteProduct(id);
+
+            if (res.status < 400) {
+                return id
+            }
         } catch (err) {
             console.error(err)
             rejectWithValue(err.message)

@@ -20,7 +20,6 @@ function AdminSizes({ sizes, onChange }) {
         }
 
         if (onChange) {
-            console.log(newValue)
             onChange(size, newValue)
         }
     }

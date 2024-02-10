@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {createProductThunk, getProductByIdThunk, getProductsThunk} from "../thunks/productThunks";
+import {createProductThunk, deleteProductThunk, getProductByIdThunk, getProductsThunk} from "../thunks/productThunks";
 
 const initialState = {
     products: [],
@@ -56,6 +56,20 @@ const productSlice = createSlice({
                 state.error = true
                 state.errorMessage = action.payload
             })
+
+            .addCase(deleteProductThunk.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(deleteProductThunk.fulfilled, (state, action) => {
+                state.loading = false
+                state.products = state.products.filter(p => p.id !== action.payload)
+            })
+            .addCase(deleteProductThunk.rejected, (state, action) => {
+                state.loading = false
+                state.error = true
+                state.errorMessage = action.payload
+            })
+
 
 })
 

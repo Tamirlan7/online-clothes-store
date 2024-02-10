@@ -35,6 +35,12 @@ public class Product {
     @JoinColumn(name = "clothing_type_id")
     private ClothingType clothingType;
 
+    @Column(name = "pre_order", nullable = false, columnDefinition = "boolean default false")
+    private boolean preOrder;
+
+    @Column(name = "is_visible", nullable = false, columnDefinition = "boolean default true")
+    private boolean isVisible;
+
     @ManyToOne
     @JoinColumn(name = "collection_id")
     private Collection collection;
@@ -45,8 +51,9 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE })
     private List<ProductMediaFile> productMediaFiles;
 
-    @Column(name = "discount_percentage")
-    private double discountPercentage;
+    @PositiveOrZero(message = "Поле должно быть больше либо равна нулю")
+    @Column(name = "price_with_discount")
+    private double priceWithDiscount;
 
     @UpdateTimestamp
     @Column(name = "updated_at")

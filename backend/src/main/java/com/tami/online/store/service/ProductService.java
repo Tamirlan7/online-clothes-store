@@ -71,8 +71,8 @@ public class ProductService {
             product.setPrice(productDtoRequest.getPrice());
         }
 
-        if (productDtoRequest.getDiscountPercentage() > -1) {
-            product.setPrice(productDtoRequest.getDiscountPercentage());
+        if (productDtoRequest.getPriceWithDiscount() > -1) {
+            product.setPrice(productDtoRequest.getPriceWithDiscount());
         }
 
         if (productDtoRequest.getName() != null) {
@@ -133,7 +133,7 @@ public class ProductService {
                 .clothingType(clothingType)
                 .productSizes(productSizes)
                 .collection(collection)
-                .discountPercentage(productDtoRequest.getDiscountPercentage())
+                .priceWithDiscount(productDtoRequest.getPriceWithDiscount())
                 .build();
 
         product = productRepository.save(product);

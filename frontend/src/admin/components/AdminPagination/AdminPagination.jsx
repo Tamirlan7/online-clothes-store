@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 function AdminPagination({ onPageChanged, currentPage }) {
     // first 3 and last 3 divided by {...} <= item
     const maxUIPageItems = 6;
-    const { totalPages } = useSelector(state => state.product)
+    const { totalPages, products } = useSelector(state => state.product)
 
     const handleOnPageChange = (page) => {
         if (currentPage === page) {
@@ -32,6 +32,10 @@ function AdminPagination({ onPageChanged, currentPage }) {
                 onPageChanged(currentPage + 1)
             }
         }
+    }
+
+    if (!totalPages || !products.length) {
+        return <></>
     }
 
     return (

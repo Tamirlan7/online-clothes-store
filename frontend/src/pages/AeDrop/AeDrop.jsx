@@ -13,27 +13,15 @@ import Container from "../../components/Container/Container";
 export default function AeDrop() {
     const dispatch = useDispatch()
     const collection = collections.AE;
-    const products = useSelector(state => state.product.products[collection])
+    const { products } = useSelector(state => state.product)
     const [filterData, setFilterData] = useState({
         selectedClothingType: '',
         searchText: '',
     })
 
-    const filteredProducts = useMemo(() => {
-        let prods = products
-
-        if (filterData.selectedClothingType.trim() !== '') {
-            prods = prods.filter(p => p.clothingType.name === filterData.selectedClothingType)
-        }
-
-        prods = prods.filter((p) => p.name.trim().toLowerCase().includes(filterData.searchText.trim().toLowerCase()))
-
-        return prods
-    }, [products, filterData.searchText, filterData.selectedClothingType])
-
     useEffect(() => {
         dispatch(getProductsThunk({
-            collection
+            collection,
         }))
     }, [collection, dispatch])
 
@@ -60,7 +48,7 @@ export default function AeDrop() {
                 </div>
 
                 <div>
-                    <Products products={filteredProducts}/>
+                    <Products products={products}/>
                 </div>
             </Container>
         </section>

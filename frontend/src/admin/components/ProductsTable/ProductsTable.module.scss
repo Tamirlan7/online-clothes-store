@@ -19,6 +19,12 @@
   border-bottom: 1px solid #E5E5E5;
 }
 
+.centered-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .cell {
   text-align: left;
   flex: 1;
@@ -37,6 +43,18 @@
 
 .priority-cell {
   flex: 2 !important;
+}
+
+.checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  input {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .limited-cell-83 {

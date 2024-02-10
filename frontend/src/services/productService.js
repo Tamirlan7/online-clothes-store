@@ -42,7 +42,11 @@ productService.getProducts = ({
         url = url.substring(0, url.length - 1);
     }
 
-    return axiosClient.get(url)
+    try {
+        return axiosClient.get(url)
+    } catch (err) {
+        console.log('sui here')
+    }
 }
 
 productService.getProductsByCollection = (collection) => {
@@ -55,6 +59,10 @@ productService.getProductById = (productId) => {
 
 productService.createProduct = (data) => {
     return axiosAdmin.post(`/product`, data);
+}
+
+productService.deleteProduct = (id) => {
+    return axiosAdmin.delete(`/product/${id}`);
 }
 
 export default productService;

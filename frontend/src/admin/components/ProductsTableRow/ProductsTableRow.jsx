@@ -7,24 +7,33 @@ import { ReactComponent as Trash } from "../../../assets/icons/trash.svg";
 import pImage from '../../../assets/temp/Rectangle 21.png'
 import Switch from "../../../UI/Switch/Switch";
 import {API_URL} from "../../../constants/AppConstants";
+import ProductDeleteModal from "../../modals/ProductDeleteModal/ProductDeleteModal";
 
 
-function ProductsTableRow({
-    id,
-    name,
-    collection,
-    productMediaFiles,
-    productSizes,
-    price,
-    priceWithDiscount,
-                          }) {
+function ProductsTableRow(product) {
+    const {
+        id,
+        name,
+        collection,
+        productMediaFiles,
+        productSizes,
+        price,
+        visible,
+        priceWithDiscount,
+        checked,
+        onRowChecked
+    } = product
 
-    const [isSwitched, setIsSwitched] = useState()
+    const [deleteModal, setDeleteModal] = useState(false)
 
     return (
         <tr className={c.row}>
             <td className={`${c.cell} ${cTable['limited-cell-100']}`}>
-                <figure><TableDots/></figure>
+                <div className={c.checkbox}>
+                    <figure><TableDots/></figure>
+                    {checked}
+                    <input type="checkbox" onChange={(e) => onRowChecked(id, e)} checked={checked} />
+                </div>
             </td>
             <td className={`${c.cell} ${cTable['limited-cell-121']}`}>
                 <img className={c.image} src={`${API_URL}/product/${id}/file/${productMediaFiles[0].name}`} alt="product"/>
@@ -44,10 +53,10 @@ function ProductsTableRow({
             <td className={c.cell}>
                 <div className={c.dropdown}>{collection?.name}</div>
             </td>
-            <td className={c.cell}>
+            <td className={`${c.cell} ${cTable['centered-cell']}`}>
                 <div>{price}</div>
             </td>
-            <td className={c.cell}>
+            <td className={`${c.cell} ${cTable['centered-cell']}`}>
                 <div>{priceWithDiscount ?? '-'}</div>
             </td>
             <td className={c.cell}>
@@ -56,12 +65,18 @@ function ProductsTableRow({
             <td className={`${c.cell} ${cTable['limited-cell-83']}`}>
                 <figure><Copy /></figure>
             </td>
-            <td className={`${c.cell} ${cTable['limited-cell-83']}`}>
-                <Switch switched={isSwitched} onSwitch={(v) => setIsSwitched(v)} />
+            <td className={`${c.cell} ${cTable['limited-c ell-83']}`}>
+                <Switch switched={visible}/>
             </td>
-            <td className={`${c.cell} ${cTable['limited-cell-83']}`}>
+            <td className={`${c.cell} ${cTable['limited-cell-83']}`} onClick={() => setDeleteModal(true)}>
                 <figure><Trash /></figure>
             </td>
+
+            <ProductDeleteModal
+                product={product}
+                isActive={deleteModal}
+                setIsActive={setDeleteModal}
+            />
         </tr>
     );
 }

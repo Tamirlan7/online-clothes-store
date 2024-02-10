@@ -5,7 +5,7 @@ import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
 import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
 import { ReactComponent as UploadFile } from "../../../assets/icons/upload-file.svg";
 
-function ProductFileAdditionModal({isActive, setIsActive}) {
+function ProductFileAdditionModal({isActive, setIsActive, onNext}) {
 
     return (
         <Modal
@@ -31,7 +31,11 @@ function ProductFileAdditionModal({isActive, setIsActive}) {
                     <button className={c.btn}>Вложить фото</button>
                 </div>
 
-                <ModalBtns/>
+                <ModalBtns onNext={() => {
+                    if (onNext) {
+                        onNext()
+                    }
+                }} />
             </div>
         </Modal>
     );

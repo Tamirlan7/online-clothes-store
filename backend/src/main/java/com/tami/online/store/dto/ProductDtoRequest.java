@@ -1,6 +1,5 @@
 package com.tami.online.store.dto;
 
-import com.tami.online.store.model.ProductSize;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -29,7 +28,7 @@ public class ProductDtoRequest {
     private List<ProductSizeDtoRequest> sizes;
 
     @PositiveOrZero(message = "Скидка должна быть больше нуля")
-    private double discountPercentage = -1L;
+    private double priceWithDiscount = -1L;
 
     @NotBlank(message = "Укажите коллекцию продукта")
     private String collectionName;

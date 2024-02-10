@@ -10,13 +10,11 @@ import ProductDeleteModal from "../../modals/ProductDeleteModal/ProductDeleteMod
 import {useDispatch, useSelector} from "react-redux";
 import {getProductsThunk} from "../../../thunks/productThunks";
 import AdminPagination from "../../components/AdminPagination/AdminPagination";
+import ProductCreationProcess from "../../components/ProductCreationProcess/ProductCreationProcess";
 
 function AdminCatalogPage() {
     const dispatch = useDispatch()
     const [createModal, setCreateModal] = useState(false)
-    const [addFileModal, setAddFileModal] = useState(false)
-    const [dropFileModal, setDropFileModal] = useState(false)
-    const [deleteModal, setDeleteModal] = useState(false)
     const [page, setPage] = useState(0)
     const { products } = useSelector(state => state.product)
 
@@ -24,6 +22,8 @@ function AdminCatalogPage() {
         dispatch(getProductsThunk({
             page,
         }))
+
+        window.addEventListener('offline', () => { console.log('offline') })
     }, [dispatch, page])
 
     const onAddProductClicked = () => {
@@ -50,21 +50,9 @@ function AdminCatalogPage() {
                 </div>
             </div>
 
-            <ProductCreationModal
+            <ProductCreationProcess
                 isActive={createModal}
                 setIsActive={setCreateModal}
-            />
-            <ProductFileAdditionModal
-                isActive={addFileModal}
-                setIsActive={setAddFileModal}
-            />
-            <ProductFileDropModal
-                isActive={dropFileModal}
-                setIsActive={setDropFileModal}
-            />
-            <ProductDeleteModal
-                isActive={deleteModal}
-                setIsActive={setDeleteModal}
             />
         </div>
     );

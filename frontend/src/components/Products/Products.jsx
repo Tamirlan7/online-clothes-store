@@ -5,7 +5,7 @@ import ProductCard from "../ProductCard/ProductCard";
 const Products = ({ products }) => {
     return (
         <ul className={c.list}>
-            {products?.map((product) => (
+            {Array.isArray(products) && products?.map((product) => (
                 <li className={c.item} key={product.id}>
                     <ProductCard
                         {...product}

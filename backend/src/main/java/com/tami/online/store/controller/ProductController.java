@@ -60,6 +60,7 @@ public class ProductController {
                 ));
     }
 
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -67,7 +68,7 @@ public class ProductController {
             @RequestParam String name,
             @RequestParam List<String> sizes,
             @RequestParam double price,
-            @RequestParam(required = false, defaultValue = "0") double discountPercentage,
+            @RequestParam(required = false, defaultValue = "0") double priceWithDiscount,
             @RequestParam String collectionName,
             @RequestParam String clothingType,
             @RequestParam MultipartFile[] mediaFiles
@@ -86,7 +87,7 @@ public class ProductController {
                 .name(name)
                 .sizes(productSizes)
                 .price(price)
-                .discountPercentage(discountPercentage)
+                .priceWithDiscount(priceWithDiscount)
                 .collectionName(collectionName)
                 .clothingType(clothingType)
                 .mediaFiles(mediaFiles)

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo} from 'react';
 import c from './ProductCreationModal.module.scss'
 import Modal from "../../../UI/Modal/Modal";
 import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
@@ -8,19 +8,30 @@ import Select from "../../../UI/Select/Select";
 import AdminSizes from "../../UI/AdminSizes/AdminSizes";
 import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
 
-function ProductCreationModal({isActive, setIsActive}) {
-    const [formData, setFormData] = useState({
-        clothingType: 'Джерси',
-        collection: 'ae',
-        sizes: {
-            'XS': '0',
-            'S': '0',
-            'M': '0',
-            'L': '0',
-            'XL': '0',
-            'XXL': '0'
+function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormData}) {
+    const isFormValid = useMemo(() => {
+        const sizesQuantity = Object.values(formData.sizes).reduce((sum, sizeQuantity) => sum + Number(sizeQuantity), 0)
+        const sizesAreValid = sizesQuantity === Number(formData.quantity)
+
+        const obj = {
+            name: formData.name,
+            quantity: formData.quantity > 0,
+            price: formData.price >= 0,
+            collection: formData.collection,
+            clothingType: formData.clothingType,
+            sizes: sizesAreValid,
         }
-    })
+
+        obj.all = (
+            obj.name && obj.quantity && obj.price && obj.collection && obj.clothingType && obj.sizes
+        )
+
+        return obj
+    }, [formData])
+
+    const onChange = (e) => {
+        setFormData((prev) => ({...prev, [e.target.name]: e.target.value}))
+    }
 
     const onSizesChanged = (size, newValue) => {
         setFormData((prev) => ({...prev, sizes: {...formData.sizes, [size.sizeLabel]: newValue}}))
@@ -38,7 +49,7 @@ function ProductCreationModal({isActive, setIsActive}) {
 
                 <form className={c.form}>
                     <FormControl labelText={'Введите название'}>
-                        <Input/>
+                        <Input name={'name'} value={formData.name} onChange={onChange}/>
                     </FormControl>
                     <FormControl labelText={'Тип одежды'}>
                         <Select onChange={(value) => setFormData((prev) => ({...prev, clothingType: value}))}
@@ -77,10 +88,10 @@ function ProductCreationModal({isActive, setIsActive}) {
                         ]}/>
                     </FormControl>
                     <FormControl labelText={'Введите стоимость'}>
-                        <Input mode={'numeric'} />
+                        <Input name={'price'} value={formData.price} onChange={onChange} mode={'numeric'}/>
                     </FormControl>
                     <FormControl labelText={'Введите количество товара'}>
-                        <Input mode={'numeric'} />
+                        <Input name={'quantity'} value={formData.quantity} onChange={onChange} mode={'numeric'}/>
                     </FormControl>
 
                     <AdminSizes
@@ -93,7 +104,11 @@ function ProductCreationModal({isActive, setIsActive}) {
                     />
                 </form>
 
-                <ModalBtns isConfirmBtnDisabled={true}/>
+                <ModalBtns onCancel={() => setIsActive(false)} onNext={() => {
+                    if (onNext) {
+                        onNext()
+                    }
+                }} isConfirmBtnDisabled={!isFormValid.all}/>
             </div>
         </Modal>
     );

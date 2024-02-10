@@ -47,7 +47,7 @@
   
   &:first-child {
     user-select: none;
-    cursor: not-allowed;
+    cursor: default;
     background-color: rgba(208, 208, 208, 0.5);
   }
 }
