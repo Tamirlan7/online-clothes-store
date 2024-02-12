@@ -16,7 +16,7 @@ function AdminCatalogPage() {
     const dispatch = useDispatch()
     const [createModal, setCreateModal] = useState(false)
     const [page, setPage] = useState(0)
-    const { products } = useSelector(state => state.product)
+    const { products, loading } = useSelector(state => state.product)
 
     useEffect(() => {
         dispatch(getProductsThunk({
@@ -46,7 +46,9 @@ function AdminCatalogPage() {
                 </div>
 
                 <div className={c.pagination}>
-                    <AdminPagination onPageChanged={onPageChanged} currentPage={page} />
+                    {!loading && (
+                        <AdminPagination onPageChanged={onPageChanged} currentPage={page} />
+                    )}
                 </div>
             </div>
 

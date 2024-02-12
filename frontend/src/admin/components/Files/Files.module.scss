@@ -1,0 +1,55 @@
+.files {
+  list-style: none;
+  display: flex;
+  background-color: #F3F3F3;
+  max-width: 490px;
+  width: 100%;
+  padding: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+
+  @media (max-height: 1100px) {
+    max-width: 700px;
+  }
+
+}
+
+.file {
+  max-width: 150px;
+  width: 100%;
+  height: 150px;
+
+  background-color: #fff;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+  }
+
+  @media (min-height: 1100px) {
+    max-width: 228px;
+    width: 100%;
+    height: 228px;
+  }
+
+}
+
+.figures {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+
+  figure {
+    cursor: pointer;
+  }
+}
+

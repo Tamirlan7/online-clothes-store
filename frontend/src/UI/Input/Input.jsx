@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import c from './Input.module.scss'
 
-function Input({ className, mode, invalid, ...props }) {
+function Input({className, mode, invalid, ...props}, ref) {
     // mode: default || numeric
 
     function handleOnNumericInputChange(e) {
@@ -16,6 +16,7 @@ function Input({ className, mode, invalid, ...props }) {
     if (mode === 'numeric') {
         return (
             <input
+                ref={ref}
                 {...props}
                 onChange={(e) => handleOnNumericInputChange(e)}
                 type={props.type ?? 'text'}
@@ -26,6 +27,7 @@ function Input({ className, mode, invalid, ...props }) {
 
     return (
         <input
+            ref={ref}
             {...props}
             type={props.type ?? 'text'}
             className={`${c.input} ${className} ${invalid && c.invalid}`}
@@ -33,4 +35,4 @@ function Input({ className, mode, invalid, ...props }) {
     );
 }
 
-export default Input;
+export default forwardRef(Input);

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ProductCreationModal from "../../modals/ProductCreationModal/ProductCreationModal";
 import ProductFileAdditionModal from "../../modals/ProductFileAdditionModal/ProductFileAdditionModal";
 import ProductFileDropModal from "../../modals/ProductFileDropModal/ProductFileDropModal";
@@ -17,10 +17,15 @@ function ProductCreationProcess({isActive, setIsActive}) {
             'L': '0',
             'XL': '0',
             'XXL': '0'
-        }
+        },
+        files: [],
     })
     const [addFileModal, setAddFileModal] = useState(false)
     const [dropFileModal, setDropFileModal] = useState(false)
+
+    useEffect(() => {
+        console.log(formData)
+    }, [formData])
 
     const nextModal = () => {
         if (isActive) {

@@ -1,7 +1,8 @@
 import React from 'react';
 import c from './ModalBtns.module.scss'
+import Loader from "../Loader/Loader";
 
-function ModalBtns({onCancel, onNext, cancelBtnText, confirmBtnText, isConfirmBtnDisabled}) {
+function ModalBtns({onCancel, onNext, cancelBtnText, confirmBtnText, isConfirmBtnDisabled, loading}) {
     function handleOnCancelClick() {
         if (onCancel) {
             onCancel()
@@ -10,6 +11,10 @@ function ModalBtns({onCancel, onNext, cancelBtnText, confirmBtnText, isConfirmBt
 
     function handleOnConfirmClick() {
         if (isConfirmBtnDisabled) {
+            return null
+        }
+
+        if (loading) {
             return null
         }
 
@@ -24,7 +29,13 @@ function ModalBtns({onCancel, onNext, cancelBtnText, confirmBtnText, isConfirmBt
                     className={`${c.btn} ${c['btn-cancel']}`}>{cancelBtnText ?? 'Отмена'}</button>
             <button onClick={() => handleOnConfirmClick()}
                     disabled={isConfirmBtnDisabled}
-                    className={`${c.btn} ${c['btn-confirm']}`}>{confirmBtnText ?? 'Далее'}</button>
+                    className={loading ? `${c.btn} ${c['btn-confirm']} ${c['loading-btn']}` : `${c.btn} ${c['btn-confirm']}`}>
+                {loading ? (
+                    <Loader loaderClassName={c.loader} loading={true}/>
+                ) : (
+                    <>{confirmBtnText ?? 'Далее'}</>
+                )}
+            </button>
         </div>
     );
 }

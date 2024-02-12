@@ -57,7 +57,9 @@ function ProductsTable({products}) {
             <tbody>
             {
                 loading ? (
-                    <Loader/>
+                    <div className={c.loader}>
+                        <Loader/>
+                    </div>
                 ) : (
                     <>{transformedProducts?.map((p) => (
                         <ProductsTableRow key={p.id} onRowChecked={onRowChecked} {...p} />

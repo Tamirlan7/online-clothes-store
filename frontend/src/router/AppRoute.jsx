@@ -1,12 +1,58 @@
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import LoginPopup from "../components/LoginPopup/LoginPopup";
-import {useLocation} from "react-router-dom";
+import {notification as notificationApi} from "antd";
+import {useEffect} from "react";
+import {resetNotification} from "../slices/notificationSlice";
 
+const AppRoute = ({metaData, children}) => {
+    const dispatch = useDispatch()
+    const {showAuthenticationPopup} = useSelector(state => state.user)
+    const [api, contextHolder] = notificationApi.useNotification();
+    const {notification} = useSelector(state => state.notification)
 
-const AppRoute = ({ metaData, children }) => {
-    const { showAuthenticationPopup } = useSelector(state => state.user)
+    useEffect(() => {
+        console.log('useEffect')
+
+        if (notification.message && notification.description && notification.placement && notification.type) {
+            showNotification({
+                placement: notification.placement,
+                message: notification.message,
+                description: notification.description,
+            }, notification.type)
+
+            console.log('raised notification')
+            console.table(notification)
+            dispatch(resetNotification())
+        }
+
+        function showNotification(notificationArgs, type = 'info') {
+            switch (type) {
+                case 'info':
+                    api.info(notificationArgs)
+                    break
+                case 'error':
+                    api.error(notificationArgs)
+                    break
+                case 'success':
+                    api.success(notificationArgs)
+                    break
+                case 'warning':
+                    api.warning(notificationArgs)
+                    break
+                case 'open':
+                    api.open(notificationArgs)
+                    break
+                case 'destroy':
+                    api.destroy(notificationArgs)
+                    break
+                default:
+                    api.info(notificationArgs)
+            }
+        }
+
+    }, [api, dispatch, notification]);
 
     metaData = {
         headerEnabled: metaData?.headerEnabled ?? true,
@@ -16,7 +62,7 @@ const AppRoute = ({ metaData, children }) => {
     return (
         <>
             {showAuthenticationPopup && (
-                <LoginPopup />
+                <LoginPopup/>
             )}
 
             <div style={showAuthenticationPopup ? {
@@ -24,7 +70,7 @@ const AppRoute = ({ metaData, children }) => {
             } : {}}>
                 {metaData.headerEnabled && (
                     <header>
-                        <Navbar />
+                        <Navbar/>
                     </header>
                 )}
 
@@ -34,10 +80,12 @@ const AppRoute = ({ metaData, children }) => {
 
                 {metaData.footerEnabled && (
                     <footer>
-                        <Footer />
+                        <Footer/>
                     </footer>
                 )}
             </div>
+
+            {contextHolder}
         </>
     )
 }

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import c from './ProductCreationModal.module.scss'
 import Modal from "../../../UI/Modal/Modal";
 import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
@@ -7,8 +7,21 @@ import Input from "../../../UI/Input/Input";
 import Select from "../../../UI/Select/Select";
 import AdminSizes from "../../UI/AdminSizes/AdminSizes";
 import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
+import Loader from "../../../UI/Loader/Loader";
+import {useSelector} from "react-redux";
+import Form from "../../../UI/Form/Form";
 
 function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormData}) {
+    const inputRef = useRef(null)
+
+    useEffect(() => {
+
+        if (isActive) {
+            inputRef.current?.focus();
+        }
+
+    }, [isActive]);
+
     const isFormValid = useMemo(() => {
         const sizesQuantity = Object.values(formData.sizes).reduce((sum, sizeQuantity) => sum + Number(sizeQuantity), 0)
         const sizesAreValid = sizesQuantity === Number(formData.quantity)
@@ -47,9 +60,9 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                     <ModalTitle>Добавить товар</ModalTitle>
                 </div>
 
-                <form className={c.form}>
+                <Form className={c.form}>
                     <FormControl labelText={'Введите название'}>
-                        <Input name={'name'} value={formData.name} onChange={onChange}/>
+                        <Input ref={inputRef} name={'name'} value={formData.name} onChange={onChange}/>
                     </FormControl>
                     <FormControl labelText={'Тип одежды'}>
                         <Select onChange={(value) => setFormData((prev) => ({...prev, clothingType: value}))}
@@ -102,13 +115,13 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                         }))}
                         onChange={onSizesChanged}
                     />
-                </form>
 
-                <ModalBtns onCancel={() => setIsActive(false)} onNext={() => {
-                    if (onNext) {
-                        onNext()
-                    }
-                }} isConfirmBtnDisabled={!isFormValid.all}/>
+                    <ModalBtns onCancel={() => setIsActive(false)} onNext={() => {
+                        if (onNext) {
+                            onNext()
+                        }
+                    }} isConfirmBtnDisabled={!isFormValid.all}/>
+                </Form>
             </div>
         </Modal>
     );

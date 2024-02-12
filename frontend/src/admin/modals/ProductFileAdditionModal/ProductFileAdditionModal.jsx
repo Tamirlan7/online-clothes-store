@@ -3,9 +3,43 @@ import c from './ProductFileAdditionModal.module.scss'
 import Modal from "../../../UI/Modal/Modal";
 import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
 import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
-import { ReactComponent as UploadFile } from "../../../assets/icons/upload-file.svg";
+import {ReactComponent as UploadFile} from "../../../assets/icons/upload-file.svg";
+import InputFile from "../../../UI/InputFile/InputFile";
+import Files from "../../components/Files/Files";
+import {useDispatch} from "react-redux";
+import {raiseNotification} from "../../../slices/notificationSlice";
 
-function ProductFileAdditionModal({isActive, setIsActive, onNext}) {
+function ProductFileAdditionModal({isActive, setIsActive, onNext, formData, setFormData}) {
+    const dispatch = useDispatch()
+
+    const onFilesChange = (e) => {
+        if (formData?.files) {
+            const files = e.target.files;
+
+            // Ограничиваем количество выбранных файлов до максимума 4
+            if (files.length + formData.files.length > 4) {
+                dispatch(raiseNotification({
+                    message: 'Ошибка',
+                    description: 'Максимальное количество файлов - 4',
+                    type: 'error'
+                }))
+
+                return;
+            }
+
+            // Обновляем состояние выбранных файлов
+            setFormData(prev => ({...prev, files: [...prev.files, ...Array.from(files)]}))
+        }
+    };
+
+    const onDeleteFile = (fileIdx) => {
+        const newFiles = [...formData.files];
+        newFiles.splice(fileIdx, 1);
+        setFormData(prev => ({...prev, files: newFiles}))
+    }
+    const onEditFile = (fileIdx) => {
+        // file editing
+    }
 
     return (
         <Modal
@@ -19,7 +53,7 @@ function ProductFileAdditionModal({isActive, setIsActive, onNext}) {
 
                 <div className={c.content}>
                     <figure>
-                        <UploadFile />
+                        <UploadFile/>
                     </figure>
 
                     <div className={c['text-content']}>
@@ -28,14 +62,26 @@ function ProductFileAdditionModal({isActive, setIsActive, onNext}) {
                         <p className={c.text}>Протяните файл для его загрузки или выберите его при помощи кнопки.</p>
                     </div>
 
-                    <button className={c.btn}>Вложить фото</button>
+                    {formData?.files['length'] ? (
+                        <div className={c.files}>
+                            <Files files={formData.files} onDeleteFile={onDeleteFile} onEditFile={onEditFile}/>
+                        </div>
+                    ) : <></>}
+
+                    {formData?.files['length'] < 4 && (
+                        <InputFile onChange={onFilesChange}
+                                   label={'Вложить фото'}
+                                   className={c.btn}
+                                   multiple
+                                   accept={'image/*'}/>
+                    )}
                 </div>
 
                 <ModalBtns onNext={() => {
                     if (onNext) {
                         onNext()
                     }
-                }} />
+                }}/>
             </div>
         </Modal>
     );
