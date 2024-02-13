@@ -37,8 +37,8 @@ public class ProductMediaFileService {
     }
 
     @Transactional
-    public void createMediaFiles(MultipartFile[] files, Product product) {
-        List<ProductMediaFile> productMediaFiles = Arrays.stream(files)
+    public void createMediaFiles(List<MultipartFile> files, Product product) {
+        List<ProductMediaFile> productMediaFiles = files.stream()
                 .map(file -> create(file, product))
                 .collect(Collectors.toList());
 

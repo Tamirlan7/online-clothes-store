@@ -5,6 +5,7 @@ import LoginPopup from "../components/LoginPopup/LoginPopup";
 import {notification as notificationApi} from "antd";
 import {useEffect} from "react";
 import {resetNotification} from "../slices/notificationSlice";
+import useInitialize from "../hooks/useInitialize";
 
 const AppRoute = ({metaData, children}) => {
     const dispatch = useDispatch()
@@ -12,9 +13,9 @@ const AppRoute = ({metaData, children}) => {
     const [api, contextHolder] = notificationApi.useNotification();
     const {notification} = useSelector(state => state.notification)
 
-    useEffect(() => {
-        console.log('useEffect')
+    useInitialize()
 
+    useEffect(() => {
         if (notification.message && notification.description && notification.placement && notification.type) {
             showNotification({
                 placement: notification.placement,
@@ -22,8 +23,6 @@ const AppRoute = ({metaData, children}) => {
                 description: notification.description,
             }, notification.type)
 
-            console.log('raised notification')
-            console.table(notification)
             dispatch(resetNotification())
         }
 

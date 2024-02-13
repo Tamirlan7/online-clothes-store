@@ -4,6 +4,25 @@
   gap: 6px;
 }
 
+.error {
+  color: #FF0000;
+  font-weight: 500;
+  animation: error-enter .3s ease forwards;
+  transform: translateY(-10px);
+}
+
+@keyframes error-enter {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
 .label {
   line-height: 21.78px;
   font-size: 18px;

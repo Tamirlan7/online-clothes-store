@@ -1,13 +1,18 @@
 import React from 'react';
 import c from './FormControl.module.scss'
 
-function FormControl({ labelText, children }) {
+function FormControl({labelText, children, invalid, errorMessage}) {
     return (
         <div className={c.control}>
-            <label className={c.label}>{labelText}</label>
-            <div>
+            {labelText && (
+                <label className={c.label}>{labelText}</label>
+            )}
+            <div className={c.block}>
                 {children}
             </div>
+            {invalid && (
+                <span className={`${c.error}`}>{errorMessage}</span>
+            )}
         </div>
     );
 }

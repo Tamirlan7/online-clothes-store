@@ -7,11 +7,13 @@ import Input from "../../../UI/Input/Input";
 import Select from "../../../UI/Select/Select";
 import AdminSizes from "../../UI/AdminSizes/AdminSizes";
 import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
-import Loader from "../../../UI/Loader/Loader";
 import {useSelector} from "react-redux";
 import Form from "../../../UI/Form/Form";
+import collectionConverter from "../../../converters/collectionConverter";
 
 function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormData}) {
+    const {collections, loading: collectionsLoading} = useSelector(state => state.collection)
+    const {clothingTypes, loading: clothingTypesLoading} = useSelector(state => state.clothingType)
     const inputRef = useRef(null)
 
     useEffect(() => {
@@ -22,16 +24,30 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
 
     }, [isActive]);
 
+    useEffect(() => {
+
+        if (collections.length) {
+            setFormData(prev => ({...prev, collection: collections[0].name}))
+        }
+
+    }, [collections, setFormData])
+
+    useEffect(() => {
+        if (clothingTypes.length) {
+            setFormData(prev => ({...prev, clothingType: clothingTypes[0].name}))
+        }
+    }, []);
+
     const isFormValid = useMemo(() => {
         const sizesQuantity = Object.values(formData.sizes).reduce((sum, sizeQuantity) => sum + Number(sizeQuantity), 0)
         const sizesAreValid = sizesQuantity === Number(formData.quantity)
 
         const obj = {
-            name: formData.name,
-            quantity: formData.quantity > 0,
-            price: formData.price >= 0,
-            collection: formData.collection,
-            clothingType: formData.clothingType,
+            name: Boolean(formData.name),
+            quantity: typeof formData.quantity === "string" ? formData.quantity?.trim() !== '' : formData.quantity > 0,
+            price: typeof formData.price === "string" ? formData.price?.trim() !== '' : formData.price >= 0,
+            collection: Boolean(formData.collection),
+            clothingType: Boolean(formData.clothingType),
             sizes: sizesAreValid,
         }
 
@@ -61,60 +77,51 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                 </div>
 
                 <Form className={c.form}>
-                    <FormControl labelText={'Введите название'}>
-                        <Input ref={inputRef} name={'name'} value={formData.name} onChange={onChange}/>
+                    <FormControl invalid={!isFormValid.name} errorMessage={'Название не должно быть пустым'}
+                                 labelText={'Введите название'}>
+                        <Input invalid={!isFormValid.name} ref={inputRef} name={'name'} value={formData.name}
+                               onChange={onChange}/>
                     </FormControl>
                     <FormControl labelText={'Тип одежды'}>
                         <Select onChange={(value) => setFormData((prev) => ({...prev, clothingType: value}))}
-                                value={formData.clothingType} options={[
-                            {
-                                text: 'Джерси',
-                                value: 'Джерси'
-                            },
-                            {
-                                text: 'Худи',
-                                value: 'Худи'
-                            },
-
-                            {
-                                text: 'Футболка',
-                                value: 'Футболка'
-                            },
-                        ]}/>
+                                loading={clothingTypesLoading}
+                                value={formData.clothingType}
+                                options={clothingTypes.map((c) => ({
+                                    value: c?.name,
+                                    text: c?.name
+                                }))}/>
                     </FormControl>
                     <FormControl labelText={'Выберите коллекцию'}>
-                        <Select onChange={(value) => setFormData((prev) => ({...prev, collection: value}))}
-                                value={formData.collection} options={[
-                            {
-                                text: 'AG',
-                                value: 'ag'
-                            },
-                            {
-                                text: 'UNC',
-                                value: 'unc'
-                            },
-
-                            {
-                                text: 'AE',
-                                value: 'ae'
-                            },
-                        ]}/>
+                        <Select loading={collectionsLoading}
+                                onChange={(value) => setFormData((prev) => ({...prev, collection: value}))}
+                                value={formData.collection}
+                                options={collections.map((c) => ({
+                                    value: c?.name,
+                                    text: collectionConverter.convertToShorthand(c?.name)
+                                }))}/>
                     </FormControl>
-                    <FormControl labelText={'Введите стоимость'}>
-                        <Input name={'price'} value={formData.price} onChange={onChange} mode={'numeric'}/>
+                    <FormControl invalid={!isFormValid.price} errorMessage={'Цена должна больше либо равна нулю'}
+                                 labelText={'Введите стоимость'}>
+                        <Input invalid={!isFormValid.price} name={'price'} value={formData.price} onChange={onChange}
+                               mode={'numeric'}/>
                     </FormControl>
-                    <FormControl labelText={'Введите количество товара'}>
-                        <Input name={'quantity'} value={formData.quantity} onChange={onChange} mode={'numeric'}/>
+                    <FormControl invalid={!isFormValid.quantity} errorMessage={'Кол-во должна больше нуля'}
+                                 labelText={'Введите количество товара'}>
+                        <Input invalid={!isFormValid.quantity} name={'quantity'} value={formData.quantity}
+                               onChange={onChange} mode={'numeric'}/>
                     </FormControl>
 
-                    <AdminSizes
-                        sizes={Object.keys(formData.sizes).map((key) => ({
-                            sizeLabel: key,
-                            value: formData.sizes[key],
-                            invalid: key === 'M'
-                        }))}
-                        onChange={onSizesChanged}
-                    />
+                    <FormControl invalid={!isFormValid.sizes}
+                                 errorMessage={'Общее кол-во всех размеров должны быть равна общему кол-во товара'}>
+                        <AdminSizes
+                            sizes={Object.keys(formData.sizes).map((key) => ({
+                                sizeLabel: key,
+                                value: formData.sizes[key],
+                                invalid: !isFormValid.sizes
+                            }))}
+                            onChange={onSizesChanged}
+                        />
+                    </FormControl>
 
                     <ModalBtns onCancel={() => setIsActive(false)} onNext={() => {
                         if (onNext) {

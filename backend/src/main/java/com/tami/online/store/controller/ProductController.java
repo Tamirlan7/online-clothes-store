@@ -18,8 +18,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +27,7 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping(value = "{productId}/file/{fileName}", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
+    @GetMapping(value = "{productId}/file/{fileName}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<Resource> getProductFileByFileName(
             @PathVariable("productId") Long productId,
             @PathVariable("fileName") String fileName
@@ -71,19 +71,22 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "true") boolean visible,
             @RequestParam(required = false, defaultValue = "false") boolean preOrder,
             @RequestParam(required = false, defaultValue = "0") double priceWithDiscount,
-            @RequestParam String collectionName,
+            @RequestParam String collection,
             @RequestParam String clothingType,
-            @RequestParam MultipartFile[] mediaFiles
+            @RequestParam List<MultipartFile> mediaFiles
     ) {
         ObjectMapper mapper = new ObjectMapper();
-        List<ProductSizeDtoRequest> productSizes = new ArrayList<>();
-        sizes.forEach((size) -> {
-            try {
-                productSizes.add(mapper.readValue(size, ProductSizeDtoRequest.class));
-            } catch (JsonProcessingException e) {
-                throw new CustomBadRequestException("Ошибка при конвертации в ProductSizeDtoRequest, поле sizes должно быть массивом объектов { size: string, quantity: int, additionalInfo: string } ошибка: " + e.getMessage());
-            }
-        });
+
+        List<ProductSizeDtoRequest> productSizes = sizes.stream()
+                .map(size -> {
+                    try {
+                        return mapper.readValue(size, ProductSizeDtoRequest.class);
+                    } catch (JsonProcessingException e) {
+                        throw new CustomBadRequestException("Error converting to ProductSizeDtoRequest: " + e.getMessage());
+                    }
+                })
+                .collect(Collectors.toList());
+
 
         ProductDtoRequest product = ProductDtoRequest.builder()
                 .name(name)
@@ -92,7 +95,7 @@ public class ProductController {
                 .preOrder(preOrder)
                 .visible(visible)
                 .priceWithDiscount(priceWithDiscount)
-                .collectionName(collectionName)
+                .collectionName(collection)
                 .clothingType(clothingType)
                 .mediaFiles(mediaFiles)
                 .build();

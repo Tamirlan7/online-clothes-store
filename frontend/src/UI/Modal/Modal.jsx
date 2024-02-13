@@ -1,12 +1,13 @@
 import React from 'react';
 import c from './Modal.module.scss';
 
-const Modal = ({children, className, isActive, setIsActive, onClose}) => {
+const Modal = ({children, className, isActive, setIsActive, onClose, ...props}) => {
 
     return (
         <div
             className={isActive ? `${c['modal-window']} ${c['modal-active']}` : `${c['modal-window']}`}
-            onMouseUp={() => {
+            {...props}
+            onClick={() => {
                 setIsActive(false)
                 if (onClose) {
                     onClose()
@@ -21,7 +22,7 @@ const Modal = ({children, className, isActive, setIsActive, onClose}) => {
                             : className ? `${className} ${c['modal-window-content']}`
                                 : `${c['modal-window-content']}`
                 }
-                onMouseUp={(e) => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
             >
                 {children}
             </div>

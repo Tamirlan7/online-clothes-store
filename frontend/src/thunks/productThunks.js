@@ -59,13 +59,15 @@ export const getProductByIdThunk = createAsyncThunk(
 export const createProductThunk = createAsyncThunk(
     "product/createProductThunk",
     async (
-        data,
+        {
+            formData,
+        },
         {
             rejectWithValue,
         }
     ) => {
         try {
-            const res = await productService.createProduct(data);
+            const res = await productService.createProduct(formData);
             return res.data
         } catch (err) {
             console.error(err)

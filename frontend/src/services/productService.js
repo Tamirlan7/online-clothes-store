@@ -58,7 +58,11 @@ productService.getProductById = (productId) => {
 }
 
 productService.createProduct = (data) => {
-    return axiosAdmin.post(`/product`, data);
+    return axiosAdmin.post(`/product`, data, {
+        headers: {
+            "Content-Type": 'multipart/form-data'
+        }
+    });
 }
 
 productService.deleteProduct = (id) => {
