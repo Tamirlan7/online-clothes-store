@@ -5,9 +5,11 @@ const initialState = {
     products: [],
     currentProduct: null,
     loading: false,
+    postLoading: false,
     error: false,
     errorMessage: null,
     totalPages: null,
+    deleteLoading: false,
 }
 
 const productSlice = createSlice({
@@ -46,26 +48,26 @@ const productSlice = createSlice({
             })
 
             .addCase(createProductThunk.pending, (state, action) => {
-                state.loading = true
+                state.postLoading = true
             })
             .addCase(createProductThunk.fulfilled, (state, action) => {
-                state.loading = false
+                state.postLoading = false
             })
             .addCase(createProductThunk.rejected, (state, action) => {
-                state.loading = false
+                state.postLoading = false
                 state.error = true
                 state.errorMessage = action.payload
             })
 
             .addCase(deleteProductThunk.pending, (state, action) => {
-                state.loading = true
+                state.deleteLoading = true
             })
             .addCase(deleteProductThunk.fulfilled, (state, action) => {
-                state.loading = false
+                state.deleteLoading = false
                 state.products = state.products.filter(p => p.id !== action.payload)
             })
             .addCase(deleteProductThunk.rejected, (state, action) => {
-                state.loading = false
+                state.deleteLoading = false
                 state.error = true
                 state.errorMessage = action.payload
             })

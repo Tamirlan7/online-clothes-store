@@ -6,12 +6,13 @@ import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
 import {ReactComponent as UploadFile} from "../../../assets/icons/upload-file.svg";
 import InputFile from "../../../UI/InputFile/InputFile";
 import Files from "../../components/Files/Files";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {raiseNotification} from "../../../slices/notificationSlice";
 import ProductFileDropModal from "../ProductFileDropModal/ProductFileDropModal";
 
 function ProductFileAdditionModal({isActive, setIsActive, onNext, formData, setFormData, onCancel}) {
     const dispatch = useDispatch()
+    const { postLoading } = useSelector(state => state.product)
     const [dropFileModal, setDropFileModal] = useState(false)
 
     const addFiles = (files) => {
@@ -108,7 +109,7 @@ function ProductFileAdditionModal({isActive, setIsActive, onNext, formData, setF
                             )}
                         </div>
 
-                        <ModalBtns cancelBtnText={'Назад'} confirmBtnText={'Добавить'} onCancel={onCancel}
+                        <ModalBtns loading={postLoading} cancelBtnText={'Назад'} confirmBtnText={'Добавить'} onCancel={onCancel}
                                    onNext={() => {
                                        if (onNext) {
                                            onNext()

@@ -3,28 +3,30 @@ import c from './AdminCatalogPage.module.scss'
 import AdminMenu from "../../components/AdminMenu/AdminMenu";
 import AdminFilter from "../../components/AdminFilter/AdminFilter";
 import ProductsTable from "../../components/ProductsTable/ProductsTable";
-import ProductCreationModal from "../../modals/ProductCreationModal/ProductCreationModal";
-import ProductFileAdditionModal from "../../modals/ProductFileAdditionModal/ProductFileAdditionModal";
-import ProductFileDropModal from "../../modals/ProductFileDropModal/ProductFileDropModal";
-import ProductDeleteModal from "../../modals/ProductDeleteModal/ProductDeleteModal";
 import {useDispatch, useSelector} from "react-redux";
 import {getProductsThunk} from "../../../thunks/productThunks";
 import AdminPagination from "../../components/AdminPagination/AdminPagination";
 import ProductCreationProcess from "../../components/ProductCreationProcess/ProductCreationProcess";
+import {ADMIN_PRODUCTS_PAGE} from "../../../constants/AppConstants";
+import useDebounce from "../../../hooks/useDebounce";
 
 function AdminCatalogPage() {
     const dispatch = useDispatch()
+    const [searchValue, setSearchValue] = useState('')
+    const apiSearchValue = useDebounce(searchValue, 459)
     const [createModal, setCreateModal] = useState(false)
-    const [page, setPage] = useState(0)
-    const { products, loading } = useSelector(state => state.product)
+    const [page, setPage] = useState(JSON.parse(localStorage.getItem(ADMIN_PRODUCTS_PAGE)) ?? 0)
+    const {products, loading, deleteLoading} = useSelector(state => state.product)
 
     useEffect(() => {
-        dispatch(getProductsThunk({
-            page,
-        }))
+        if (!deleteLoading) {
+            dispatch(getProductsThunk({
+                page,
+                name: apiSearchValue,
+            }))
+        }
 
-        window.addEventListener('offline', () => { console.log('offline') })
-    }, [dispatch, page])
+    }, [dispatch, page, deleteLoading, apiSearchValue])
 
     const onAddProductClicked = () => {
         setCreateModal(true)
@@ -32,22 +34,31 @@ function AdminCatalogPage() {
 
     const onPageChanged = (page) => {
         setPage(page)
+        localStorage.setItem(ADMIN_PRODUCTS_PAGE, page)
+    }
+
+    const onSearch = (e) => {
+        setSearchValue(e.target.value)
     }
 
     return (
         <div className={c.page}>
-            <AdminMenu />
+            <AdminMenu/>
 
             <div className={c.content}>
-                <AdminFilter onAddProduct={onAddProductClicked} />
+                <AdminFilter
+                    searchValue={searchValue}
+                    onSearch={onSearch}
+                    onAddProduct={onAddProductClicked}
+                />
 
                 <div className={c.table}>
-                    <ProductsTable products={products} />
+                    <ProductsTable products={products}/>
                 </div>
 
                 <div className={c.pagination}>
-                    {!loading && (
-                        <AdminPagination onPageChanged={onPageChanged} currentPage={page} />
+                    {(!loading ?? !deleteLoading) && (
+                        <AdminPagination onPageChanged={onPageChanged} currentPage={page}/>
                     )}
                 </div>
             </div>

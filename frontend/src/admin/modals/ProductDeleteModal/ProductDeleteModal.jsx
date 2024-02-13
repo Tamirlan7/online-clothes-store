@@ -3,10 +3,11 @@ import c from './ProductDeleteModal.module.scss'
 import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
 import Modal from "../../../UI/Modal/Modal";
 import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {deleteProductThunk} from "../../../thunks/productThunks";
 
 function ProductDeleteModal({isActive, setIsActive, product}) {
+    const {deleteLoading} = useSelector(state => state.product)
     const dispatch = useDispatch()
 
     const confirmDeletion = () => {
@@ -15,6 +16,7 @@ function ProductDeleteModal({isActive, setIsActive, product}) {
         }))
 
         setIsActive(false)
+
     }
 
     return (
@@ -28,11 +30,13 @@ function ProductDeleteModal({isActive, setIsActive, product}) {
                 </div>
 
                 <div className={c.content}>
-                    <p className={c.text}>Вы действительно хотите безвозвратно <span>удалить товар {product.name}?</span></p>
+                    <p className={c.text}>Вы действительно хотите
+                        безвозвратно <span>удалить товар {product.name}?</span></p>
                     <p className={c.note}>Отменить это действие будет невозможно</p>
                 </div>
 
                 <ModalBtns
+                    loading={deleteLoading}
                     onCancel={() => setIsActive(false)}
                     onNext={() => confirmDeletion()}
                     confirmBtnText={'Подтвердить'}
