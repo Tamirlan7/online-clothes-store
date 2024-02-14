@@ -4,10 +4,23 @@
   align-items: center;
 }
 
+.select {
+  max-width: 150px;
+  width: 100%;
+}
+
+.left {
+  flex: 1;
+}
+
 .list {
-  list-style: none;
   display: flex;
   align-items: center;
+}
+
+.popup {
+  position: absolute;
+  z-index: 2000;
 }
 
 .item {

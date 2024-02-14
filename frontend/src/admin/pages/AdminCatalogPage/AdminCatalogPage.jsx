@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import c from './AdminCatalogPage.module.scss'
 import AdminMenu from "../../components/AdminMenu/AdminMenu";
 import AdminFilter from "../../components/AdminFilter/AdminFilter";
@@ -13,10 +13,30 @@ import useDebounce from "../../../hooks/useDebounce";
 function AdminCatalogPage() {
     const dispatch = useDispatch()
     const [searchValue, setSearchValue] = useState('')
+    const [clothingType, setClothingType] = useState('')
     const apiSearchValue = useDebounce(searchValue, 459)
     const [createModal, setCreateModal] = useState(false)
     const [page, setPage] = useState(JSON.parse(localStorage.getItem(ADMIN_PRODUCTS_PAGE)) ?? 0)
     const {products, loading, deleteLoading} = useSelector(state => state.product)
+
+    const sortedProducts = useMemo(() => {
+        if (clothingType === '') {
+            return products
+        }
+
+        return products.slice().sort((pA, pB) => {
+            const typeA = pA.clothingType?.name || '';
+            const typeB = pB.clothingType?.name || '';
+
+            if (typeA === clothingType && typeB !== clothingType) {
+                return -1;
+            } else if (typeA !== clothingType && typeB === clothingType) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+    }, [products, clothingType])
 
     useEffect(() => {
         if (!deleteLoading) {
@@ -28,7 +48,7 @@ function AdminCatalogPage() {
 
     }, [dispatch, page, deleteLoading, apiSearchValue])
 
-    const onAddProductClicked = () => {
+    function onAddProductClicked() {
         setCreateModal(true)
     }
 
@@ -41,19 +61,25 @@ function AdminCatalogPage() {
         setSearchValue(e.target.value)
     }
 
+    const onSort = (value) => {
+        setClothingType(value)
+    }
+
     return (
         <div className={c.page}>
             <AdminMenu/>
 
             <div className={c.content}>
                 <AdminFilter
+                    sortValue={clothingType}
+                    onSort={onSort}
                     searchValue={searchValue}
                     onSearch={onSearch}
                     onAddProduct={onAddProductClicked}
                 />
 
                 <div className={c.table}>
-                    <ProductsTable products={products}/>
+                    <ProductsTable products={sortedProducts}/>
                 </div>
 
                 <div className={c.pagination}>
