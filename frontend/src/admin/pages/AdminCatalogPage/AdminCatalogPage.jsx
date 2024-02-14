@@ -48,6 +48,12 @@ function AdminCatalogPage() {
 
     }, [dispatch, page, deleteLoading, apiSearchValue])
 
+    useEffect(() => {
+        if (!products.length && page > 0) {
+            onPageChanged(page - 1)
+        }
+    }, [products, page])
+
     function onAddProductClicked() {
         setCreateModal(true)
     }

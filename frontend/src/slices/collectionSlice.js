@@ -21,7 +21,9 @@ const collectionSlice = createSlice({
             })
             .addCase(getAllCollectionsThunk.fulfilled, (state, action) => {
                 state.loading = false
-                state.collections = action.payload
+                if (Array.isArray(action.payload)) {
+                    state.collections = action.payload
+                }
             })
             .addCase(getAllCollectionsThunk.rejected, (state, action) => {
                 state.loading = false

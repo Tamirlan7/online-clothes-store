@@ -1,15 +1,21 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import collectionService from "../services/collectionService";
+import {raiseNotification} from "../slices/notificationSlice";
 
 export const getAllCollectionsThunk = createAsyncThunk(
     'collection/getAllCollections',
-    async () => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await collectionService.getAllCollections();
             return res.data
         } catch (err) {
-            console.error(err)
-            return err.message
+            dispatch(raiseNotification({
+                message: err.message,
+                description: 'Произошла ошибка при попытке загрузки списка коллекции с сервера',
+                type: 'error'
+            }))
+
+            return rejectWithValue(err.message)
         }
     }
 )

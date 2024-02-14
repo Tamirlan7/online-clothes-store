@@ -17,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductDtoRequest {
 
+    private Long id;
+
     @NotBlank(message = "Укажите название продукта")
     private String name;
 
@@ -40,6 +42,10 @@ public class ProductDtoRequest {
     private List<MultipartFile> mediaFiles;
 
     private boolean visible;
-    
+
+    private boolean visibleChanged = false;
+
+    private boolean preOrderChanged = false;
+
     private boolean preOrder;
 }

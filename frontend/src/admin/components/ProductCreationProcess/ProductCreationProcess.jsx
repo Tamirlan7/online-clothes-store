@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import ProductCreationModal from "../../modals/ProductCreationModal/ProductCreationModal";
 import ProductFileAdditionModal from "../../modals/ProductFileAdditionModal/ProductFileAdditionModal";
-import ProductFileDropModal from "../../modals/ProductFileDropModal/ProductFileDropModal";
 import {useDispatch} from "react-redux";
 import {createProductThunk} from "../../../thunks/productThunks";
 
@@ -24,7 +23,6 @@ function ProductCreationProcess({isActive, setIsActive}) {
         files: [],
     })
     const [addFileModal, setAddFileModal] = useState(false)
-    const [dropFileModal, setDropFileModal] = useState(false)
 
     const nextModal = () => {
         if (isActive) {
@@ -63,7 +61,6 @@ function ProductCreationProcess({isActive, setIsActive}) {
         dispatch(createProductThunk({
             formData: data,
         }))
-
     }
 
     const prevModal = () => {
@@ -71,29 +68,6 @@ function ProductCreationProcess({isActive, setIsActive}) {
             setAddFileModal(false)
             setIsActive(true)
             return null
-        }
-    }
-
-    const onDragStartHandler = (e) => {
-        e.preventDefault()
-
-        if (addFileModal) {
-            setAddFileModal(false)
-        }
-
-        if (!dropFileModal) {
-            setDropFileModal(true)
-        }
-    }
-
-    const onDropModalDragLeaveHandler = (e) => {
-        console.log('leave')
-        if (!addFileModal) {
-            setAddFileModal(true)
-        }
-
-        if (dropFileModal) {
-            setDropFileModal(false)
         }
     }
 

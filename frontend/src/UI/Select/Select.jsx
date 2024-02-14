@@ -4,7 +4,7 @@ import {ReactComponent as ArrayDown} from "../../assets/icons/arrow-down.svg";
 import {useOutsideClick} from "../../hooks/useOutsideClick";
 import Loader from "../Loader/Loader";
 
-function Select({options, value, onChange, loading}) {
+function Select({options, value, onChange, loading, disabled}) {
     const [isOptionsVisible, setIsOptionsVisible] = useState(false)
     const [isFocused, setIsFocused] = useState(false)
     const ref = useOutsideClick(() => {
@@ -63,6 +63,10 @@ function Select({options, value, onChange, loading}) {
     }
 
     const toggleOptionsVisibility = () => {
+        if (disabled || loading) {
+            return
+        }
+
         setIsOptionsVisible((prev) => !prev)
         setIsFocused((prev) => !prev)
     }
@@ -78,7 +82,7 @@ function Select({options, value, onChange, loading}) {
 
 
     return (
-        <div ref={ref} className={isFocused ? `${c.select} ${c['select-focused']}` : `${c.select}`}
+        <div ref={ref} className={isFocused ? `${c.select} ${c['select-focused']}` : `${c.select} ${disabled && `${c['select-disabled']}`}`}
              onClick={() => toggleOptionsVisibility()}>
             <div className={c.value}>
                 {currentValue}

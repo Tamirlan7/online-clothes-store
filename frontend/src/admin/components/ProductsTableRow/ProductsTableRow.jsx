@@ -4,7 +4,6 @@ import cTable from '../ProductsTable/ProductsTable.module.scss'
 import { ReactComponent as TableDots } from "../../../assets/icons/table-dots.svg";
 import { ReactComponent as Copy } from "../../../assets/icons/copy.svg";
 import { ReactComponent as Trash } from "../../../assets/icons/trash.svg";
-import pImage from '../../../assets/temp/Rectangle 21.png'
 import Switch from "../../../UI/Switch/Switch";
 import {API_URL} from "../../../constants/AppConstants";
 import ProductDeleteModal from "../../modals/ProductDeleteModal/ProductDeleteModal";
@@ -22,10 +21,12 @@ function ProductsTableRow(product) {
         preOrder,
         priceWithDiscount,
         checked,
-        onRowChecked
+        onRowChecked,
+        onVisibleChange,
+        onPreOrderChange,
+        onDeleteProduct
     } = product
 
-    const [deleteModal, setDeleteModal] = useState(false)
 
     return (
         <tr className={c.row}>
@@ -65,23 +66,25 @@ function ProductsTableRow(product) {
                 <div>33</div>
             </td>
             <td className={`${c.cell} ${cTable['limited-cell-83']}`}>
-                <figure><Copy/></figure>
+                <figure style={{ cursor: "pointer" }}><Copy/></figure>
             </td>
             <td className={`${c.cell} ${cTable['limited-c ell-83']}`}>
-                <Switch switched={preOrder}/>
+                <Switch onSwitch={(val) => {
+                    if (onPreOrderChange) {
+                        onPreOrderChange(product, val)
+                    }
+                }} switched={preOrder}/>
             </td>
             <td className={`${c.cell} ${cTable['limited-c ell-83']}`}>
-                <Switch switched={visible}/>
+                <Switch onSwitch={(val) => {
+                    if (onVisibleChange) {
+                        onVisibleChange(product, val)
+                    }
+                }} switched={visible}/>
             </td>
-            <td className={`${c.cell} ${cTable['limited-cell-83']}`} onClick={() => setDeleteModal(true)}>
-                <figure><Trash/></figure>
+            <td className={`${c.cell} ${cTable['limited-cell-83']}`} onClick={() => onDeleteProduct(product)}>
+                <figure style={{ cursor: "pointer" }}><Trash/></figure>
             </td>
-
-            <ProductDeleteModal
-                product={product}
-                isActive={deleteModal}
-                setIsActive={setDeleteModal}
-            />
         </tr>
     );
 }

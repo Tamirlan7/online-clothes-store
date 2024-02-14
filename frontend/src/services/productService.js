@@ -69,4 +69,8 @@ productService.deleteProduct = (id) => {
     return axiosAdmin.delete(`/product/${id}`);
 }
 
+productService.updateProducts = (data) => {
+    return axiosAdmin.put('/product', data)
+}
+
 export default productService;

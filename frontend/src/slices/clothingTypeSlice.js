@@ -22,7 +22,10 @@ const clothingTypeSlice = createSlice({
             })
             .addCase(getAllClothingTypesThunk.fulfilled, (state, action) => {
                 state.loading = false
-                state.clothingTypes = action.payload
+
+                if (Array.isArray(action.payload)) {
+                    state.clothingTypes = action.payload
+                }
             })
             .addCase(getAllClothingTypesThunk.rejected, (state, action) => {
                 state.loading = false

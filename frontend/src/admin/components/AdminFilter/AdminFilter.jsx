@@ -4,7 +4,7 @@ import {Select} from "antd";
 import {useSelector} from "react-redux";
 
 function AdminFilter({onAddProduct, onSearch, searchValue, onSort, sortValue, ...props}) {
-    const {clothingTypes, loading} = useSelector(state => state.clothingType)
+    const {clothingTypes, loading, error} = useSelector(state => state.clothingType)
 
     return (
         <div {...props} className={`${c.component} ${props.className}`}>
@@ -13,7 +13,7 @@ function AdminFilter({onAddProduct, onSearch, searchValue, onSort, sortValue, ..
                     <div className={c.item}>Сортировать по:</div>
                     <Select
                         loading={loading}
-                        disabled={loading}
+                        disabled={loading || error}
                         rootClassName={c.select}
                         onChange={onSort}
                         value={sortValue}

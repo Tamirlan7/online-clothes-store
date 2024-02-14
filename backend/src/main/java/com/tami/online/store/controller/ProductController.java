@@ -114,6 +114,12 @@ public class ProductController {
                 .body(productService.updateProduct(productDtoRequest, id));
     }
 
+    @PutMapping
+    public ResponseEntity<List<Product>> updateProducts(@RequestBody List<ProductDtoRequest> productsDto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(productService.updateProducts(productsDto));
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteProduct(@PathVariable("id") Long id) {

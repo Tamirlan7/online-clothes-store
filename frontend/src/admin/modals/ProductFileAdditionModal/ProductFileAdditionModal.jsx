@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import c from './ProductFileAdditionModal.module.scss'
 import Modal from "../../../UI/Modal/Modal";
 import ModalTitle from "../../../UI/ModalTitle/ModalTitle";
@@ -14,6 +14,14 @@ function ProductFileAdditionModal({isActive, setIsActive, onNext, formData, setF
     const dispatch = useDispatch()
     const { postLoading } = useSelector(state => state.product)
     const [dropFileModal, setDropFileModal] = useState(false)
+
+    useEffect(() => {
+
+        if (!postLoading) {
+            setIsActive(false)
+        }
+
+    }, [postLoading, setIsActive]);
 
     const addFiles = (files) => {
         if (formData?.files) {
