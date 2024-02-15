@@ -1,7 +1,7 @@
-import Home from "../pages/Home/Home";
-import AeDrop from "../pages/AeDrop/AeDrop";
-import ProductDetails from "../pages/ProductDetails/ProductDetails";
-import Privacy from "../pages/Privacy/Privacy";
+import HomePage from "../pages/HomePage/HomePage";
+import AeCollectionPage from "../pages/AeCollectionPage/AeCollectionPage";
+import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
+import PrivacyPage from "../pages/PrivacyPage/PrivacyPage";
 import {RoutePaths} from "./RouteConstants";
 import {lazy} from "react";
 import {userRole} from "../data/userRole";
@@ -30,18 +30,21 @@ export const protectedRoutes = [
 export const publicRoutes = [
     {
         path: RoutePaths.HOME,
-        component: <Home />,
+        component: <HomePage />,
         meta: {
             footerEnabled: false,
         }
     },
     {
         path: RoutePaths.ALTERNATIVE_EDGE,
-        component: <AeDrop />,
+        component: <AeCollectionPage />,
     },
     {
         path: RoutePaths.PRODUCT_DETAILS,
-        component: <ProductDetails />,
+        component: <ProductDetailsPage />,
+        meta: {
+            footerEnabled: false
+        }
     },
     {
         path: RoutePaths.CATALOG,
@@ -57,7 +60,7 @@ export const publicRoutes = [
     },
     {
         path: RoutePaths.PRIVACY,
-        component: <Privacy />,
+        component: <PrivacyPage />,
     },
     {
         path: RoutePaths.CARE,

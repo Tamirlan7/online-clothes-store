@@ -1,5 +1,5 @@
 import React from "react";
-import "./Home.scss";
+import "./HomePage.scss";
 import drop1logo from "../../assets/images/logodrop-1.svg";
 import drop2logo from "../../assets/images/logodrop-2.svg";
 import drop3logo from "../../assets/images/logodrop-3.svg";
@@ -9,7 +9,7 @@ import bottomlogo3 from "../../assets/images/bottomlogo-3.svg";
 import CollectionCard from "../../components/CollectionCard/CollectionCard";
 import {RoutePaths} from "../../router/RouteConstants";
 
-const Home = () => {
+const HomePage = () => {
     return (
         <section className='home'>
             <div className={'home__collection'}>
@@ -45,4 +45,4 @@ const Home = () => {
 );
 }
 
-export default Home
+export default HomePage

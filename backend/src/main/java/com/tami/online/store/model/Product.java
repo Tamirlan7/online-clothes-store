@@ -64,4 +64,12 @@ public class Product {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @Lob
+    @Column(length = 512)
+    private String description;
+
+    private String dimension;
+
+    private String weight;
 }

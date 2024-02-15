@@ -1,9 +1,9 @@
 import React from "react";
-import "./Privacy.scss";
+import "./PrivacyPage.scss";
 import Logo from "../../assets/images/Vector.svg";
 import Footer from "../../components/Footer/Footer";
 
-export default function Privacy() {
+export default function PrivacyPage() {
   return (
     <>
       <section className='privacy'>

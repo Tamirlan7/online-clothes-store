@@ -1,9 +1,12 @@
 import React from 'react';
 import c from './Container.module.scss'
 
-const Container = ({ children }) => {
+const Container = ({children, className, ...props}) => {
     return (
-        <div className={c.container}>
+        <div
+            {...props}
+            className={`${c.container} ${className}`}
+        >
             {children}
         </div>
     );

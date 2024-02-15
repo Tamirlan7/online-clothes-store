@@ -1,6 +1,5 @@
-import React, {useEffect, useMemo, useState} from "react";
-import Footer from "../../components/Footer/Footer";
-import "./AeDrop.scss";
+import React, {useEffect, useState} from "react";
+import "./AeCollectionPage.scss";
 import logo from "../../assets/images/bottomlogo2.svg";
 import Products from "../../components/Products/Products";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,8 +8,9 @@ import {getProductsByCollectionThunk, getProductsThunk} from "../../thunks/produ
 import CollectionLanding from "../../components/CollectionLanding/CollectionLanding";
 import CollectionFilterButtons from "../../components/CollectionFilterButtons/CollectionFilterButtons";
 import Container from "../../components/Container/Container";
+import useDebounce from "../../hooks/useDebounce";
 
-export default function AeDrop() {
+export default function AeCollectionPage() {
     const dispatch = useDispatch()
     const collection = collections.AE;
     const { products } = useSelector(state => state.product)
@@ -18,12 +18,15 @@ export default function AeDrop() {
         selectedClothingType: '',
         searchText: '',
     })
+    const apiSearchText = useDebounce(filterData.searchText)
 
     useEffect(() => {
         dispatch(getProductsThunk({
             collection,
+            name: apiSearchText,
+            clothingType: filterData.selectedClothingType
         }))
-    }, [collection, dispatch])
+    }, [collection, dispatch, apiSearchText, filterData.selectedClothingType])
 
     return (
         <section className='drop'>
@@ -40,9 +43,9 @@ export default function AeDrop() {
             <Container>
                 <div>
                     <CollectionFilterButtons
-                        buttonValue={filterData.selectedClothingType}
+                        clothingType={filterData.selectedClothingType}
                         searchTextValue={filterData.searchText}
-                        onButtonValueChange={(value) => setFilterData((prev) => ({...prev, selectedClothingType: value}))}
+                        onClothingTypeChanged={(value) => setFilterData((prev) => ({...prev, selectedClothingType: value}))}
                         onSearchTextValueChange={(value) => setFilterData((prev) => ({...prev, searchText: value}))}
                     />
                 </div>

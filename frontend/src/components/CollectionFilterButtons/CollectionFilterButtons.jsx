@@ -1,30 +1,21 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import './CollectionFilterButtons.scss'
+import {Select} from "antd";
+import {useSelector} from "react-redux";
 
 const CollectionFilterButtons = ({
-    buttonValue,
-    onButtonValueChange,
+    clothingType,
+    onClothingTypeChanged,
     searchTextValue,
     onSearchTextValueChange
                                  }) => {
 
-    const buttonLastValue = useRef('');
+    const {clothingTypes, loading, error} = useSelector(state => state.clothingType)
 
-    const buttons = [
-        'HOODIE',
-        'T-SHIRT',
-        'SCARF',
-        'ACCESSORIES',
-        'SALE %%%',
-    ]
-
-    const handleOnBtnClick = (value) => {
-        if (buttonLastValue.current === value) {
-            value = ''
+    const handleOnChange = (value) => {
+        if (onClothingTypeChanged) {
+            onClothingTypeChanged(value)
         }
-
-        buttonLastValue.current = value
-        onButtonValueChange(value)
     }
 
     return (
@@ -37,13 +28,20 @@ const CollectionFilterButtons = ({
                     onChange={(e) => onSearchTextValueChange(e.target.value)}
                 />
 
-                <div className='drop__buttons-container'>
-                    {buttons.map((btn, idx) => (
-                        <button onClick={() => handleOnBtnClick(btn)} key={idx} className={buttonValue === btn ? 'drop__button drop__button__selected' : 'drop__button'}>
-                            {btn}
-                        </button>
-                    ))}
-                </div>
+                <Select
+                    loading={loading}
+                    disabled={loading || error}
+                    className={'drop__select'}
+                    onChange={handleOnChange}
+                    value={clothingType}
+                    options={[
+                        {
+                            label: 'Все',
+                            value: '',
+                        },
+                        ...clothingTypes.map(c => ({label: c?.name, value: c?.name}))
+                    ]}
+                />
             </div>
         </div>
     );

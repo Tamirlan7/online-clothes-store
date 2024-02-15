@@ -10,31 +10,31 @@ productService.getProducts = ({
     page,
     size,
                               }) => {
-    let url = '/product'
+    let url = '/product?'
     let urlChanged = false
 
     if (name) {
-        url = url + `?name=${name}&`
+        url = url + `name=${name}&`
         urlChanged = true
     }
 
     if (collection) {
-        url = url + `?collection=${collection}&`
+        url = url + `collection=${collection}&`
         urlChanged = true
     }
 
     if (clothingType) {
-        url = url + `?clothingType=${clothingType}&`
+        url = url + `clothingType=${clothingType}&`
         urlChanged = true
     }
 
     if (page >= 0) {
-        url = url + `?page=${page}&`
+        url = url + `page=${page}&`
         urlChanged = true
     }
 
     if (size) {
-        url = url + `?size=${size}&`
+        url = url + `size=${size}&`
         urlChanged = true
     }
 
@@ -47,10 +47,6 @@ productService.getProducts = ({
     } catch (err) {
         console.log('sui here')
     }
-}
-
-productService.getProductsByCollection = (collection) => {
-    return axiosClient.get(`/product/collection/${collection}`)
 }
 
 productService.getProductById = (productId) => {

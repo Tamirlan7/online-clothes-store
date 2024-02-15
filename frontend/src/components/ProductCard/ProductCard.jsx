@@ -8,11 +8,10 @@ export default function ProductCard({
     id,
     name,
     price,
-    discountPercentage,
+    priceWithDiscount,
     productMediaFiles,
                                     }) {
 
-    const priceWithDiscount = discountPercentage > 0 ? price * (discountPercentage / 100) : null
 
     return (
         <Link
@@ -28,7 +27,9 @@ export default function ProductCard({
                 <p className='card__title'>{name}</p>
                 <div className="card__price-container">
                     <p className='card__price'>{price}р.</p>
-                    <p className='card__sale'>600р.</p>
+                    {priceWithDiscount > 0 && (
+                        <p className='card__sale'>{priceWithDiscount}</p>
+                    )}
                 </div>
             </div>
         </Link>
