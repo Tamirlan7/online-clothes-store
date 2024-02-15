@@ -1,10 +1,12 @@
 .card {
+  box-sizing: border-box;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-decoration: none;
-  max-width: 606px;
+  background-color: black;
+  height: 100%;
 
   &__img {
     object-fit: cover;
@@ -18,7 +20,6 @@
     align-items: center;
     width: 100%;
     gap: 10px;
-    background-color: black;
     padding-top: 12px;
   }
 
@@ -43,7 +44,7 @@
   &__price {
     color: #fff;
     text-align: center;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     font-size: 15.795px;
     font-style: normal;
     font-weight: 400;
@@ -55,7 +56,7 @@
   &__sale {
     color: #bdbdbd;
     text-align: center;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     font-size: 15.795px;
     font-style: normal;
     font-weight: 400;
@@ -64,6 +65,4 @@
     padding: 0;
 	text-decoration: line-through;
   }
-
-
 }

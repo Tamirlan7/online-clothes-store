@@ -1,21 +1,22 @@
 import React from 'react';
-import './CollectionLanding.scss'
+import c from './CollectionLanding.module.scss'
 
 const CollectionLanding = ({ overlayText, overlayImageSrc, logoSrc }) => {
     return (
-        <div className='drop__top-container'>
+        <div className={c.block}>
             <img
-                className='drop__img'
+                className={c.bg}
                 src={overlayImageSrc}
                 alt='animated muted video'
             />
-            <div className='drop__overlay'>
+
+            <div className={c.content}>
                 <img
-                    className='drop__overlay-logo'
+                    className={c.logo}
                     src={logoSrc}
                     alt='logo'
                 />
-                <p className='drop__overlay-text'>{overlayText}</p>
+                <p className={c.text}>{overlayText}</p>
             </div>
         </div>
     );

@@ -42,9 +42,6 @@ export const publicRoutes = [
     {
         path: RoutePaths.PRODUCT_DETAILS,
         component: <ProductDetailsPage />,
-        meta: {
-            footerEnabled: false
-        }
     },
     {
         path: RoutePaths.CATALOG,

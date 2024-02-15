@@ -1,0 +1,152 @@
+.block {
+  position: relative;
+  padding: 3.2rem 12rem;
+  color: #fff;
+  font-size: 20px;
+
+  @media (max-width: 1500px) {
+    padding: 25px;
+  }
+
+  @media (max-width: 1200px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 1100px) {
+    font-size: 16px;
+  }
+}
+
+.inner-block {
+  position: relative;
+  z-index: 120;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.content {
+  position: relative;
+  z-index: 120;
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 440px) {
+    flex-direction: column;
+  }
+}
+
+.left {
+  display: flex;
+  gap: 6.9rem;
+
+  @media (max-width: 610px) {
+    flex-wrap: wrap;
+    max-width: 305px;
+  }
+
+  @media (max-width: 440px) {
+    margin-bottom: 25px;
+    justify-content: flex-start;
+  }
+
+}
+
+.right {
+  width: 30%;
+  font-size: 18px;
+
+  @media (max-width: 1500px) {
+    width: 50%;
+  }
+
+  @media (max-width: 1200px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 1100px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 950px) {
+    width: 40%;
+  }
+
+  @media (max-width: 610px) {
+    width: 50%;
+  }
+
+  @media (max-width: 440px) {
+    width: auto;
+  }
+
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+.bank-cards {
+  list-style: none;
+  display: flex;
+  gap: 2.4rem;
+  align-items: center;
+  margin-bottom: 3.1rem;
+}
+
+.default-bank-cards {
+  @media (max-width: 730px) {
+    display: none;
+  }
+}
+
+.responsive-bank-cards {
+  display: none;
+  margin-bottom: 0;
+
+  @media (max-width: 730px) {
+    margin-top: 25px;
+    display: flex;
+  }
+
+  @media (max-width: 360px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+.bank-card {
+  @media (max-width: 1100px) {
+    max-width: 70px;
+    width: 100%;
+  }
+
+  @media (max-width: 360px) {
+
+  }
+
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;;
+
+    @media (max-width: 360px) {
+      max-width: 70px;
+    }
+  }
+}

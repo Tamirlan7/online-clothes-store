@@ -40,18 +40,27 @@ export default function AeCollectionPage() {
 
             <div className={'drop__separator'} />
 
-            <Container>
-                <div>
-                    <CollectionFilterButtons
-                        clothingType={filterData.selectedClothingType}
-                        searchTextValue={filterData.searchText}
-                        onClothingTypeChanged={(value) => setFilterData((prev) => ({...prev, selectedClothingType: value}))}
-                        onSearchTextValueChange={(value) => setFilterData((prev) => ({...prev, searchText: value}))}
-                    />
-                </div>
+            <Container style={{ padding: 0 }}>
+                <div className={'drop__content'}>
 
-                <div>
-                    <Products products={products}/>
+                    <div className={`drop__inner__content`}>
+                        <div>
+                            <CollectionFilterButtons
+                                clothingType={filterData.selectedClothingType}
+                                searchTextValue={filterData.searchText}
+                                onClothingTypeChanged={(value) => setFilterData((prev) => ({
+                                    ...prev,
+                                    selectedClothingType: value
+                                }))}
+                                onSearchTextValueChange={(value) => setFilterData((prev) => ({
+                                    ...prev,
+                                    searchText: value
+                                }))}
+                            />
+                        </div>
+
+                        <Products products={products}/>
+                    </div>
                 </div>
             </Container>
         </section>

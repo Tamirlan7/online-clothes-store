@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Card from "../../assets/images/item-card.png";
 import './ProductCard.scss';
 import {API_URL} from "../../constants/AppConstants";
 
