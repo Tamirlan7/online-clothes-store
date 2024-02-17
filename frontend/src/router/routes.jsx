@@ -5,6 +5,7 @@ import PrivacyPage from "../pages/PrivacyPage/PrivacyPage";
 import {RoutePaths} from "./RouteConstants";
 import {lazy} from "react";
 import {userRole} from "../data/userRole";
+import OrderPage from "../pages/OrderPage/OrderPage";
 const AdminPage = lazy(() => import("../admin/pages/AdminCatalogPage/AdminCatalogPage"))
 
 /* only user routes */
@@ -62,6 +63,10 @@ export const publicRoutes = [
     {
         path: RoutePaths.CARE,
         component: <div>Уход за изделиями</div>,
+    },
+    {
+        path: RoutePaths.ORDER,
+        component: <OrderPage />,
     },
 ];
 

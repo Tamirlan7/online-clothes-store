@@ -6,6 +6,7 @@ import {notification as notificationApi} from "antd";
 import {useEffect} from "react";
 import {resetNotification} from "../slices/notificationSlice";
 import useInitialize from "../hooks/useInitialize";
+import Cart from "../components/Cart/Cart";
 
 const AppRoute = ({metaData, children}) => {
     const dispatch = useDispatch()
@@ -65,7 +66,9 @@ const AppRoute = ({metaData, children}) => {
             )}
 
             <div style={showAuthenticationPopup ? {
-                filter: 'blur(6px)'
+                filter: 'blur(6px)',
+                position: 'static',
+                zIndex: 1000,
             } : {}}>
                 {metaData.headerEnabled && (
                     <header>
@@ -73,8 +76,10 @@ const AppRoute = ({metaData, children}) => {
                     </header>
                 )}
 
-                <main>
-                    {children}
+                <main style={{ position: 'relative', zIndex: 999 }}>
+                    <div>{children}</div>
+
+                    <Cart />
                 </main>
 
                 {metaData.footerEnabled && (

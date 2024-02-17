@@ -11,4 +11,5 @@ export const RoutePaths = {
     CARE: '/care',
     NOT_FOUND: '/not-found',
     ADMIN: '/admin',
+    ORDER: '/order',
 }

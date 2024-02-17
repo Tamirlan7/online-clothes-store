@@ -4,13 +4,13 @@ import {ReactComponent as ArrayDown} from "../../assets/icons/arrow-down.svg";
 import {useOutsideClick} from "../../hooks/useOutsideClick";
 import Loader from "../Loader/Loader";
 
-function Select({options, value, onChange, loading, disabled}) {
+function Select({options, value, onChange, loading, disabled, rootClassName, addMoreEnabled = false, optionHeight = 42, maxItems = 7}) {
     const [isOptionsVisible, setIsOptionsVisible] = useState(false)
     const [isFocused, setIsFocused] = useState(false)
     const ref = useOutsideClick(() => {
         hideOptions()
     })
-    
+
     /*
     * options: Option[]
     *
@@ -19,7 +19,7 @@ function Select({options, value, onChange, loading, disabled}) {
     *  value: string,
     * }
     * */
-    
+
     const transformedOptions = useMemo(() => {
         let selectedOption = null
 
@@ -39,12 +39,12 @@ function Select({options, value, onChange, loading, disabled}) {
         newOptions = [selectedOption, ...newOptions]
         return newOptions
     }, [options, value])
-    
+
 
     const currentValue = useMemo(() => {
         return transformedOptions.find(option => option?.value === value)?.text
     }, [transformedOptions, value])
-    
+
     const hideOptions = () => {
         if (isOptionsVisible) {
             setIsOptionsVisible(false)
@@ -74,7 +74,7 @@ function Select({options, value, onChange, loading, disabled}) {
     if (loading) {
         return (
             <div className={c['select-loading']}>
-                <Loader rootClassName={c['loader-wrapper']} loaderClassName={c.loader} />
+                <Loader rootClassName={c['loader-wrapper']} loaderClassName={c.loader}/>
                 <span>Загружаем данные...</span>
             </div>
         )
@@ -82,19 +82,22 @@ function Select({options, value, onChange, loading, disabled}) {
 
 
     return (
-        <div ref={ref} className={isFocused ? `${c.select} ${c['select-focused']}` : `${c.select} ${disabled && `${c['select-disabled']}`}`}
+        <div ref={ref}
+             className={isFocused ? `${c.select} ${c['select-focused']} ${rootClassName}` : `${rootClassName} ${c.select} ${disabled && `${c['select-disabled']}`}`}
              onClick={() => toggleOptionsVisibility()}>
             <div className={c.value}>
                 {currentValue}
             </div>
 
-            <div onClick={(e) => e.stopPropagation()}
+            <div style={{ height: optionHeight * maxItems }} onClick={(e) => e.stopPropagation()}
                  className={isOptionsVisible ? `${c.options} ${c['options-visible']}` : `${c.options} ${c['options-hidden']}`}>
                 {Array.isArray(transformedOptions) && transformedOptions.map((option, idx) => (
                     <div className={c.option} onClick={() => handleOnChange(option?.value)}
                          key={idx}>{option?.text}</div>
                 ))}
-                <div className={c.option}>+ Добавить...</div>
+                {addMoreEnabled && (
+                    <div className={c.option}>+ Добавить...</div>
+                )}
             </div>
 
             <figure className={c.icon}>

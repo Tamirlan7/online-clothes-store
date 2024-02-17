@@ -1,5 +1,6 @@
 .drop {
   &__buttons {
+    font-family: 'Halvar Breitschrift', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,16 +10,39 @@
   }
 
   &__select {
-    max-width: 150px;
-    width: 100%;
+    background-color: white;
+    height: 40px !important;
+    font-size: 16px !important;
+    max-width: 160px;
+    font-weight: 700 !important;
+    border-radius: 0 !important;
+
+    @media (max-width: 880px) {
+      flex-grow: 1;
+    }
+
+    @media (max-width: 470px) {
+      max-width: 100%;
+    }
   }
 
   &__container {
     display: flex;
+    padding: 0 10px;
     width: 100%;
     height: 100%;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 880px) {
+      gap: 50px;
+    }
+
+    @media (max-width: 470px) {
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 10px;
+    }
   }
 
   &__input {
@@ -30,10 +54,11 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 130%; /* 20.8px */
+    line-height: 21px;
     text-transform: uppercase;
     border: none;
     outline: none;
+    font-family: 'Halvar Breitschrift', sans-serif;
 
     &::placeholder {
       color: #121212;

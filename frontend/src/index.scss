@@ -1,7 +1,9 @@
-*{
-	box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+@import 'fonts.scss';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -19,11 +21,12 @@ body {
   font-weight: 400;
   font-family: Inter, sans-serif;
   color: #232323;
+  overflow-x: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
 
 a {

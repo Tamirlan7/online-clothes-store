@@ -2,6 +2,7 @@ import React from 'react';
 import {Navigate, useLocation} from "react-router-dom";
 import {UNAUTHENTICATED_ENTRY} from "../constants/AppConstants";
 import useUserInitialization from "../hooks/useUserInitialization";
+import PageLoader from "../UI/PageLoader/PageLoader";
 
 
 const ProtectedRoute = ({ children, enabledRoles  }) => {
@@ -9,7 +10,7 @@ const ProtectedRoute = ({ children, enabledRoles  }) => {
     const { roles, loading, initialized } = useUserInitialization();
 
     if (loading || !initialized) {
-        return <div style={{ fontSize: 32 }}>Загрузка...</div>;
+        return <PageLoader />;
     }
 
     if (roles.length && enabledRoles.length) {

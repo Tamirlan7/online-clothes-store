@@ -3,6 +3,7 @@
   top: 0;
   z-index: 1000;
 }
+
 .navbar {
   background-color: #121212;
   height: 70px;
@@ -41,7 +42,6 @@
   top: 0;
   left: -100%;
   transition: 850ms;
-  position: absolute;
   z-index: 3;
 }
 
@@ -101,7 +101,7 @@
 
 .navbar-about {
   color: #fff;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;

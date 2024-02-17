@@ -1,7 +1,8 @@
 import React from 'react';
 import './CollectionFilterButtons.scss'
-import {Select} from "antd";
+// import {Select} from "antd";
 import {useSelector} from "react-redux";
+import Select from "../../UI/Select/Select";
 
 const CollectionFilterButtons = ({
     clothingType,
@@ -29,19 +30,37 @@ const CollectionFilterButtons = ({
                 />
 
                 <Select
+                    maxItems={4}
+                    rootClassName={'drop__select'}
                     loading={loading}
                     disabled={loading || error}
-                    className={'drop__select'}
                     onChange={handleOnChange}
                     value={clothingType}
                     options={[
                         {
-                            label: 'Все',
+                            text: 'Все',
                             value: '',
                         },
-                        ...clothingTypes.map(c => ({label: c?.name, value: c?.name}))
+                        ...clothingTypes.map(c => ({text: c?.name, value: c?.name}))
                     ]}
                 />
+
+                {/*<Select*/}
+                {/*    loading={loading}*/}
+                {/*    size={'large'}*/}
+                {/*    disabled={loading || error}*/}
+                {/*    popupClassName={'drop__options'}*/}
+                {/*    className={'drop__select'}*/}
+                {/*    onChange={handleOnChange}*/}
+                {/*    value={clothingType}*/}
+                {/*    options={[*/}
+                {/*        {*/}
+                {/*            label: 'Все',*/}
+                {/*            value: '',*/}
+                {/*        },*/}
+                {/*        ...clothingTypes.map(c => ({label: c?.name, value: c?.name}))*/}
+                {/*    ]}*/}
+                {/*/>*/}
             </div>
         </div>
     );

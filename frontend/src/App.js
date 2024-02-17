@@ -1,10 +1,13 @@
 import Router from "./router/Router";
-import {Suspense} from "react";
+import {Suspense, useState} from "react";
+import PageLoader from "./UI/PageLoader/PageLoader";
+import RadioButton from "./UI/RadioButton/RadioButton";
 
 function App() {
+    const [option, setOption] = useState(0)
 
     return (
-        <Suspense fallback={<div>loading...</div>}>
+        <Suspense fallback={<PageLoader/>}>
             <Router/>
         </Suspense>
     );

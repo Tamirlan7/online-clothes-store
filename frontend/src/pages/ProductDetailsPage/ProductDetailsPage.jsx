@@ -6,17 +6,19 @@ import {getProductByIdThunk} from "../../thunks/productThunks";
 import {API_URL} from "../../constants/AppConstants";
 import Container from "../../components/Container/Container";
 import bg from '../../assets/images/card-upper-image.png'
-import card from '../../assets/images/card.jpg'
 import LineThrough from "../../UI/LineThrough/LineThrough";
+import {addProductToCart, showCart} from "../../slices/cartSlice";
+import sizes from "../../data/sizes";
 
 export default function ProductDetailsPage() {
     const dispatch = useDispatch()
     const {currentProduct} = useSelector(state => state.product)
     const {productId} = useParams();
     const [selectedSize, setSelectedSize] = useState({
-        'size': 'XS',
-        'quantity': 0,
+        'size': null,
+        'quantity': 1,
     })
+    const [isCounter, setIsCounter] = useState(false)
     const [currentImageIdx, setCurrentImageIdx] = useState(0)
     const currentMainImage = useMemo(
         () => `${API_URL}/product/${currentProduct?.id}/file/${currentProduct?.productMediaFiles[currentImageIdx].name}`,
@@ -29,6 +31,27 @@ export default function ProductDetailsPage() {
         }
 
     }, [currentProduct?.id, dispatch, productId])
+
+    const handleOnSizeClick = (s) => {
+        setSelectedSize((prev) => ({ ...prev, size: s?.size  }))
+    }
+
+    const handleClickOnBuyBtn = () => {
+        if (selectedSize.size) {
+            setIsCounter(true)
+            setSelectedSize((prev) => ({...prev, quantity: 1}))
+            dispatch(showCart());
+            dispatch(addProductToCart({
+                ...currentProduct,
+                id: `${currentProduct.id}:${selectedSize.size}`,
+                size: {
+                    name: selectedSize.size,
+                    quantity: selectedSize.quantity,
+                },
+                actualPrice: currentProduct.priceWithDiscount > 0 ? currentProduct.priceWithDiscount : currentProduct.price,
+            }))
+        }
+    }
 
     if (!currentProduct) {
         return <></>
@@ -76,23 +99,29 @@ export default function ProductDetailsPage() {
                                     <span className={c.key}>Артикул:</span>
                                     <span className={c.value}>{currentProduct.clothingType?.name}</span>
                                 </div>
-                                <div className={c.chrs}>
-                                    <div className={`${c.key} ${c.pair}`}>Характеристики:</div>
-                                    <div>
-                                        <div className={c.pair}>
-                                            <span className={c.value}>ДxШxВ:</span>
-                                            <span className={c.value}>400x300x10 мм</span>
-                                        </div>
-                                        <div className={c.pair}>
-                                            <span className={c.value}>Вес:</span>
-                                            <span className={c.value}>250 г</span>
+                                {(currentProduct?.dimension && currentProduct?.weight) && (
+                                    <div className={c.chrs}>
+                                        <div className={`${c.key} ${c.pair}`}>Характеристики:</div>
+                                        <div>
+                                            {currentProduct?.dimension && (
+                                                <div className={c.pair}>
+                                                    <span className={c.value}>ДxШxВ:</span>
+                                                    <span className={c.value}>{currentProduct.dimension}</span>
+                                                </div>
+                                            )}
+                                            {currentProduct?.weight && (
+                                                <div className={c.pair}>
+                                                    <span className={c.value}>Вес:</span>
+                                                    <span className={c.value}>{currentProduct.weight}</span>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                             <div className={`${c.pair} ${c['price-block']}`}>
                                 {currentProduct.priceWithDiscount > 0 ? (
-                                    <> 
+                                    <>
                                         <h2 className={`${c.price} ${c.title} ${c.key}`}>{currentProduct.priceWithDiscount} р.</h2>
                                         <span className={`${c['old-price']}`}>
                                             <LineThrough>{currentProduct.price} р.</LineThrough>
@@ -104,30 +133,21 @@ export default function ProductDetailsPage() {
                             </div>
 
                             <ul className={c.sizes}>
-                                <li className={c['size-item']}>
-                                    <span className={`${c.size} ${c.font24} ${c['size-selected']}`}>XS</span>
-                                    <span className={c.quantity}></span>
-                                </li>
-                                <li className={c['size-item']}>
-                                    <span className={`${c.size} ${c.font24} ${c['size-disabled']}`}>S</span>
-                                    <span className={c.quantity}>{''}</span>
-                                </li>
-                                <li className={c['size-item']}>
-                                    <span className={`${c.size} ${c.font24}`}>M</span>
-                                    <span className={c.quantity}>Последний</span>
-                                </li>
-                                <li className={c['size-item']}>
-                                    <span className={`${c.size} ${c.font24}`}>L</span>
-                                    <span className={c.quantity}>Осталось 2</span>
-                                </li>
-                                <li className={c['size-item']}>
-                                    <span className={`${c.size} ${c.font24}`}>XL</span>
-                                    <span className={c.quantity}>Осталось 2</span>
-                                </li>
+                                {currentProduct?.productSizes?.map((s) => (
+                                    <li onClick={() => handleOnSizeClick(s)} className={c['size-item']} key={s?.id}>
+                                        <span className={
+                                            `${c.size} ${c.font24} 
+                                            ${s.size === selectedSize.size && (`${c['size-selected']}`)}
+                                            `}>
+                                            {s?.size}
+                                        </span>
+                                        <span className={c.quantity}>Осталось {s.quantity}</span>
+                                    </li>
+                                ))}
                             </ul>
 
                             <div className={c.btns}>
-                                <button className={`${c.font24} ${c.btn}`}>КУПИТЬ</button>
+                                <button onClick={handleClickOnBuyBtn} className={`${c.font24} ${c.btn}`}>КУПИТЬ</button>
                             </div>
 
                             {currentProduct.preOrder && (

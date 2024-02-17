@@ -1,11 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    admin: {
-        catalog: {},
-        menu: {
-            width: null,
-        }
+    device: {
+        width: null,
+        height: null
+    },
+    cart: {
+        visible: false,
     }
 }
 
@@ -14,14 +15,20 @@ const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
-        changeMenuWidth(state, action) {
-            if (typeof action.payload === 'number') {
-                state.admin.menu = action.payload
-            }
-        }
+        changeDeviceSize(state, action) {
+            /*
+            * device: {
+            *   width: number
+            *   height: number
+            * }
+            *  */
+
+            state.device.width = action.payload['width']
+            state.device.height = action.payload['height']
+        },
     }
 })
 
 
-export const {changeMenuWidth} = appSlice.actions
+export const {changeDeviceSize} = appSlice.actions
 export default appSlice.reducer

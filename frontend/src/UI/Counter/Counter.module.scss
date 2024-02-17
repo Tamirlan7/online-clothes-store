@@ -1,0 +1,42 @@
+.block {
+  border-radius: 152px;
+  width: max-content;
+  background-color: #121212;
+  font-family: "Halvar Breitschrift", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+
+  * {
+    color: #FFFFFF;
+    background-color: transparent;
+  }
+}
+
+.value {
+  flex: 1;
+  width: max-content
+}
+
+.input {
+  padding: 0;
+  text-align: center;
+  outline: none;
+}
+
+.btn {
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+  box-sizing: content-box;
+  padding: 8px 9px 8px 10px;
+  outline: none;
+  border: none;
+  font-family: inherit;
+  font-weight: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: inherit;
+}

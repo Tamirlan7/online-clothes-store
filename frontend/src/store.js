@@ -5,6 +5,7 @@ import appSlice from "./slices/appSlice";
 import userSlice from "./slices/userSlice";
 import notificationSlice from "./slices/notificationSlice";
 import clothingTypeSlice from "./slices/clothingTypeSlice";
+import cartSlice from "./slices/cartSlice";
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
         'app': appSlice,
         'user': userSlice,
         'notification': notificationSlice,
-        'clothingType': clothingTypeSlice
+        'clothingType': clothingTypeSlice,
+        'cart': cartSlice
     },
     devTools: process.env.NODE_ENV === 'development'
 })

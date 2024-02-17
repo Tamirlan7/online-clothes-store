@@ -1,7 +1,7 @@
 import React, {forwardRef} from 'react';
 import c from './Input.module.scss'
 
-function Input({className, mode, invalid, ...props}, ref) {
+function Input({className, mode, invalid, focusable = true, hoverable = true, ...props}, ref) {
     // mode: default || numeric
 
     function handleOnNumericInputChange(e) {
@@ -20,7 +20,13 @@ function Input({className, mode, invalid, ...props}, ref) {
                 {...props}
                 onChange={(e) => handleOnNumericInputChange(e)}
                 type={props.type ?? 'text'}
-                className={`${c.input} ${className} ${invalid && c.invalid}`}
+                className={`
+                    ${c.input} 
+                    ${!focusable && c['not-focusable']} 
+                    ${!hoverable && c['not-hoverable']} 
+                    ${className} 
+                    ${invalid && c.invalid}
+                    `}
             />
         );
     }

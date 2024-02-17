@@ -1,0 +1,55 @@
+.block {
+
+  label {
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #7b7b7b;
+    line-height: 22px;
+  }
+
+
+  input {
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+
+    @media (max-width: 1600px) {
+      font-size: 17px;
+    }
+
+    &::placeholder {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+  }
+
+  @media (max-width: 1600px) {
+    label {
+      font-size: 16px;
+    }
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+.title {
+  font-family: 'Halvar Breitschrift', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 23px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  margin: 2.4rem 0;
+  background-color: #e8e8e8;
+}

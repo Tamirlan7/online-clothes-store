@@ -1,6 +1,7 @@
 .block {
   position: relative;
   height: calc(100vh - 70px);
+  font-family: 'Gotham', sans-serif;
 }
 
 .bg {
@@ -59,6 +60,7 @@
 
 .text {
   width: 50%;
+  font-weight: 500;
 
   @media (max-width: 900px) {
     width: 80%;

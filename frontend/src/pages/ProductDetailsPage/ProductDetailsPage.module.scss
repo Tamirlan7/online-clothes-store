@@ -1,4 +1,5 @@
 .block {
+  font-family: 'Halvar Breitschrift', sans-serif;
   padding: 7rem 22rem 27rem 12rem;
   background-color: #020202;
   color: #fff;
@@ -27,7 +28,7 @@
 
 .bg {
   position: absolute;
-  top: 70px;
+  top: 0;
   width: 100%;
   height: 39%;
   left: 0;
@@ -193,6 +194,7 @@
 .price-block {
   margin-bottom: 4.2rem;
   display: flex;
+  font-family: Arial, sans-serif;
 
   @media (max-width: 1150px) {
     margin-bottom: 3rem;
@@ -236,11 +238,13 @@
 }
 
 .size {
+  font-family: 'Montserrat', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
   display: flex;
   justify-content: center;
   justify-self: flex-start;
   align-items: center;
-  font-weight: 500;
   cursor: pointer;
   width: 64px;
   height: 64px;
