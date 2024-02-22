@@ -25,6 +25,9 @@ function OrderPage() {
         setFormData(prev => ({...prev, [e?.target.name]: e.target.value}))
     }
 
+    const onOrder = () => {
+    }
+
     return (
         <div className={c.block}>
             <Container style={{padding: 0}}>
@@ -67,7 +70,7 @@ function OrderPage() {
                                         <Input placeholder={'Хотел бы уточнить об...'}/>
                                     </FormControl>
                                     <FormControl labelText={'Промокод'}>
-                                        <Input />
+                                        <Input/>
                                     </FormControl>
                                 </OrderSection>
 
@@ -84,15 +87,15 @@ function OrderPage() {
                                     </FormControl>
                                 </OrderSection>
 
-                                <button className={c.btn}>Оформить заказ</button>
+                                <div className={c.btn}>
+                                    <button onClick={onOrder}>ОФОРМИТЬ ЗАКАЗ</button>
+                                </div>
                             </Form>
                         </div>
                         <div className={c.right}>
-                            <div className={c.info}>
-                                <h2 className={c.title}>Ваш Заказ</h2>
-                                <CartItems/>
-                                <p className={c.sum}>Итого: 14.000 р.</p>
-                            </div>
+                            <OrderSection dividerClassName={c.divider} titleText={'Ваш заказ'}>
+                                <CartItems listClassName={c.orders}/>
+                            </OrderSection>
                         </div>
                     </div>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import c from './AdminPagination.module.scss'
 import {ReactComponent as ArrowLeft} from "../../../assets/icons/arrow-left.svg";
 import {useSelector} from "react-redux";

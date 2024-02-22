@@ -6,7 +6,6 @@ import {hideCart} from "../../slices/cartSlice";
 import CartItems from "../CartItems/CartItems";
 import {useNavigate} from "react-router-dom";
 import {RoutePaths} from "../../router/RouteConstants";
-import products from "../Products/Products";
 import {Empty} from "antd";
 
 function Cart() {
@@ -42,7 +41,6 @@ function Cart() {
                             <CartItems/>
                         </div>
 
-                        <p className={c.sum}>Итого: {products.reduce((acc, p) => acc + (p.actualPrice * p.size.quantity), 0)} р.</p>
 
                         <div className={c.btn}>
                             <button onClick={onOrder}>ОФОРМИТЬ ЗАКАЗ</button>
@@ -50,16 +48,15 @@ function Cart() {
                     </>
                 ) : (
                     <>
-                        <div className={c.header} style={{ justifyContent: "flex-end" }}>
+                        <div className={c.header} style={{justifyContent: "flex-end"}}>
                             <figure onClick={onClose}><Close/></figure>
                         </div>
-                        <Empty style={{ fontFamily: 'inherit', fontSize: 16 }} description={'В корзине нет товаров'} />
+                        <Empty style={{fontFamily: 'inherit', fontSize: 16}} description={'В корзине нет товаров'}/>
                     </>
-            )}
+                )}
+            </div>
         </div>
-</div>
-)
-    ;
+    );
 }
 
 export default Cart;

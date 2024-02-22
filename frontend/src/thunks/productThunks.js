@@ -83,6 +83,7 @@ export const updateProductsThunk = createAsyncThunk(
         try {
             // data: Product[]
             const res = await productService.updateProducts(data);
+            console.log(data)
 
             if (res.status < 400) {
                 dispatch(raiseNotification({
@@ -143,6 +144,42 @@ export const createProductThunk = createAsyncThunk(
         }
     }
 )
+
+export const copyProductThunk = createAsyncThunk(
+    "product/copyProductThunk",
+    async (
+        {
+            id
+        },
+        {
+            rejectWithValue,
+            dispatch,
+        }
+    ) => {
+        try {
+            const res = await productService.copyProduct(id);
+
+            if (res.status < 400) {
+                dispatch(raiseNotification({
+                    message: 'Сообщение',
+                    description: `Продукт успешно дублирован`,
+                    type: 'success'
+                }))
+
+                return res.data
+            }
+        } catch (err) {
+            dispatch(raiseNotification({
+                message: err.message,
+                description: 'Произошла ошибка при попытке дублирования продукта',
+                type: 'error'
+            }))
+
+            return rejectWithValue(err.message)
+        }
+    }
+)
+
 
 export const deleteProductThunk = createAsyncThunk(
     "product/deleteProductThunk",

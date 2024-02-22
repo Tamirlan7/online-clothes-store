@@ -69,4 +69,8 @@ productService.updateProducts = (data) => {
     return axiosAdmin.put('/product', data)
 }
 
+productService.copyProduct = (id) => {
+    return axiosAdmin.post(`/product/copy/${id}`)
+}
+
 export default productService;

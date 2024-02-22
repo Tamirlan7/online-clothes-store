@@ -9,57 +9,43 @@ import AdminPagination from "../../components/AdminPagination/AdminPagination";
 import ProductCreationProcess from "../../components/ProductCreationProcess/ProductCreationProcess";
 import {ADMIN_PRODUCTS_PAGE} from "../../../constants/AppConstants";
 import useDebounce from "../../../hooks/useDebounce";
+import {changeAdminProductsPage} from "../../../slices/productSlice";
 
 function AdminCatalogPage() {
     const dispatch = useDispatch()
     const [searchValue, setSearchValue] = useState('')
     const [clothingType, setClothingType] = useState('')
+    const [collection, setCollection] = useState('')
     const apiSearchValue = useDebounce(searchValue, 459)
     const [createModal, setCreateModal] = useState(false)
-    const [page, setPage] = useState(JSON.parse(localStorage.getItem(ADMIN_PRODUCTS_PAGE)) ?? 0)
-    const {products, loading, deleteLoading} = useSelector(state => state.product)
-
-    const sortedProducts = useMemo(() => {
-        if (clothingType === '') {
-            return products
-        }
-
-        return products.slice().sort((pA, pB) => {
-            const typeA = pA.clothingType?.name || '';
-            const typeB = pB.clothingType?.name || '';
-
-            if (typeA === clothingType && typeB !== clothingType) {
-                return -1;
-            } else if (typeA !== clothingType && typeB === clothingType) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
-    }, [products, clothingType])
+    const {products, loading, deleteLoading, adminProductsPage: page} = useSelector(state => state.product)
 
     useEffect(() => {
-        if (!deleteLoading) {
+        const p = JSON.parse(localStorage.getItem(ADMIN_PRODUCTS_PAGE)) ?? 0
+
+        if (p || p === 0) {
+            dispatch(changeAdminProductsPage(Number(p)))
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!deleteLoading && page != null) {
             dispatch(getProductsThunk({
                 page,
                 name: apiSearchValue,
+                collection,
+                clothingType
             }))
         }
 
-    }, [dispatch, page, deleteLoading, apiSearchValue])
-
-    useEffect(() => {
-        if (!products.length && page > 0) {
-            onPageChanged(page - 1)
-        }
-    }, [products, page])
+    }, [dispatch, page, deleteLoading, apiSearchValue, clothingType, collection])
 
     function onAddProductClicked() {
         setCreateModal(true)
     }
 
     const onPageChanged = (page) => {
-        setPage(page)
+        dispatch(changeAdminProductsPage(Number(page)))
         localStorage.setItem(ADMIN_PRODUCTS_PAGE, page)
     }
 
@@ -67,9 +53,6 @@ function AdminCatalogPage() {
         setSearchValue(e.target.value)
     }
 
-    const onSort = (value) => {
-        setClothingType(value)
-    }
 
     return (
         <div className={c.page}>
@@ -77,15 +60,17 @@ function AdminCatalogPage() {
 
             <div className={c.content}>
                 <AdminFilter
-                    sortValue={clothingType}
-                    onSort={onSort}
+                    collection={collection}
+                    onCollectionChanged={(val) => setCollection(val)}
+                    clothingType={clothingType}
+                    onClothingTypeChanged={(val) => setClothingType(val)}
                     searchValue={searchValue}
                     onSearch={onSearch}
                     onAddProduct={onAddProductClicked}
                 />
 
                 <div className={c.table}>
-                    <ProductsTable products={sortedProducts}/>
+                    <ProductsTable products={products}/>
                 </div>
 
                 <div className={c.pagination}>

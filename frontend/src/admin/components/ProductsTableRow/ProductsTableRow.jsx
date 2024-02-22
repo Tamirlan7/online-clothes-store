@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo} from 'react';
 import c from './ProductsTableRow.module.scss'
 import cTable from '../ProductsTable/ProductsTable.module.scss'
 import { ReactComponent as TableDots } from "../../../assets/icons/table-dots.svg";
@@ -6,10 +6,16 @@ import { ReactComponent as Copy } from "../../../assets/icons/copy.svg";
 import { ReactComponent as Trash } from "../../../assets/icons/trash.svg";
 import Switch from "../../../UI/Switch/Switch";
 import {API_URL} from "../../../constants/AppConstants";
-import ProductDeleteModal from "../../modals/ProductDeleteModal/ProductDeleteModal";
+import {useDispatch} from "react-redux";
+import {copyProductThunk} from "../../../thunks/productThunks";
+import {Input} from "antd";
+import {changeProductDescription, showProductDescriptionModal} from "../../../slices/appSlice";
+import TextArea from "antd/es/input/TextArea";
 
 
 function ProductsTableRow(product) {
+    const dispatch = useDispatch()
+
     const {
         id,
         name,
@@ -24,9 +30,20 @@ function ProductsTableRow(product) {
         onRowChecked,
         onVisibleChange,
         onPreOrderChange,
-        onDeleteProduct
-    } = product
+        onDeleteProduct,
+        onPriceChanged,
+        onPriceWithDiscountChanged,
+        onDescriptionClicked,
+        onNameChanged,
+    } = product ?? {}
 
+    const quantity = useMemo(() => {
+        return productSizes.reduce((acc, s) => acc + s.quantity, 0);
+    }, [productSizes])
+
+    const onCopy = () => {
+        dispatch(copyProductThunk({ id }))
+    }
 
     return (
         <tr className={c.row}>
@@ -38,12 +55,21 @@ function ProductsTableRow(product) {
                 </div>
             </td>
             <td className={`${c.cell} ${cTable['limited-cell-121']}`}>
-                <img className={c.image} src={`${API_URL}/product/${id}/file/${productMediaFiles[0].name}`}
+                <img className={c.image} src={`${API_URL}/product/${id}/file/${productMediaFiles[0]?.name}`}
                      alt="product"/>
             </td>
             <td className={`${c.cell} ${cTable['priority-cell']}`}>
                 <div className={c['name-inner-cell']}>
-                    <span className={c.name}>{name}</span>
+                    <TextArea
+                        variant={'borderless'}
+                        value={name}
+                        onChange={(val) => {
+                            if (onNameChanged) {
+                                onNameChanged(product, val)
+                            }
+                        }}
+                        style={{ fontFamily: 'inherit', resize: 'none', padding: 0, overflow: 'hidden' }}
+                    />
                     <div className={c.options}>
                         <div>4 варианта</div>
                         <span>+</span>
@@ -51,38 +77,56 @@ function ProductsTableRow(product) {
                 </div>
             </td>
             <td className={`${c.cell} ${cTable['priority-cell']}`}>
-                <button className={c['description-btn']}>Открыть описание</button>
+                <button className={c['description-btn']} onClick={() => onDescriptionClicked(product)}>Открыть описание</button>
             </td>
             <td className={c.cell}>
                 <div className={c.dropdown}>{collection?.name}</div>
             </td>
             <td className={`${c.cell} ${cTable['centered-cell']}`}>
-                <div>{price}</div>
+                <Input
+                    variant={'borderless'}
+                    value={price}
+                    onChange={(val) => {
+                        if (onPriceChanged) {
+                            onPriceChanged(product, val)
+                        }
+                    }}
+                    style={{ fontFamily: 'inherit', textAlign: 'center' }}
+                />
             </td>
             <td className={`${c.cell} ${cTable['centered-cell']}`}>
-                <div>{priceWithDiscount ?? '-'}</div>
+                <Input
+                    variant={'borderless'}
+                    value={priceWithDiscount}
+                    onChange={(val) => {
+                        if (onPriceWithDiscountChanged) {
+                            onPriceWithDiscountChanged(product, val)
+                        }
+                    }}
+                    style={{ fontFamily: 'inherit', textAlign: 'center' }}
+                />
             </td>
-            <td className={c.cell}>
-                <div>33</div>
+            <td className={`${c.cell} ${cTable['centered-cell']}`}>
+                <div>{quantity}</div>
             </td>
-            <td className={`${c.cell} ${cTable['limited-cell-83']}`}>
-                <figure style={{ cursor: "pointer" }}><Copy/></figure>
+            <td className={`${c.cell} ${cTable['limited-cell-83']} ${cTable['centered-cell']}`}>
+                <figure style={{ cursor: "pointer" }} onClick={onCopy}><Copy/></figure>
             </td>
-            <td className={`${c.cell} ${cTable['limited-c ell-83']}`}>
+            <td className={`${c.cell} ${cTable['limited-c ell-83']} ${cTable['centered-cell']}`}>
                 <Switch onSwitch={(val) => {
                     if (onPreOrderChange) {
                         onPreOrderChange(product, val)
                     }
                 }} switched={preOrder}/>
             </td>
-            <td className={`${c.cell} ${cTable['limited-c ell-83']}`}>
+            <td className={`${c.cell} ${cTable['limited-c ell-83']} ${cTable['centered-cell']}`}>
                 <Switch onSwitch={(val) => {
                     if (onVisibleChange) {
                         onVisibleChange(product, val)
                     }
                 }} switched={visible}/>
             </td>
-            <td className={`${c.cell} ${cTable['limited-cell-83']}`} onClick={() => onDeleteProduct(product)}>
+            <td className={`${c.cell} ${cTable['limited-cell-83']} ${cTable['centered-cell']}`} onClick={() => onDeleteProduct(product)}>
                 <figure style={{ cursor: "pointer" }}><Trash/></figure>
             </td>
         </tr>

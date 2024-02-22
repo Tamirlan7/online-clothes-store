@@ -1,11 +1,19 @@
 .block {
   padding: 4.2rem 0 8rem 12rem;
+
+  @media (max-width: 1400px) {
+    padding-inline: 25px;
+  }
 }
 
 
 .content {
   display: flex;
   gap: 8.4rem;
+
+  @media (max-width: 1250px) {
+    gap: 5rem;
+  }
 }
 
 .radio-btns {
@@ -14,7 +22,28 @@
   gap: 2px;
 }
 
+.left {
+  @media (max-width: 1250px) {
+    width: 40%;
+  }
+}
+
 .right {
+  max-width: 601px;
+  width: 100%;
+  flex: 1;
+}
+
+.divider {
+  margin-bottom: 0 !important;
+}
+
+.orders {
+  margin-top: 0;
+
+  &:first-child {
+    border-top: none !important;
+  }
 }
 
 .form {
@@ -23,6 +52,13 @@
   gap: 4rem;
 }
 
+.title {
+  font-family: 'Halvar Breitschrift', sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 29px;
+  margin-bottom: 24px;
+}
 
 .note {
   margin-top: 6px;
@@ -36,5 +72,38 @@
 
   @media (max-width: 1600px) {
     font-size: 16px;
+  }
+}
+
+
+.btn {
+  font-size: 20px;
+  width: 100%;
+
+  button {
+    max-width: 410px;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    font-size: inherit;
+    justify-content: center;
+    font-weight: 500;
+    font-family: inherit;
+    line-height: 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    align-items: center;
+    border: none;
+    background-color: #121212;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1600px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 351px) {
+    font-size: 14px;
   }
 }

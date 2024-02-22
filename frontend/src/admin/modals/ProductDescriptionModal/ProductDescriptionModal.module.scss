@@ -1,0 +1,23 @@
+.modal {
+  max-width: 600px;
+  width: 100%;
+}
+
+.block {
+  width: 100%;
+
+  label {
+    font-size: 16px;
+  }
+
+  textarea {
+    height: 140px;
+    font-size: 18px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

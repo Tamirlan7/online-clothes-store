@@ -8,6 +8,7 @@ import {changeShowConfirmAction} from "../../../slices/productSlice";
 import ConfirmAction from "../ConfirmAction/ConfirmAction";
 import {updateProductsThunk} from "../../../thunks/productThunks";
 import ProductDeleteModal from "../../modals/ProductDeleteModal/ProductDeleteModal";
+import ProductDescriptionModal from "../../modals/ProductDescriptionModal/ProductDescriptionModal";
 
 
 function ProductsTable({products}) {
@@ -17,6 +18,8 @@ function ProductsTable({products}) {
     const [transformedProducts, setTransformedProducts] = useState([])
     const [deleteProduct, setDeleteProduct] = useState({})
     const [deleteModal, setDeleteModal] = useState(false)
+    const [descriptionModal, setDescriptionModal] = useState(false)
+    const [descriptionModalProduct, setDescriptionModalProduct] = useState({})
 
     useEffect(() => {
         setTransformedProducts(products?.map(p => ({...p, checked})))
@@ -44,7 +47,11 @@ function ProductsTable({products}) {
 
                 if (p) {
                     if (tp.visible !== p.visible ||
-                        tp.preOrder !== p.preOrder) {
+                        tp.preOrder !== p.preOrder ||
+                        tp.price !== p.price ||
+                        tp.priceWithDiscount !== p.priceWithDiscount ||
+                        tp.name !== p.name
+                    ) {
                         return true
                     }
                 }
@@ -74,6 +81,26 @@ function ProductsTable({products}) {
         setTransformedProducts((prev) => [...prev.map(cp => {
             if (cp.id === p.id) {
                 cp.visible = val
+            }
+
+            return cp
+        })])
+    }
+
+    const onPriceChanged = (p, e) => {
+        setTransformedProducts((prev) => [...prev.map(cp => {
+            if (cp.id === p.id) {
+                cp.price = Number(e.target.value)
+            }
+
+            return cp
+        })])
+    }
+
+    const onPriceWithDiscountChanged = (p, e) => {
+        setTransformedProducts((prev) => [...prev.map(cp => {
+            if (cp.id === p.id) {
+                cp.priceWithDiscount = Number(e.target.value)
             }
 
             return cp
@@ -110,6 +137,19 @@ function ProductsTable({products}) {
                         updatedProduct.preOrderChanged = true;
                     }
 
+                    if (tp.price !== p.price) {
+                        updatedProduct.price = tp.price
+                    }
+
+                    if (tp.priceWithDiscount !== p.priceWithDiscount) {
+                        updatedProduct.priceWithDiscount = tp.priceWithDiscount
+                    }
+
+                    if (tp.name !== p.name) {
+                        updatedProduct.name = tp.name
+                    }
+
+
                     if (Object.keys(updatedProduct).length) {
                         updatedProduct.id = tp.id
                         data.push(updatedProduct)
@@ -122,6 +162,21 @@ function ProductsTable({products}) {
         dispatch(updateProductsThunk({
             data,
         }))
+    }
+
+    const onNameChanged = (p, e) => {
+        setTransformedProducts((prev) => [...prev.map(cp => {
+            if (cp.id === p.id) {
+                cp.name = e.target.value
+            }
+
+            return cp
+        })])
+    }
+
+    const onDescriptionClicked = (p) => {
+        setDescriptionModal(true)
+        setDescriptionModalProduct(p)
     }
 
     return (
@@ -158,6 +213,10 @@ function ProductsTable({products}) {
                             onPreOrderChange={onPreOrderChange}
                             onVisibleChange={onVisibleChange}
                             onDeleteProduct={onDeleteProduct}
+                            onPriceChanged={onPriceChanged}
+                            onPriceWithDiscountChanged={onPriceWithDiscountChanged}
+                            onDescriptionClicked={onDescriptionClicked}
+                            onNameChanged={onNameChanged}
                             {...p}
                         />
                     ))}</>
@@ -181,6 +240,12 @@ function ProductsTable({products}) {
                 product={deleteProduct}
                 isActive={deleteModal}
                 setIsActive={setDeleteModal}
+            />
+
+            <ProductDescriptionModal
+                isActive={descriptionModal}
+                setIsActive={setDescriptionModal}
+                product={descriptionModalProduct}
             />
         </>
     );

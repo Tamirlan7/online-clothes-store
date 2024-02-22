@@ -2,7 +2,7 @@ import React from 'react';
 import c from './Counter.module.scss'
 import Input from "../Input/Input";
 
-function Counter({rootClassName, inputClassName, value, onChange}) {
+function Counter({rootClassName, inputClassName, value, onChange, min = 1}) {
 
     const increment = () => handleOnChange(Number(value) + 1)
     const decrement = () => handleOnChange(Number(value) <= 0 ? 0 : Number(value - 1))
@@ -10,6 +10,14 @@ function Counter({rootClassName, inputClassName, value, onChange}) {
     const handleOnChange = (updatedValue) => {
         if (updatedValue === value) {
             return
+        }
+
+        if (typeof updatedValue === 'string' && updatedValue.trim() === '') {
+            updatedValue = 1
+        }
+
+        if (updatedValue < min) {
+            updatedValue = min;
         }
 
         if (onChange) {

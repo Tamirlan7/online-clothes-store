@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
+    copyProductThunk,
     createProductThunk,
     deleteProductThunk,
     getProductByIdThunk,
@@ -19,6 +20,8 @@ const initialState = {
     totalPages: null,
     deleteLoading: false,
     showConfirmAction: false,
+    size: null,
+    adminProductsPage: null,
 }
 
 const productSlice = createSlice({
@@ -28,6 +31,11 @@ const productSlice = createSlice({
         changeShowConfirmAction(state, action) {
             if (typeof action.payload === 'boolean') {
                 state.showConfirmAction = action.payload
+            }
+        },
+        changeAdminProductsPage(state, action) {
+            if (typeof action.payload === 'number') {
+                state.adminProductsPage = action.payload
             }
         }
     },
@@ -43,6 +51,7 @@ const productSlice = createSlice({
                     state.products = action.payload.content
                 }
                 state.totalPages = action.payload?.totalPages
+                state.size = action.payload?.size;
             })
             .addCase(getProductsThunk.rejected, (state, action) => {
                 state.loading = false
@@ -88,6 +97,26 @@ const productSlice = createSlice({
                 state.errorMessage = action.payload
             })
 
+
+            .addCase(copyProductThunk.pending, (state, action) => {
+                state.postLoading = true
+            })
+            .addCase(copyProductThunk.fulfilled, (state, action) => {
+                state.postLoading = false
+
+                if (state.size && action.payload['id']) {
+
+                    if (state.products.length < state.size) {
+                        state.products.push(action.payload)
+                    }
+                }
+            })
+            .addCase(copyProductThunk.rejected, (state, action) => {
+                state.postLoading = false
+                state.error = true
+                state.errorMessage = action.payload
+            })
+
             .addCase(updateProductsThunk.pending, (state, action) => {
                 state.putLoading = true
             })
@@ -113,5 +142,5 @@ const productSlice = createSlice({
 
 })
 
-export const {changeShowConfirmAction} = productSlice.actions
+export const {changeShowConfirmAction, changeAdminProductsPage} = productSlice.actions
 export default productSlice.reducer

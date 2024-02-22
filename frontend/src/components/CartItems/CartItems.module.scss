@@ -1,4 +1,5 @@
 .list {
+  font-family: Inter, sans-serif;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -11,4 +12,20 @@
 .item {
   padding: 24px 0;
   border-bottom: 1px solid #d0d0d0;
+
+  @media (max-width: 550px) {
+    padding: 12px 0;
+  }
+}
+
+.sum {
+  margin-top: 24px;
+  text-align: right;
+  line-height: 21px;
+  font-weight: 700;
+  font-size: 18px;
+
+  @media (max-width: 1600px) {
+    font-size: 16px;
+  }
 }

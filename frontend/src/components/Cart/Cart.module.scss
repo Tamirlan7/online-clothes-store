@@ -9,7 +9,9 @@
   width: 100%;
   background-color: #fff;
   padding: 20px;
+  border-left: 1px solid rgba(18, 18, 18, 0.2);
   animation: content-enter .3s ease-in-out forwards;
+  box-shadow: 0 8px 8px 8px #1018280A;
 }
 
 .content {
@@ -56,14 +58,6 @@
   }
 }
 
-.sum {
-  margin-top: 24px;
-  text-align: right;
-  line-height: 21px;
-  font-weight: 700;
-  font-size: 18px;
-}
-
 .btn {
   margin-top: 7.2rem;
   font-size: 24px;
@@ -83,13 +77,23 @@
     border: none;
     background-color: #121212;
     color: #fff;
+
+    @media (max-width: 1200px) {
+      height: 48px;
+    }
+
+    @media (max-width: 500px) {
+      height: 40px;
+      font-size: 14px
+    ;
+    }
   }
 
   @media (max-width: 1600px) {
     font-size: 18px;
   }
 
-  @media (max-width: 351px) {
+  @media (max-width: 1200px) {
     font-size: 16px;
   }
 }

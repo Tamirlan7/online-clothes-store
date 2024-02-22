@@ -8,7 +8,10 @@ const Modal = ({children, className, isActive, setIsActive, onClose, ...props}) 
             className={isActive ? `${c['modal-window']} ${c['modal-active']}` : `${c['modal-window']}`}
             {...props}
             onClick={() => {
-                setIsActive(false)
+                if (setIsActive) {
+                    setIsActive(false)
+                }
+
                 if (onClose) {
                     onClose()
                 }
