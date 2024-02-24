@@ -9,11 +9,9 @@ const CollectionCard = ({ text, bottomLogoSrc, dropLogoSrc, dropImgSrc, href  })
             to={href}
             className='home__drop'
         >
-            <img
-                className='home__drop-img'
-                src={dropImgSrc}
-                alt='drop'
-            />
+            <video autoPlay loop muted className='home__drop-img'>
+                <source src={dropImgSrc} type={'video/mp4'} />
+            </video>
             <div className='home__overlay'>
                 <img
                     className='home__overlay-logo'

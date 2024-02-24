@@ -4,11 +4,9 @@ import c from './CollectionLanding.module.scss'
 const CollectionLanding = ({ overlayText, overlayImageSrc, logoSrc }) => {
     return (
         <div className={c.block}>
-            <img
-                className={c.bg}
-                src={overlayImageSrc}
-                alt='animated muted video'
-            />
+            <video autoPlay loop muted className={c.bg}>
+                <source src={overlayImageSrc} type={'video/mp4'}/>
+            </video>
 
             <div className={c.content}>
                 <img

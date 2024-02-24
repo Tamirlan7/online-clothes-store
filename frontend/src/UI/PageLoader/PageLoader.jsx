@@ -1,5 +1,5 @@
 import React from 'react';
-import loader from "../../assets/gif/loader/loader.gif";
+import loader from "../../assets/videos/loader/loader.gif";
 import c from './PageLoader.module.scss'
 
 

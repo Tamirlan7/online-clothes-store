@@ -1,32 +1,34 @@
+import {RoutePaths} from "../router/RouteConstants";
+
 export const SidebarData = [
   {
     title: "Главная",
-    path: "/",
+    path: RoutePaths.HOME,
     cName: "nav-text",
   },
   {
     title: "Каталог",
-    path: "/catalog",
+    path: RoutePaths.CATALOG,
     cName: "nav-text",
   },
   {
     title: "Альбом",
-    path: "/album",
+    path: RoutePaths.ALBUM,
     cName: "nav-text",
   },
   {
     title: "Контакты",
-    path: "/contacts",
+    path: RoutePaths.CONTACTS,
     cName: "nav-text",
   },
   {
     title: "Политика конфиденциальности",
-    path: "/PrivacyPage",
+    path: RoutePaths.PRIVACY,
     cName: "nav-text",
   },
   {
     title: "Уход за изделиями",
-    path: "/care",
+    path: RoutePaths.CARE,
     cName: "nav-text",
   },
 ];
