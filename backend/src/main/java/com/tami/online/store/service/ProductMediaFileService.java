@@ -8,10 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Files;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ public class ProductMediaFileService {
 
     private final FileService fileService;
     private final ProductMediaFileRepository productMediaFileRepository;
+
 
     @Transactional
     public ProductMediaFile create(MultipartFile file, Product product) {
@@ -43,6 +45,22 @@ public class ProductMediaFileService {
                 .collect(Collectors.toList());
 
         product.setProductMediaFiles(productMediaFiles);
+    }
+
+    public void copyMediaFiles(Product pCopyFrom, Product pCopyTo) {
+
+        List<ProductMediaFile> productMediaFiles = pCopyFrom.getProductMediaFiles().stream()
+                .map(file -> fileService.copyFile(file, "product/" + pCopyTo.getId().toString()))
+                .map(dto -> ProductMediaFile.builder()
+                        .name(dto.name())
+                        .path(dto.path())
+                        .type(dto.type())
+                        .product(pCopyTo)
+                        .build())
+                .collect(Collectors.toList());
+
+        productMediaFileRepository.saveAll(productMediaFiles);
+        pCopyTo.setProductMediaFiles(productMediaFiles);
     }
 
 }

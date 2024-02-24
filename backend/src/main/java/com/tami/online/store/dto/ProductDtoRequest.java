@@ -48,4 +48,10 @@ public class ProductDtoRequest {
     private boolean preOrderChanged = false;
 
     private boolean preOrder;
+
+    private String description;
+
+    private String weight;
+
+    private String dimension;
 }

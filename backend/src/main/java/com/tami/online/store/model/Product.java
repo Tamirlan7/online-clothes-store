@@ -41,6 +41,7 @@ public class Product {
     @Column(name = "pre_order")
     private boolean preOrder;
 
+    @Column(name = "visible")
     private boolean visible;
 
     @ManyToOne
@@ -50,7 +51,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductSize> productSizes;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE })
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ProductMediaFile> productMediaFiles;
 
     @PositiveOrZero(message = "Поле должно быть больше либо равна нулю")
@@ -65,7 +66,6 @@ public class Product {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Lob
     @Column(length = 512)
     private String description;
 

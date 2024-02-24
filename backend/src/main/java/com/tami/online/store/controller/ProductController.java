@@ -40,6 +40,12 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
+    @PostMapping("/copy/{id}")
+    public ResponseEntity<Product> copyProduct(@PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(productService.copyProduct(id));
+    }
+
     @GetMapping
     public ResponseEntity<Page<Product>> getAllProducts(
             @RequestParam(name = "name", required = false, defaultValue = "") String name,

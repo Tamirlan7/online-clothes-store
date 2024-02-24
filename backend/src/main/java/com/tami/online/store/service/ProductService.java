@@ -3,6 +3,7 @@ package com.tami.online.store.service;
 import com.tami.online.store.dto.GetProductsArgs;
 import com.tami.online.store.dto.ProductDtoRequest;
 import com.tami.online.store.exception.NotFoundException;
+import com.tami.online.store.mapper.ProductMapper;
 import com.tami.online.store.model.ClothingType;
 import com.tami.online.store.model.Collection;
 import com.tami.online.store.model.Product;
@@ -34,6 +35,7 @@ public class ProductService {
     private final ClothingTypeRepository clothingTypeRepository;
     private final CollectionRepository collectionRepository;
     private final FileService fileService;
+    private final ProductMapper productMapper;
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
     public Page<Product> getAllProducts(GetProductsArgs args) {
@@ -49,7 +51,7 @@ public class ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Продукт с id " + id + " не существует"));
 
-
+        // clothing type
         if (productDtoRequest.getClothingType() != null) {
             ClothingType clothingType = clothingTypeRepository
                     .findByName(productDtoRequest.getClothingType())
@@ -58,6 +60,7 @@ public class ProductService {
             product.setClothingType(clothingType);
         }
 
+        // collection
         if (productDtoRequest.getCollectionName() != null) {
             Collection collection = collectionRepository
                     .findByName(productDtoRequest.getCollectionName())
@@ -66,26 +69,47 @@ public class ProductService {
             product.setCollection(collection);
         }
 
+        // price
         if (productDtoRequest.getPrice() > -1) {
             product.setPrice(productDtoRequest.getPrice());
         }
 
+        // price with discount
         if (productDtoRequest.getPriceWithDiscount() > -1) {
-            product.setPrice(productDtoRequest.getPriceWithDiscount());
+            product.setPriceWithDiscount(productDtoRequest.getPriceWithDiscount());
         }
 
+        // name
         if (productDtoRequest.getName() != null) {
             product.setName(productDtoRequest.getName());
         }
 
+        // visible
         if (productDtoRequest.isVisibleChanged() && productDtoRequest.isVisible() != product.isVisible()) {
             product.setVisible(productDtoRequest.isVisible());
         }
 
+        // pre order
         if (productDtoRequest.isPreOrderChanged() && productDtoRequest.isPreOrder() != product.isPreOrder()) {
             product.setPreOrder(productDtoRequest.isPreOrder());
         }
 
+        // description
+        if (productDtoRequest.getDescription() != null) {
+            product.setDescription(productDtoRequest.getDescription());
+        }
+
+        // weight
+        if (productDtoRequest.getWeight() != null) {
+            product.setWeight(productDtoRequest.getWeight());
+        }
+
+        // dimension
+        if (productDtoRequest.getDimension() != null) {
+            product.setDimension(productDtoRequest.getDimension());
+        }
+
+        // sizes
         if (productDtoRequest.getSizes() != null && !productDtoRequest.getSizes().isEmpty()) {
             List<ProductSize> productSizes = product.getProductSizes();
 
@@ -172,5 +196,15 @@ public class ProductService {
         return productsDto.stream()
                 .map(p -> updateProduct(p, p.getId()))
                 .toList();
+    }
+
+    public Product copyProduct(Long id) {
+        Product p = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Продукт с id " + id + " не существует"));
+
+        Product cp = productMapper.cloneProduct(p);
+        cp = productRepository.save(cp);
+        productMediaFileService.copyMediaFiles(p, cp);
+        return cp;
     }
 }

@@ -25,13 +25,15 @@ public class AppInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        userRepository.save(
-                User.builder()
-                        .username("admin")
-                        .password(passwordEncoder.encode("admin"))
-                        .role(Role.ROLE_ADMIN)
-                        .build()
-        );
+        if (userRepository.findByUsername("admin").isEmpty()) {
+            userRepository.save(
+                    User.builder()
+                            .username("admin")
+                            .password(passwordEncoder.encode("admin"))
+                            .role(Role.ROLE_ADMIN)
+                            .build()
+            );
+        }
 
         initClothingTypes();
         initCollections();

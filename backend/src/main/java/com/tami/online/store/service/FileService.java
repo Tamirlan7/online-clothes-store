@@ -3,6 +3,8 @@ package com.tami.online.store.service;
 import com.tami.online.store.dto.FileDtoResponse;
 import com.tami.online.store.exception.CustomBadRequestException;
 import com.tami.online.store.exception.InternalServerException;
+import com.tami.online.store.model.Product;
+import com.tami.online.store.model.ProductMediaFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -10,12 +12,11 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.util.Objects;
 
 @Service
 public class FileService {
@@ -36,6 +37,24 @@ public class FileService {
             } catch (IOException e) {
                 throw new InternalServerException("Could not create " + root + " directory (Files exception), errorMessage: " + e.getMessage());
             }
+        }
+    }
+
+    public FileDtoResponse copyFile(ProductMediaFile file, String copyToPrefix) {
+        try {
+            Path src = Paths.get(file.getPath());
+            Path dist = Paths.get((root.resolve(copyToPrefix).resolve(file.getName()).toString()));
+
+            Files.copy(src, dist, StandardCopyOption.REPLACE_EXISTING);
+
+            return FileDtoResponse.builder()
+                    .type(file.getType())
+                    .name(file.getName())
+                    .path(dist.toString())
+                    .build();
+
+        } catch (IOException e) {
+            throw new CustomBadRequestException("Could not copy file " + e.getMessage());
         }
     }
 

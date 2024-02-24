@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  frontend:
+    container_name: uncwear-frontend
+    image: uncwear-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
