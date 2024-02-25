@@ -8,7 +8,6 @@ import Container from "../../components/Container/Container";
 import bg from '../../assets/images/card-upper-image.png'
 import LineThrough from "../../UI/LineThrough/LineThrough";
 import {addProductToCart, showCart} from "../../slices/cartSlice";
-import sizes from "../../data/sizes";
 
 export default function ProductDetailsPage() {
     const dispatch = useDispatch()
@@ -133,7 +132,7 @@ export default function ProductDetailsPage() {
                             </div>
 
                             <ul className={c.sizes}>
-                                {currentProduct?.productSizes?.map((s) => (
+                                {currentProduct?.productSizes?.filter(s => s.quantity).map((s) => (
                                     <li onClick={() => handleOnSizeClick(s)} className={c['size-item']} key={s?.id}>
                                         <span className={
                                             `${c.size} ${c.font24} 
@@ -141,7 +140,6 @@ export default function ProductDetailsPage() {
                                             `}>
                                             {s?.size}
                                         </span>
-                                        <span className={c.quantity}>Осталось {s.quantity}</span>
                                     </li>
                                 ))}
                             </ul>

@@ -90,6 +90,7 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                         <Select onChange={(value) => setFormData((prev) => ({...prev, clothingType: value}))}
                                 loading={clothingTypesLoading}
                                 value={formData.clothingType}
+                                maxItems={clothingTypes.length > 7 ? 7 : clothingTypes.length}
                                 disabled={clothingTypeError}
                                 options={clothingTypes?.map((c) => ({
                                     value: c?.name,
@@ -98,6 +99,7 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                     </FormControl>
                     <FormControl labelText={'Выберите коллекцию'}>
                         <Select loading={collectionsLoading}
+                                maxItems={collections.length > 7 ? 7 : collections.length}
                                 onChange={(value) => setFormData((prev) => ({...prev, collection: value}))}
                                 disabled={collectionError}
                                 value={formData.collection}

@@ -432,7 +432,6 @@ export default function PrivacyPage() {
           сети Интернет по адресу https://uncwear.ru/privacy_policy.
         </p>
       </section>
-      <Footer />
     </>
   );
 }

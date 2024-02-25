@@ -2,7 +2,6 @@ import React from 'react';
 import c from './AdminFilter.module.scss'
 import {Select} from "antd";
 import {useSelector} from "react-redux";
-import {collections} from "../../../data/collections";
 
 function AdminFilter({onAddProduct, onSearch, searchValue, onClothingTypeChanged, clothingType, collection, onCollectionChanged, ...props}) {
     const {clothingTypes, loading, error} = useSelector(state => state.clothingType)
@@ -15,7 +14,7 @@ function AdminFilter({onAddProduct, onSearch, searchValue, onClothingTypeChanged
                     <div className={c.item}>Сортировать по:</div>
                     <Select
                         loading={loading}
-                        disabled={loading || error}
+                        disabled={loading || error || !clothingTypes.length}
                         rootClassName={c.select}
                         onChange={onClothingTypeChanged}
                         value={clothingType ?? ''}
@@ -30,7 +29,7 @@ function AdminFilter({onAddProduct, onSearch, searchValue, onClothingTypeChanged
                     <Select
                         style={{ marginLeft: 15 }}
                         loading={collectionsLoading}
-                        disabled={collectionsLoading || collectionsError}
+                        disabled={collectionsLoading || collectionsError || !collections.length}
                         rootClassName={c.select}
                         onChange={onCollectionChanged}
                         value={collection ?? ''}

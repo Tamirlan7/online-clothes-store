@@ -1,11 +1,12 @@
 .privacy {
   background: #010101;
   margin: 0;
-  padding: 0;
+  padding: 15px 0 50px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: "Halvar Breitschrift", sans-serif;
 
   &__container {
     width: calc(100vw - 80px);
@@ -17,11 +18,12 @@
 
   &__title {
     color: #fff;
-    font-size: 72px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
 	margin: 42px 0;
+    font-size: 45px;
+
   }
 
   &__logo {
@@ -36,5 +38,9 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
+  @media (max-width: 1600px) {
+    font-size: 20px;
+  }
   }
 }

@@ -30,10 +30,10 @@ const CollectionFilterButtons = ({
                 />
 
                 <Select
-                    maxItems={4}
+                    maxItems={clothingTypes.length >= 4 ? 4 : clothingTypes.length <= 0 ? 0 : clothingTypes.length}
                     rootClassName={'drop__select'}
                     loading={loading}
-                    disabled={loading || error}
+                    disabled={loading || error || !clothingTypes.length}
                     onChange={handleOnChange}
                     value={clothingType}
                     options={[
@@ -44,23 +44,6 @@ const CollectionFilterButtons = ({
                         ...clothingTypes.map(c => ({text: c?.name, value: c?.name}))
                     ]}
                 />
-
-                {/*<Select*/}
-                {/*    loading={loading}*/}
-                {/*    size={'large'}*/}
-                {/*    disabled={loading || error}*/}
-                {/*    popupClassName={'drop__options'}*/}
-                {/*    className={'drop__select'}*/}
-                {/*    onChange={handleOnChange}*/}
-                {/*    value={clothingType}*/}
-                {/*    options={[*/}
-                {/*        {*/}
-                {/*            label: 'Все',*/}
-                {/*            value: '',*/}
-                {/*        },*/}
-                {/*        ...clothingTypes.map(c => ({label: c?.name, value: c?.name}))*/}
-                {/*    ]}*/}
-                {/*/>*/}
             </div>
         </div>
     );
