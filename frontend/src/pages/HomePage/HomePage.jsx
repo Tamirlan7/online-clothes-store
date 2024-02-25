@@ -1,11 +1,13 @@
 import React from "react";
 import "./HomePage.scss";
-import drop1logo from "../../assets/images/logodrop-1.svg";
-import drop2logo from "../../assets/images/logodrop-2.svg";
-import drop3logo from "../../assets/images/logodrop-3.svg";
-import bottomlogo1 from "../../assets/images/bottomlogo1.svg";
-import bottomlogo2 from "../../assets/images/bottomlogo2.svg";
-import bottomlogo3 from "../../assets/images/bottomlogo-3.svg";
+import dropUncLogo from "../../assets/images/dropUncLogo.svg";
+import dropAeLogo from "../../assets/images/dropAeLogo.svg";
+import dropAgLogo from "../../assets/images/dropAgLogo.svg";
+
+import uncBottomLogo from "../../assets/images/uncBottomLogo.svg";
+import bottomAeLogo from "../../assets/images/bottomAeLogo.svg";
+import bottomAgLogo from "../../assets/images/bottomAgLogo.svg";
+
 import CollectionCard from "../../components/CollectionCard/CollectionCard";
 import {RoutePaths} from "../../router/RouteConstants";
 import uncriders from '../../assets/videos/banners/uncriders.MP4'
@@ -19,8 +21,8 @@ const HomePage = () => {
                 <CollectionCard
                     href={RoutePaths.UNCRIDERS}
                     dropImgSrc={uncriders}
-                    dropLogoSrc={drop1logo}
-                    bottomLogoSrc={bottomlogo1}
+                    dropLogoSrc={dropUncLogo}
+                    bottomLogoSrc={uncBottomLogo}
                     text={'UNC — the clothing brand has been in existence since 2021. Basing and logistics management in Russia, Cheboksary.'}
                 />
             </div>
@@ -29,8 +31,8 @@ const HomePage = () => {
                 <CollectionCard
                     href={RoutePaths.ALTERNATIVE_EDGE}
                     dropImgSrc={alternativeEdge}
-                    dropLogoSrc={drop2logo}
-                    bottomLogoSrc={bottomlogo2}
+                    dropLogoSrc={dropAeLogo}
+                    bottomLogoSrc={bottomAeLogo}
                     text={'UNC — the clothing brand has been in existence since 2021. Basing and logistics management in Russia, Cheboksary.'}
                 />
             </div>
@@ -39,8 +41,8 @@ const HomePage = () => {
                 <CollectionCard
                     href={RoutePaths.ADVANCED_GEAR}
                     dropImgSrc={noSignal}
-                    dropLogoSrc={drop3logo}
-                    bottomLogoSrc={bottomlogo3}
+                    dropLogoSrc={dropAgLogo}
+                    bottomLogoSrc={bottomAgLogo}
                     text={'UNC — the clothing brand has been in existence since 2021. Basing and logistics management in Russia, Cheboksary.'}
                 />
             </div>

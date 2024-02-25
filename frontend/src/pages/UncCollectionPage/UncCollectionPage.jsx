@@ -1,20 +1,19 @@
-import React, {useEffect, useState} from "react";
-import "./AeCollectionPage.scss";
-import logo from "../../assets/images/bottomAeLogo.svg";
-import Products from "../../components/Products/Products";
+import React, {useEffect, useState} from 'react';
+import c from './UncCollectionPage.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {collections} from "../../data/collections";
+import useDebounce from "../../hooks/useDebounce";
 import {getProductsThunk} from "../../thunks/productThunks";
 import CollectionLanding from "../../components/CollectionLanding/CollectionLanding";
-import CollectionFilterButtons from "../../components/CollectionFilterButtons/CollectionFilterButtons";
+import uncridersBanner from "../../assets/videos/banners/uncriders.MP4";
+import logo from "../../assets/images/uncBottomLogo.svg";
 import Container from "../../components/Container/Container";
-import useDebounce from "../../hooks/useDebounce";
-import alternativeEdge from '../../assets/videos/banners/alternative-edge.MP4'
+import CollectionFilterButtons from "../../components/CollectionFilterButtons/CollectionFilterButtons";
+import Products from "../../components/Products/Products";
 
-export default function AeCollectionPage() {
+function UncCollectionPage() {
     const dispatch = useDispatch()
-    const collection = collections.AE;
-    const { products } = useSelector(state => state.product)
+    const collection = collections.UR;
     const [filterData, setFilterData] = useState({
         selectedClothingType: '',
         searchText: '',
@@ -33,7 +32,7 @@ export default function AeCollectionPage() {
         <section className='drop'>
             <div>
                 <CollectionLanding
-                    overlayImageSrc={alternativeEdge}
+                    overlayImageSrc={uncridersBanner}
                     logoSrc={logo}
                     overlayText={'Также как постоянный количественный рост и сфера нашей активности не даёт нам иного выбора, кроме определения приоретизации разума над эмоциями. Есть над чем задуматься: представители современных социальных резервов набирают популярность среди определенных слоев населения, а значит, должны быть своевременно верифицированы.'}
                 />
@@ -67,3 +66,5 @@ export default function AeCollectionPage() {
         </section>
     );
 }
+
+export default UncCollectionPage;

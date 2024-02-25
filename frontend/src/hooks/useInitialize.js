@@ -7,10 +7,10 @@ import {changeDeviceSize} from "../slices/appSlice";
 export default function useInitialize() {
     const dispatch = useDispatch()
 
-    const handleResize = useCallback((e) => {
+    const handleResize = useCallback(() => {
         dispatch(changeDeviceSize({
-            width: e.target.innerWidth,
-            height: e.target.innerHeight,
+            width: window.innerWidth,
+            height: window.innerHeight,
         }))
     }, [dispatch])
 
@@ -19,6 +19,8 @@ export default function useInitialize() {
         dispatch(getAllClothingTypesThunk())
 
         window.addEventListener('resize', handleResize)
+
+        handleResize()
 
         return () => {
             window.removeEventListener('resize', handleResize)

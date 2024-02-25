@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import c from './Cart.module.scss'
 import {ReactComponent as Close} from '../../assets/icons/close.svg'
 import {useDispatch, useSelector} from "react-redux";
@@ -7,17 +7,33 @@ import CartItems from "../CartItems/CartItems";
 import {useNavigate} from "react-router-dom";
 import {RoutePaths} from "../../router/RouteConstants";
 import {Empty} from "antd";
+import OrderForm from "../OrderForm/OrderForm";
 
 function Cart() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {visible, products} = useSelector(state => state.cart)
+    const { device } = useSelector(state => state.app)
+    const [showOrderForm, setShowOrderForm] = useState(false)
 
     const onClose = () => {
         dispatch(hideCart())
+
+        if (showOrderForm) {
+            setShowOrderForm(false)
+        }
     }
 
     const onOrder = () => {
+        if (device.width <= 900) {
+            setShowOrderForm(true)
+            return;
+        }
+
+        if (showOrderForm) {
+            setShowOrderForm(false)
+        }
+
         dispatch(hideCart())
         navigate(RoutePaths.ORDER)
     }
@@ -45,6 +61,12 @@ function Cart() {
                         <div className={c.btn}>
                             <button onClick={onOrder}>ОФОРМИТЬ ЗАКАЗ</button>
                         </div>
+
+                        {showOrderForm && (
+                            <div className={c.form}>
+                                <OrderForm />
+                            </div>
+                        )}
                     </>
                 ) : (
                     <>

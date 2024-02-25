@@ -3,6 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 import {protectedRoutes, publicRoutes, unauthenticatedRoutes} from './routes';
 import AppRoute from "./AppRoute";
 import ProtectedRoute from "./ProtectedRoute";
+import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 
 
 const Router = () => {
@@ -50,6 +51,22 @@ const Router = () => {
                     }
                 />
             ))}
+
+            <Route
+                path={'/*'}
+                element={
+                    <>
+                        <AppRoute metaData={{
+                            headerEnabled: false,
+                            footerEnabled: false,
+                        }}>
+                            <NotFoundPage />
+                        </AppRoute>
+                    </>
+                }
+            >
+
+            </Route>
         </Routes>
     )
 }

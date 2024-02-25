@@ -48,7 +48,6 @@ function Navbar() {
                     <img className="navbar-logo" src={LOGO} alt="logo"/>
                 </Link>
                 <div className="navbar-right">
-                    <button className="navbar-ru">RU</button>
                     <button onClick={handleClickOnCart} className="navbar-cart">
                         <img src={Cart} alt="shoping cart"/>
                     </button>
