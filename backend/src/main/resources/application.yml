@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
@@ -21,8 +21,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-jwt:
 
+jwt:
   access-token-key: '{"kty": "oct", "k": "kL9yZ1mB5aV4bU7vH4mO0wN5hT3cL6gP2xV1cU5wA7oH9xV7qW8oA6hG5bU4l"}'
   refresh-token-key: '{"kty": "oct", "k": "mN8jEh4pWz9sVxGyQ3cA7bL2uR1oH0Kf"}'
   #  m - minutes

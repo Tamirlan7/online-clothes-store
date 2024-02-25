@@ -43,7 +43,13 @@ public class FileService {
     public FileDtoResponse copyFile(ProductMediaFile file, String copyToPrefix) {
         try {
             Path src = Paths.get(file.getPath());
-            Path dist = Paths.get((root.resolve(copyToPrefix).resolve(file.getName()).toString()));
+            final Path distDirectory = root.resolve(copyToPrefix);
+
+            if (!Files.exists(distDirectory)) {
+                Files.createDirectory(distDirectory);
+            }
+
+            Path dist = Paths.get((distDirectory.resolve(file.getName()).toString()));
 
             Files.copy(src, dist, StandardCopyOption.REPLACE_EXISTING);
 
