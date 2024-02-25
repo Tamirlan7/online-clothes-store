@@ -19,10 +19,11 @@ public class CorsConfig {
 
         config.setAllowedOrigins(List.of(
                 "http://localhost:3000",
-                "http://uncwear.store:80",
-                "http://www.uncwear.store:80",
-                "https://uncwear.store:80",
-                "https://www.uncwear.store:80"
+                "http://localhost:3000",
+                "http://uncwear.store",
+                "http://www.uncwear.store",
+                "https://uncwear.store",
+                "https://www.uncwear.store"
         ));
 
         config.setAllowedMethods(List.of(
