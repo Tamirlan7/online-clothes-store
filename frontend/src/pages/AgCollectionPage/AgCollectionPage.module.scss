@@ -14,30 +14,4 @@
   height: 100%;
   object-fit: cover;
   width: 100%;
-
-  &::-webkit-media-controls {
-    display: none !important;
-  }
-
-  &::-webkit-media-controls-play-button,
-  &::-webkit-media-controls-start-playback-button {
-    display: none !important;
-  }
-
-  &::-webkit-media-controls-current-time-display,
-  &::-webkit-media-controls-time-remaining-display {
-    display: none !important;
-  }
-
-  &::-webkit-media-controls-mute-button,
-  &::-webkit-media-controls-volume-slider {
-    display: none !important;
-  }
-
-  &::-webkit-media-controls-toggle-closed-captions-button,
-  &::-webkit-media-controls-fullscreen-button {
-    display: none !important;
-  }
-
-
 }
