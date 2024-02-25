@@ -35,9 +35,9 @@ public class AppInitializer implements CommandLineRunner {
             );
         }
 
-        initClothingTypes();
-        initCollections();
-        initProducts();
+//        initClothingTypes();
+//        initCollections();
+//        initProducts();
     }
 
     private void initClothingTypes() {
