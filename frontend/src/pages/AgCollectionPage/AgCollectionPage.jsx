@@ -5,8 +5,9 @@ import noSignal from '../../assets/videos/banners/no-signal.mp4'
 function AgCollectionPage() {
     return (
         <div className={c.wrapper}>
-            <video autoPlay loop muted className={c.video}>
+            <video playsInline autoPlay loop muted className={c.video}>
                 <source src={noSignal} type={'video/mp4'}/>
+                This browser does not support HTML5 audio.
             </video>
         </div>
     );

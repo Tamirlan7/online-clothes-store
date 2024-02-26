@@ -13,7 +13,7 @@ function NotFoundPage() {
 
     return (
         <div className={c.wrapper}>
-            <video autoPlay loop muted className={c.video}>
+            <video playsInline autoPlay loop muted className={c.video}>
                 <source src={noSignal} type={'video/mp4'}/>
             </video>
 
