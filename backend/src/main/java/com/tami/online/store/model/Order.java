@@ -54,6 +54,6 @@ public class Order {
     @Column(name = "payment_method", nullable = false)
     private String paymentMethod;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
 }

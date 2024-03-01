@@ -1,5 +1,6 @@
 package com.tami.online.store.service;
 
+import com.tami.online.store.dto.GetOrdersResponse;
 import com.tami.online.store.dto.TinkoffInitRequest;
 import com.tami.online.store.dto.TinkoffInitResponse;
 import com.tami.online.store.exception.CustomBadRequestException;
@@ -25,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +41,13 @@ public class OrderService {
     private final WebClient tinkoffClient;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+
+    public List<GetOrdersResponse> getOrders() {
+        return orderRepository.findAll().stream().map(order -> GetOrdersResponse.builder()
+                .order(order)
+                .products(productRepository.findAllById(order.getOrderItems().stream().map(OrderItem::getProductId).toList()))
+                .build()).toList();
+    }
 
     public Order create(Order order) {
         boolean paymentSuccess = true;
