@@ -2,6 +2,7 @@ package com.tami.online.store.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tami.online.store.model.PayType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,9 @@ public class TinkoffInitRequest {
 
     @JsonProperty("TerminalKey")
     private String terminalKey;
+
+    @JsonProperty("PayType")
+    private PayType payType = PayType.O;
 
     @JsonProperty("Amount")
     private Long amount;
@@ -34,5 +38,5 @@ public class TinkoffInitRequest {
     private Map<String, String> data;
 
     @JsonProperty("Receipt")
-    private Map<String, String> receipt;
+    private Map<String, Object> receipt;
 }

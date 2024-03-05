@@ -22,10 +22,7 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -88,6 +85,10 @@ public class OrderService {
                 .orderId("21")
                 .description("Проверка")
                 .amount(300 * 100L)
+                .data(new HashMap<>())
+                .receipt(Map.of(
+                        "Items", List.of(Map.of("Name", "Наименование товара", "Price", 300 * 100L, "Quantity", 2))
+                ))
                 .build();
 
         String token = generateTinkoffToken(body);
