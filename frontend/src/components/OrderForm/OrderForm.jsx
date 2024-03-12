@@ -12,7 +12,7 @@ function OrderForm() {
         phone: '',
         city: '',
         deliveryService: 'CDEK',
-        deliveryPicUpPoint: '',
+        deliveryPickUpPoint: '',
         fullName: '',
         comment: '',
         promoCode: '',

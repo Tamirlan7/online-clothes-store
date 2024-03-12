@@ -7,12 +7,14 @@ import Input from "../../../UI/Input/Input";
 import Select from "../../../UI/Select/Select";
 import AdminSizes from "../../UI/AdminSizes/AdminSizes";
 import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Form from "../../../UI/Form/Form";
-import collectionConverter from "../../../converters/collectionConverter";
+import {addClothingTypeThunk} from "../../../thunks/clothingTypeThunks";
+import {addCollectionThunk} from "../../../thunks/collectionThunks";
 
 function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormData}) {
     const {collections, loading: collectionsLoading, error: collectionError} = useSelector(state => state.collection)
+    const dispatch = useDispatch()
     const {
         clothingTypes,
         loading: clothingTypesLoading,
@@ -66,6 +68,14 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
         setFormData((prev) => ({...prev, [e.target.name]: e.target.value}))
     }
 
+    const onAddClothingType = (clothingType) => {
+        dispatch(addClothingTypeThunk(clothingType))
+    }
+
+    const onAddCollection = (collection) => {
+        dispatch(addCollectionThunk(collection))
+    }
+
     const onSizesChanged = (size, newValue) => {
         setFormData((prev) => ({...prev, sizes: {...formData.sizes, [size.sizeLabel]: newValue}}))
     }
@@ -90,7 +100,9 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                         <Select onChange={(value) => setFormData((prev) => ({...prev, clothingType: value}))}
                                 loading={clothingTypesLoading}
                                 value={formData.clothingType}
-                                maxItems={clothingTypes.length > 7 ? 7 : clothingTypes.length}
+                                onAddClicked={onAddClothingType}
+                                addMoreEnabled
+                                maxItems={clothingTypes.length > 7 ? 7 : clothingTypes.length + 1}
                                 disabled={clothingTypeError}
                                 options={clothingTypes?.map((c) => ({
                                     value: c?.name,
@@ -99,13 +111,15 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                     </FormControl>
                     <FormControl labelText={'Выберите коллекцию'}>
                         <Select loading={collectionsLoading}
-                                maxItems={collections.length > 7 ? 7 : collections.length}
+                                onAddClicked={onAddCollection}
+                                addMoreEnabled
+                                maxItems={collections.length > 7 ? 7 : collections.length + 1}
                                 onChange={(value) => setFormData((prev) => ({...prev, collection: value}))}
                                 disabled={collectionError}
                                 value={formData.collection}
                                 options={collections?.map((c) => ({
                                     value: c?.name,
-                                    text: collectionConverter.convertToShorthand(c?.name)
+                                    text: c?.name
                                 }))}/>
                     </FormControl>
                     <FormControl invalid={!isFormValid.price} errorMessage={'Цена должна больше либо равна нулю'}

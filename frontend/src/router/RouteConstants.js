@@ -10,6 +10,7 @@ export const RoutePaths = {
     PRIVACY: '/privacy',
     CARE: '/care',
     NOT_FOUND: '/not-found',
-    ADMIN: '/admin',
+    ADMIN_CATALOG: '/admin/catalog',
     ORDER: '/order',
+    ADMIN_ORDERS: '/admin/orders',
 }

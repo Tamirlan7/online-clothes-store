@@ -1,0 +1,17 @@
+.block {
+  min-height: calc(100vh - 70px - 203px);
+  display: flex;
+  align-items: center;
+}
+
+.inner {
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px 0;
+  text-align: center;
+  font-family: 'Halvar Breitschrift' ,sans-serif;
+  font-weight: 300;
+  color: #000000;
+  font-size: 16px;
+  line-height: 24px;
+}

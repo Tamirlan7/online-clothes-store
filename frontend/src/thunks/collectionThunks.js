@@ -20,3 +20,21 @@ export const getAllCollectionsThunk = createAsyncThunk(
     }
 )
 
+export const addCollectionThunk = createAsyncThunk(
+    'collection/addCollectionThunk',
+    async (collection, {dispatch, rejectWithValue}) => {
+        try {
+            const res = await collectionService.addCollection(collection);
+            return res.data
+        } catch (err) {
+            dispatch(raiseNotification({
+                message: err.message,
+                description: 'Произошла ошибка при попытке добавить коллекцию',
+                type: 'error'
+            }))
+
+            return rejectWithValue(err.message)
+        }
+    }
+)
+

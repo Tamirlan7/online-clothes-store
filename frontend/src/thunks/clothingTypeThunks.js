@@ -20,3 +20,20 @@ export const getAllClothingTypesThunk = createAsyncThunk(
     }
 )
 
+export const addClothingTypeThunk = createAsyncThunk(
+    'clothingType/addClothingTypeThunk',
+    async (clothingType, {dispatch, rejectWithValue}) => {
+        try {
+            const res = await clothingTypeService.addClothingType(clothingType);
+            return res.data
+        } catch (err) {
+            dispatch(raiseNotification({
+                message: err.message,
+                description: 'Произошла ошибка при попытке добавить тип одежды',
+                type: 'error'
+            }))
+
+            return rejectWithValue(err.message)
+        }
+    }
+)

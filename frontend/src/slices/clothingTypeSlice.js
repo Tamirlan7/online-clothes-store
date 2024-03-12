@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getAllClothingTypesThunk} from "../thunks/clothingTypeThunks";
+import {addClothingTypeThunk, getAllClothingTypesThunk} from "../thunks/clothingTypeThunks";
 
 const initialState = {
     clothingTypes: [],
@@ -28,6 +28,23 @@ const clothingTypeSlice = createSlice({
                 }
             })
             .addCase(getAllClothingTypesThunk.rejected, (state, action) => {
+                state.loading = false
+                state.error = true
+                state.errorMessage = action.payload
+            })
+
+
+            .addCase(addClothingTypeThunk.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(addClothingTypeThunk.fulfilled, (state, action) => {
+                state.loading = false
+
+                if (action.payload['name']) {
+                    state.clothingTypes.push(action.payload)
+                }
+            })
+            .addCase(addClothingTypeThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = true
                 state.errorMessage = action.payload

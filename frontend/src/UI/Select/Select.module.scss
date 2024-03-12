@@ -104,15 +104,24 @@
   align-items: center;
   transition: background-color .1s ease;
 
-  &:hover {
+  &:hover:not(.input) {
     background-color: rgba(208, 208, 208, 0.3);
   }
   
-  &:first-child {
+  &:first-child:not(.add) {
     user-select: none;
     cursor: default;
     background-color: rgba(208, 208, 208, 0.5);
   }
+}
+
+.add {
+  user-select: none;
+}
+
+.input {
+  outline: none;
+  border: 1px solid #00308c;
 }
 
 .value {
