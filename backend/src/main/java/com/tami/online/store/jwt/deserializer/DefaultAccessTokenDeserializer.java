@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.UUID;
 
 public class DefaultAccessTokenDeserializer implements AccessTokenDeserializer {
@@ -29,8 +30,8 @@ public class DefaultAccessTokenDeserializer implements AccessTokenDeserializer {
 
                 return AccessToken.builder()
                         .id(UUID.fromString(claimsSet.getJWTID()))
-                        .expiresAt(claimsSet.getExpirationTime().toInstant())
-                        .issuedAt(claimsSet.getIssueTime().toInstant())
+                        .expiresAt(Date.from(claimsSet.getExpirationTime().toInstant()))
+                        .issuedAt(Date.from(claimsSet.getIssueTime().toInstant()))
                         .authorities(claimsSet.getStringListClaim("roles"))
                         .userId((Long) claimsSet.getClaim("userId"))
                         .build();

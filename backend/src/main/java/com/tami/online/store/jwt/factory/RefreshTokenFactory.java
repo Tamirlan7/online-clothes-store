@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,8 +50,8 @@ public class RefreshTokenFactory {
         return RefreshToken.builder()
                 .id(UUID.randomUUID())
                 .authorities(authorities)
-                .issuedAt(now)
-                .expiresAt(now.plus(tokenTtl))
+                .issuedAt(Date.from(now))
+                .expiresAt(Date.from(now.plus(tokenTtl)))
                 .userId(1L)
                 .build();
     }
@@ -67,8 +68,8 @@ public class RefreshTokenFactory {
 
         return RefreshToken.builder()
                 .id(UUID.randomUUID())
-                .expiresAt(now.plus(tokenTtl))
-                .issuedAt(now)
+                .expiresAt(Date.from(now.plus(tokenTtl)))
+                .issuedAt(Date.from(now))
                 .authorities(authorities)
                 .userId(user.getId())
                 .build();

@@ -19,6 +19,12 @@ public class TinkoffInitRequest {
     @JsonProperty("TerminalKey")
     private String terminalKey;
 
+    @JsonProperty("CustomerKey")
+    private String customerKey;
+
+    @JsonProperty("OperationInitiatorType")
+    private Integer operationInitiatorType = 0;
+
     @JsonProperty("PayType")
     private PayType payType = PayType.O;
 

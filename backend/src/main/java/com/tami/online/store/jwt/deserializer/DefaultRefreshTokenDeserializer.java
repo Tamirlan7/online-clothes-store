@@ -7,6 +7,7 @@ import com.tami.online.store.jwt.model.RefreshToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.util.UUID;
 
@@ -27,8 +28,8 @@ public class DefaultRefreshTokenDeserializer implements RefreshTokenDeserializer
             var claimsSet = encryptedJWT.getJWTClaimsSet();
             return RefreshToken.builder()
                     .id(UUID.fromString(claimsSet.getJWTID()))
-                    .expiresAt(claimsSet.getExpirationTime().toInstant())
-                    .issuedAt(claimsSet.getIssueTime().toInstant())
+                    .expiresAt(Date.from(claimsSet.getExpirationTime().toInstant()))
+                    .issuedAt(Date.from(claimsSet.getIssueTime().toInstant()))
                     .authorities(claimsSet.getStringListClaim("roles"))
                     .userId((Long) claimsSet.getClaim("userId"))
                     .build();

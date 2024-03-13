@@ -4,6 +4,7 @@ import com.tami.online.store.dto.ClothingTypeDtoRequest;
 import com.tami.online.store.exception.NotFoundException;
 import com.tami.online.store.model.ClothingType;
 import com.tami.online.store.repository.ClothingTypeRepository;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,10 @@ public class ClothingTypeService {
     }
 
     public ClothingType createClothingType(ClothingTypeDtoRequest clothingTypeDtoRequest) {
+        if (clothingTypeRepository.findByName(clothingTypeDtoRequest.getClothingType()).isPresent()) {
+            throw new EntityExistsException("clothingType with name " + clothingTypeDtoRequest.getClothingType() + " already exists");
+        }
+
         ClothingType clothingType = ClothingType.builder()
                 .name(clothingTypeDtoRequest.getClothingType())
                 .build();

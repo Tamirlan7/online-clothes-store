@@ -1,5 +1,6 @@
 package com.tami.online.store.jwt;
 
+import com.tami.online.store.exception.InvalidTokenException;
 import com.tami.online.store.jwt.deserializer.AccessTokenDeserializer;
 import com.tami.online.store.jwt.model.AccessToken;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class JwtAuthenticationConverter implements AuthenticationConverter {
             String strFormatToken = header.substring(7);
             AccessToken token = accessTokenDeserializer.deserialize(strFormatToken);
 
-            if (Instant.now().isBefore(token.expiresAt())) {
+            if (token != null && Instant.now().isBefore(token.expiresAt().toInstant())) {
                 return new PreAuthenticatedAuthenticationToken(
                         token,
                         strFormatToken,

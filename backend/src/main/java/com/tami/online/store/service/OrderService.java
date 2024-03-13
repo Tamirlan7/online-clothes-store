@@ -1,5 +1,7 @@
 package com.tami.online.store.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tami.online.store.dto.GetOrdersResponse;
 import com.tami.online.store.dto.TinkoffInitRequest;
 import com.tami.online.store.dto.TinkoffInitResponse;
@@ -16,7 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
@@ -83,8 +88,9 @@ public class OrderService {
         TinkoffInitRequest body = TinkoffInitRequest.builder()
                 .terminalKey(terminalKey)
                 .orderId("21")
+                .customerKey("customer key")
                 .description("Проверка")
-                .amount(300 * 100L)
+                .amount(3000 * 100L)
                 .data(new HashMap<>())
                 .receipt(Map.of(
                         "Items", List.of(Map.of("Name", "Наименование товара", "Price", 300 * 100L, "Quantity", 2))
@@ -101,10 +107,6 @@ public class OrderService {
                 .body(Mono.just(body), TinkoffInitRequest.class)
                 .retrieve()
                 .bodyToMono(TinkoffInitResponse.class)
-                .doOnError((ex) -> {
-                    LOGGER.error(ex.getMessage(), ex);
-                    throw new CustomBadRequestException(ex.getMessage());
-                })
                 .block();
     }
 

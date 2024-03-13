@@ -1,5 +1,6 @@
 package com.tami.online.store.config;
 
+import com.tami.online.store.exception.CustomAccessDeniedException;
 import com.tami.online.store.jwt.JwtAuthenticationConfigurer;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
@@ -32,7 +35,10 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint((request, response, authException) ->
                                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User is not authorized")
-                        ));
+                        )
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                                throw new CustomAccessDeniedException(accessDeniedException.getMessage());
+                        }));
 
 
         return http.build();

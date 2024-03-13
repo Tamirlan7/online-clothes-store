@@ -30,8 +30,8 @@ public class DefaultAccessTokenSerializer implements AccessTokenSerializer {
                 .build();
 
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                .expirationTime(Date.from(token.expiresAt()))
-                .issueTime(Date.from(token.issuedAt()))
+                .expirationTime(token.expiresAt())
+                .issueTime(token.issuedAt())
                 .jwtID(token.id().toString())
                 .claim("roles", token.authorities())
                 .claim("userId", token.userId())

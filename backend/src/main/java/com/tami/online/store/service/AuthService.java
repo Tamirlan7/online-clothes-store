@@ -84,7 +84,7 @@ public class AuthService {
 
         if (token != null &&
                 token.authorities().contains("JWT_REFRESH") &&
-                Instant.now().isBefore(token.expiresAt())) {
+                Instant.now().isBefore(token.expiresAt().toInstant())) {
 
             User user = userRepository.findById(token.userId())
                     .orElseThrow(() -> new UserNotFoundException("user with id " + token.userId() + " not found"));

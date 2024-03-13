@@ -4,6 +4,7 @@ import com.tami.online.store.dto.CollectionDtoRequest;
 import com.tami.online.store.exception.NotFoundException;
 import com.tami.online.store.model.Collection;
 import com.tami.online.store.repository.CollectionRepository;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,10 @@ public class CollectionService {
     }
 
     public Collection createCollection(CollectionDtoRequest collectionDtoRequest) {
+        if (collectionRepository.findByName(collectionDtoRequest.getCollectionName()).isPresent()) {
+            throw new EntityExistsException("collection with name " + collectionDtoRequest.getCollectionName() + " already exists");
+        }
+
         Collection collection = Collection.builder()
                 .name(collectionDtoRequest.getCollectionName())
                 .build();

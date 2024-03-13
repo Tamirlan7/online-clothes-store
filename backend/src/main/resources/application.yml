@@ -22,6 +22,9 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+  jackson:
+    time-zone: UTC
+
 tinkoff:
   terminalKey: '1708872997525DEMO'
   password: 'givxun6us20usbsg'
@@ -32,9 +35,13 @@ jwt:
   #  m - minutes
   #  h - hours
   #  d - days
-  access-token-expiration: "15d"
+  access-token-expiration: "30m"
   refresh-token-expiration: "30d"
 
 logging:
   level:
     org.springframework.security: trace
+
+
+error-codes:
+    invalid-jwt: 401

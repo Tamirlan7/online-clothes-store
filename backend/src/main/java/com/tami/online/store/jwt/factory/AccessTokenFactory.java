@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -41,8 +42,8 @@ public class AccessTokenFactory {
 
         return AccessToken.builder()
                 .id(refreshToken.id())
-                .expiresAt(now.plus(tokenTtl))
-                .issuedAt(now)
+                .expiresAt(Date.from(now.plus(tokenTtl)))
+                .issuedAt(Date.from(now))
                 .authorities(authorities)
                 .userId(refreshToken.userId())
                 .build();
