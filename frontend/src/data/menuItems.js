@@ -1,6 +1,6 @@
 import {RoutePaths} from "../router/RouteConstants";
 
-export const SidebarData = [
+export const MenuItems = [
   {
     title: "Главная",
     path: RoutePaths.HOME,

@@ -4,6 +4,7 @@ import {protectedRoutes, publicRoutes, unauthenticatedRoutes} from './routes';
 import AppRoute from "./AppRoute";
 import ProtectedRoute from "./ProtectedRoute";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
+import JwtValidationRoute from "./JwtValidationRoute";
 
 
 const Router = () => {
@@ -15,11 +16,13 @@ const Router = () => {
                     key={route.path}
                     path={route.path}
                     element={
-                        <ProtectedRoute enabledRoles={route.enabledRoles}>
-                            <AppRoute metaData={route.meta}>
-                                {route.component}
-                            </AppRoute>
-                        </ProtectedRoute>
+                        <JwtValidationRoute>
+                            <ProtectedRoute enabledRoles={route.enabledRoles}>
+                                <AppRoute metaData={route.meta}>
+                                    {route.component}
+                                </AppRoute>
+                            </ProtectedRoute>
+                        </JwtValidationRoute>
                     }
                 />
             ))}

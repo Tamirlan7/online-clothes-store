@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./AeCollectionPage.scss";
 import logo from "../../assets/images/bottomAeLogo.svg";
 import Products from "../../components/Products/Products";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {collections} from "../../data/collections";
 import {getProductsThunk} from "../../thunks/productThunks";
 import CollectionLanding from "../../components/CollectionLanding/CollectionLanding";
@@ -14,7 +14,6 @@ import alternativeEdge from '../../assets/videos/banners/alternative-edge.MP4'
 export default function AeCollectionPage() {
     const dispatch = useDispatch()
     const collection = collections.AE;
-    const { products } = useSelector(state => state.product)
     const [filterData, setFilterData] = useState({
         selectedClothingType: '',
         searchText: '',
@@ -39,9 +38,9 @@ export default function AeCollectionPage() {
                 />
             </div>
 
-            <div className={'drop__separator'} />
+            <div className={'drop__separator'}/>
 
-            <Container style={{ padding: 0 }}>
+            <Container style={{padding: 0}}>
                 <div className={'drop__content'}>
 
                     <div className={`drop__inner__content`}>
@@ -60,7 +59,7 @@ export default function AeCollectionPage() {
                             />
                         </div>
 
-                        <Products />
+                        <Products/>
                     </div>
                 </div>
             </Container>

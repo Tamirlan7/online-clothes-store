@@ -429,7 +429,7 @@ export default function PrivacyPage() {
           <br />
           <br />
           12.3. Актуальная версия Политики в свободном доступе расположена в
-          сети Интернет по адресу https://uncwear.ru/privacy_policy.
+          сети Интернет по адресу http://uncwear.store/privacy.
         </p>
       </section>
     </>

@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from "react";
 import {Link} from "react-router-dom";
-import {SidebarData} from "../../data/SidebarData";
+import {MenuItems} from "../../data/menuItems";
 import "./Navbar.scss";
 import BurgerMenu from "../../assets/images/burger-menu.svg";
 import CloseBtn from "../../assets/images/clode-btn.svg";
@@ -61,7 +61,7 @@ function Navbar() {
                     <li className="navbar-toggle">
                         <img className="close-btn" src={BurgerMenu} alt="burgermenu"/>
                     </li>
-                    {SidebarData.map((item, index) => {
+                    {MenuItems.map((item, index) => {
                         return (
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>

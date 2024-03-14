@@ -1,12 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {loginThunk} from "../thunks/userThunks";
+import {loginThunk, refreshTokenThunk} from "../thunks/userThunks";
 import {TOKENS} from "../constants/AppConstants";
+import logout from "../utils/logout";
 
 const initialState = {
     loading: false,
     error: false,
     errorMessage: null,
     roles: [],
+    isTokenRefreshing: false,
     userId: null,
     showAuthenticationPopup: false
 }
@@ -42,6 +44,21 @@ const userSlice = createSlice({
             state.error = true
             state.errorMessage = action.payload
             state.loading = false
+        })
+
+        .addCase(refreshTokenThunk.pending, (state) => {
+            state.isTokenRefreshing = true
+        })
+        .addCase(refreshTokenThunk.fulfilled, (state, action) => {
+            if (action.payload?.accessToken) {
+                localStorage.setItem(TOKENS, JSON.stringify(action.payload))
+            }
+            state.isTokenRefreshing = false
+        })
+        .addCase(refreshTokenThunk.rejected, (state, action) => {
+            state.error = true
+            state.errorMessage = action.payload
+            state.isTokenRefreshing = false
         })
 })
 

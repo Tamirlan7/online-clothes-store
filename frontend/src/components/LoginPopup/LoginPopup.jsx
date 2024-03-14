@@ -34,7 +34,7 @@ function LoginPopup() {
         dispatch(changeShowAuthenticationPopup(false))
     }
 
-    const login = (e) => {
+    const login = () => {
         dispatch(loginThunk({ data: loginData }))
     }
 

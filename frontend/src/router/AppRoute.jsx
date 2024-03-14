@@ -7,7 +7,6 @@ import {useEffect} from "react";
 import {resetNotification} from "../slices/notificationSlice";
 import useInitialize from "../hooks/useInitialize";
 import Cart from "../components/Cart/Cart";
-import ProductDescriptionModal from "../admin/modals/ProductDescriptionModal/ProductDescriptionModal";
 
 const AppRoute = ({metaData, children}) => {
     const dispatch = useDispatch()

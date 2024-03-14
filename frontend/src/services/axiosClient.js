@@ -5,21 +5,3 @@ export const axiosClient = axios.create({
     baseURL: `${API_URL}`,
     withCredentials: true,
 })
-
-axiosClient.interceptors.request.use(
-    (req) => {
-        return req
-    },
-    (err) => {
-        throw new Error(err)
-    }
-)
-
-axiosClient.interceptors.response.use(
-    (res) => {
-        return res
-    },
-    (err) => {
-        throw new Error(err)
-    }
-)

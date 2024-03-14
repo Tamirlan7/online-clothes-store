@@ -7,7 +7,7 @@ import MASTERCARD from "../../assets/images/mastercard.svg";
 import c from './Footer.module.scss'
 import Container from "../Container/Container";
 import bg from '../../assets/images/footer-background.jpg'
-import {footerFirstRoutes, footerThirdRoutes} from "../../data/footerRoutes";
+import {footerFirstRoutes, footerSecondRoutes, footerThirdRoutes} from "../../data/footerRoutes";
 
 export default function Footer() {
 
@@ -27,7 +27,7 @@ export default function Footer() {
                                 ))}
                             </ul>
                             <ul className={c.list}>
-                                {footerFirstRoutes.map((route, idx) => (
+                                {footerSecondRoutes.map((route, idx) => (
                                     <li key={idx} className={c.item}>
                                         <Link className={c.link} to={route.path}>{route.text}</Link>
                                     </li>
