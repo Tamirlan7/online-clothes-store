@@ -1,12 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useMemo} from 'react';
 import c from './AdminPagination.module.scss'
 import {ReactComponent as ArrowLeft} from "../../../assets/icons/arrow-left.svg";
 import {useSelector} from "react-redux";
 
-function AdminPagination({ onPageChanged, currentPage }) {
+function AdminPagination({onPageChanged, currentPage}) {
     // first 3 and last 3 divided by {...} <= item
     const maxUIPageItems = 6;
-    const { totalPages, products } = useSelector(state => state.product)
+    const {totalPages, products} = useSelector(state => state.product)
+
+    const totalPagesArr = useMemo(() => {
+        return Array.from({length: totalPages}, (_, idx) => idx)
+    }, [totalPages])
 
     const handleOnPageChange = (page) => {
         if (currentPage === page) {
@@ -46,36 +50,9 @@ function AdminPagination({ onPageChanged, currentPage }) {
                     <p>Назад</p>
                 </div>
 
-                <ul className={c.pages}>
-                    {totalPages > maxUIPageItems ? (
-                        <>
-                            {Array.from({length: currentPage + 3}, (_, idx) => idx).slice(-3).map((page) => (
-                                <li onClick={() => handleOnPageChange(page)}
-                                    className={currentPage === page ? `${c.page} ${c['page-current']}` : `${c.page}`}
-                                    key={page}>{page + 1}</li>
-                            ))}
-
-                            {Array.from({length: totalPages}, (_, idx) => idx).slice(-3).map((page, idx) => {
-                                return (
-                                    <>
-                                        {idx === 0 && (
-                                            <li className={`${c.page} ${c.dots}`}
-                                                key={'dots'}>...</li>
-                                        )}
-                                        <li onClick={() => handleOnPageChange(page)}
-                                            className={currentPage === page ? `${c.page} ${c['page-current']}` : `${c.page}`}
-                                            key={page}>{page + 1}</li>
-                                    </>
-                                )
-                            })}
-                        </>
-                    ) : (
-                        <>{Array.from({length: totalPages}, (_, idx) => idx).map((page) => (
-                            <li onClick={() => handleOnPageChange(page)}
-                                className={currentPage === page ? `${c.page} ${c['page-current']}` : `${c.page}`}
-                                key={page}>{page + 1}</li>
-                        ))}</>
-                    )}
+                <ul data-total-pages={totalPages} data-current-page={currentPage}
+                    data-total-pages-arr-length={totalPagesArr.length} className={c.pages}>
+                    <Pages totalPages={totalPages} currentPage={currentPage} handleOnPageChange={handleOnPageChange}/>
                 </ul>
 
                 <div className={c.item} onClick={goNext}>
@@ -85,6 +62,81 @@ function AdminPagination({ onPageChanged, currentPage }) {
             </div>
         </div>
     );
+}
+
+function Pages({totalPages, currentPage, handleOnPageChange}) {
+    // max visible pages in UI excluding the dots
+    const maxVisiblePagesInUI = 6;
+
+    /* tp = totalPages */
+    const tpArr = useMemo(() => {
+        return Array.from({length: totalPages}, (_, idx) => idx);
+    }, [totalPages])
+
+    if (totalPages < maxVisiblePagesInUI) {
+        /* case if totalPages are less than 6 elements (maxVisiblePagesInUI) */
+        return tpArr.map(p => (
+            <Page
+                key={p}
+                handleOnPageChange={handleOnPageChange}
+                currentPage={currentPage}
+                page={p}
+            />
+        ))
+    }
+
+    if (currentPage > totalPages - maxVisiblePagesInUI) {
+        /* case if currentPage is at the last 6 elements (maxVisiblePagesInUI) */
+        return tpArr.slice(tpArr.length - maxVisiblePagesInUI).map(p => (
+            <Page
+                key={p}
+                handleOnPageChange={handleOnPageChange}
+                currentPage={currentPage}
+                page={p}
+            />
+        ))
+    }
+
+    console.log('default')
+    /* default case, first 3 and last 3, the dots in the middle */
+    return (
+        <>
+            {/* p = page */}
+            {/* first three elements */}
+            {tpArr.slice(currentPage, currentPage + 3).map((p) => (
+                <Page
+                    key={p}
+                    handleOnPageChange={handleOnPageChange}
+                    currentPage={currentPage}
+                    page={p}
+                />
+            ))}
+
+            {/*    dots*/}
+            <li className={`${c.page} ${c.dots}`} key={'dots'}>...</li>
+
+            {/*    last three elements*/}
+            {tpArr.slice(tpArr.length - 3).map(p => (
+                <Page
+                    key={p}
+                    handleOnPageChange={handleOnPageChange}
+                    currentPage={currentPage}
+                    page={p}
+                />
+            ))}
+        </>
+    )
+
+}
+
+function Page ({ handleOnPageChange, currentPage, page: p }) {
+
+    return (
+        <li onClick={() => handleOnPageChange(p)}
+            className={currentPage === p ? `${c.page} ${c['page-current']}` : `${c.page}`}>
+            {p + 1}
+        </li>
+    )
 }
 
 export default AdminPagination;
