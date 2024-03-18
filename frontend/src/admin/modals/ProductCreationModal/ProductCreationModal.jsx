@@ -103,7 +103,6 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                                 onAddClicked={onAddClothingType}
                                 addMoreEnabled
                                 maxItems={clothingTypes.length > 7 ? 7 : clothingTypes.length + 1}
-                                disabled={clothingTypeError}
                                 options={clothingTypes?.map((c) => ({
                                     value: c?.name,
                                     text: c?.name
@@ -115,7 +114,6 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                                 addMoreEnabled
                                 maxItems={collections.length > 7 ? 7 : collections.length + 1}
                                 onChange={(value) => setFormData((prev) => ({...prev, collection: value}))}
-                                disabled={collectionError}
                                 value={formData.collection}
                                 options={collections?.map((c) => ({
                                     value: c?.name,

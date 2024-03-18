@@ -1,12 +1,5 @@
 import axios from "axios";
 import {API_URL, TOKENS} from "../constants/AppConstants";
-import validateJwt from "../utils/validateJwt";
-import userService from "./userService";
-
-const {
-    accessToken,
-} = JSON.parse(localStorage.getItem(TOKENS)) ?? {};
-
 
 export const axiosAdmin = axios.create({
     baseURL: `${API_URL}`,
@@ -18,6 +11,10 @@ export const axiosAdmin = axios.create({
 
 axiosAdmin.interceptors.request.use(
     (req) => {
+        req.headers = {
+            Authorization: `Bearer ${(JSON.parse(localStorage.getItem(TOKENS)) ?? {}).accessToken}`
+        }
+
         return req
     },
     (err) => {

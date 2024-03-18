@@ -7,7 +7,6 @@ import {
     getProductsThunk,
     updateProductsThunk
 } from "../thunks/productThunks";
-import {ADMIN_PRODUCTS_PAGE} from "../constants/AppConstants";
 
 const initialState = {
     products: [],
@@ -21,6 +20,7 @@ const initialState = {
     deleteLoading: false,
     showConfirmAction: false,
     size: null,
+    resetProducts: false,
     adminProductsPage: null,
 }
 
@@ -37,6 +37,11 @@ const productSlice = createSlice({
             if (typeof action.payload === 'number') {
                 state.adminProductsPage = action.payload
             }
+        },
+        changeResetProducts(state, action) {
+            if (typeof action.payload === 'boolean') {
+                state.resetProducts = action.payload
+            }
         }
     },
     extraReducers: builder =>
@@ -46,12 +51,16 @@ const productSlice = createSlice({
             })
             .addCase(getProductsThunk.fulfilled, (state, action) => {
                 state.loading = false
-                if (Array.isArray(action.payload?.content)) {
-                    state.collections = action.payload
-                    state.products = action.payload.content
+                if (Array.isArray(action.payload.data?.content)) {
+                    if (action.payload.includeOldProducts && !state.resetProducts && action.payload.data.content.length) {
+                        state.products = [...new Set([...state.products, ...action.payload.data.content])]
+                    } else {
+                        state.products = action.payload.data.content
+                        state.resetProducts = false
+                    }
                 }
-                state.totalPages = action.payload?.totalPages
-                state.size = action.payload?.size;
+                state.totalPages = action.payload.data?.totalPages
+                state.size = action.payload.data?.size;
             })
             .addCase(getProductsThunk.rejected, (state, action) => {
                 state.loading = false
@@ -142,5 +151,5 @@ const productSlice = createSlice({
 
 })
 
-export const {changeShowConfirmAction, changeAdminProductsPage} = productSlice.actions
+export const {changeShowConfirmAction, changeAdminProductsPage, changeResetProducts} = productSlice.actions
 export default productSlice.reducer

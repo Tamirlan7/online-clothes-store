@@ -1,10 +1,13 @@
+.block {
+  padding-bottom: 33px;
+}
+
 .list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 12px;
   list-style: none;
   width: 100%;
-  padding-bottom: 33px;
 
   @media (max-width: 1400px) {
     grid-template-columns: 1fr 1fr 1fr 1fr;

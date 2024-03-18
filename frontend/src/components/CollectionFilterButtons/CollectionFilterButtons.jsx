@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './CollectionFilterButtons.scss'
 import {useSelector} from "react-redux";
 import Select from "../../UI/Select/Select";
@@ -30,7 +30,7 @@ const CollectionFilterButtons = ({
 
                 <Select
                     disabledClassName={'drop__select__disabled'}
-                    maxItems={clothingTypes.length >= 4 ? 4 : clothingTypes.length <= 0 ? 0 : clothingTypes.length}
+                    maxItems={clothingTypes.length >= 5 ? 5 : clothingTypes.length <= 0 ? 0 : clothingTypes.length + 1}
                     rootClassName={'drop__select'}
                     loading={loading}
                     disabled={loading || error || !clothingTypes.length}

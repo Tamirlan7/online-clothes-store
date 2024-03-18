@@ -1,19 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {forwardRef} from "react";
+import {Link} from "react-router-dom";
 import './ProductCard.scss';
 import {API_URL} from "../../constants/AppConstants";
 
-export default function ProductCard({
-    id,
-    name,
-    price,
-    priceWithDiscount,
-    productMediaFiles,
-                                    }) {
+function ProductCard({
+                         id,
+                         name,
+                         price,
+                         priceWithDiscount,
+                         productMediaFiles,
+                     }, ref) {
 
 
     return (
         <Link
+            ref={ref}
             to={`/product/${id}`}
             className='card'
         >
@@ -34,3 +35,6 @@ export default function ProductCard({
         </Link>
     );
 }
+
+
+export default forwardRef(ProductCard)

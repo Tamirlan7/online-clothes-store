@@ -29,6 +29,9 @@ function AdminCatalogPage() {
     }, [dispatch]);
 
     useEffect(() => {
+    }, []);
+
+    useEffect(() => {
         if (!deleteLoading && page != null) {
             dispatch(getProductsThunk({
                 page,
@@ -38,6 +41,9 @@ function AdminCatalogPage() {
             }))
         }
 
+        return () => {
+            localStorage.setItem(ADMIN_PRODUCTS_PAGE, 0)
+        }
     }, [dispatch, page, deleteLoading, apiSearchValue, clothingType, collection])
 
     function onAddProductClicked() {

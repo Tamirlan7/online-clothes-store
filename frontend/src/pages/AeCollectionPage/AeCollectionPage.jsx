@@ -10,6 +10,7 @@ import CollectionFilterButtons from "../../components/CollectionFilterButtons/Co
 import Container from "../../components/Container/Container";
 import useDebounce from "../../hooks/useDebounce";
 import alternativeEdge from '../../assets/videos/banners/alternative-edge.MP4'
+import {changeResetProducts} from "../../slices/productSlice";
 
 export default function AeCollectionPage() {
     const dispatch = useDispatch()
@@ -18,15 +19,19 @@ export default function AeCollectionPage() {
         selectedClothingType: '',
         searchText: '',
     })
+    const [currentPage, setCurrentPage] = useState(0)
     const apiSearchText = useDebounce(filterData.searchText)
 
     useEffect(() => {
         dispatch(getProductsThunk({
             collection,
             name: apiSearchText,
-            clothingType: filterData.selectedClothingType
+            clothingType: filterData.selectedClothingType,
+            page: currentPage,
+            includeOldProducts: true,
         }))
-    }, [collection, dispatch, apiSearchText, filterData.selectedClothingType])
+
+    }, [currentPage, collection, dispatch, apiSearchText, filterData.selectedClothingType])
 
     return (
         <section className='drop'>
@@ -48,20 +53,33 @@ export default function AeCollectionPage() {
                             <CollectionFilterButtons
                                 clothingType={filterData.selectedClothingType}
                                 searchTextValue={filterData.searchText}
-                                onClothingTypeChanged={(value) => setFilterData((prev) => ({
-                                    ...prev,
-                                    selectedClothingType: value
-                                }))}
-                                onSearchTextValueChange={(value) => setFilterData((prev) => ({
-                                    ...prev,
-                                    searchText: value
-                                }))}
+                                onClothingTypeChanged={(value) => {
+                                    setFilterData((prev) => ({
+                                        ...prev,
+                                        selectedClothingType: value
+                                    }))
+
+                                    setCurrentPage(0)
+                                    dispatch(changeResetProducts(true))
+                                }}
+                                onSearchTextValueChange={(value) => {
+                                    setFilterData((prev) => ({
+                                        ...prev,
+                                        searchText: value
+                                    }))
+
+                                    setCurrentPage(0)
+                                    dispatch(changeResetProducts(true))
+                                }}
                             />
                         </div>
 
-                        <Products/>
+                        <Products
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
                     </div>
-                </div>
+                </div>\
             </Container>
         </section>
     );
