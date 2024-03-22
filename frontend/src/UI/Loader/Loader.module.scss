@@ -3,6 +3,10 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  flex-direction: column;
+  gap: 15px;
+  font-family: Halvar Breitschrift, sans-serif;
+  font-size: 16px;
 }
 
 .loader {
@@ -26,7 +30,7 @@
 }
 
 .white-wrapper {
-
+  color: white;
 }
 
 .white-loader {

@@ -8,8 +8,14 @@ import c from './Footer.module.scss'
 import Container from "../Container/Container";
 import bg from '../../assets/images/footer-background.jpg'
 import {footerFirstRoutes, footerSecondRoutes, footerThirdRoutes} from "../../data/footerRoutes";
+import {useSelector} from "react-redux";
 
 export default function Footer() {
+    const { footer } = useSelector(state => state.app)
+
+    if (!footer.visible) {
+        return <></>
+    }
 
     return (
         <div className={c.block}>

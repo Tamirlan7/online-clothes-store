@@ -54,7 +54,7 @@ const Products = ({currentPage, setCurrentPage}) => {
                     </li>
                 ))}
             </ul>
-            <Loader loading={loading} color={'white'} />
+            <Loader text={'Идет загрузка продуктов...'} rootClassName={c['loader-root']} loading={loading} color={'white'} />
         </div>
     );
 }

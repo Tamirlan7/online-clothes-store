@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./AeCollectionPage.scss";
 import logo from "../../assets/images/bottomAeLogo.svg";
 import Products from "../../components/Products/Products";
@@ -10,7 +10,7 @@ import CollectionFilterButtons from "../../components/CollectionFilterButtons/Co
 import Container from "../../components/Container/Container";
 import useDebounce from "../../hooks/useDebounce";
 import alternativeEdge from '../../assets/videos/banners/alternative-edge.MP4'
-import {changeResetProducts} from "../../slices/productSlice";
+import {resetProducts} from "../../slices/productSlice";
 
 export default function AeCollectionPage() {
     const dispatch = useDispatch()
@@ -21,6 +21,32 @@ export default function AeCollectionPage() {
     })
     const [currentPage, setCurrentPage] = useState(0)
     const apiSearchText = useDebounce(filterData.searchText)
+    const hasInitialized = useRef(false)
+    const [filtersChanged, setFiltersChanged] = useState(false)
+
+    useEffect(() => {
+        if (!hasInitialized.current) {
+            return
+        }
+        dispatch(resetProducts())
+        setCurrentPage(0)
+        setFiltersChanged(prev => !prev)
+    }, [dispatch, filterData.clothingType, apiSearchText]);
+
+    useEffect(() => {
+        if (!hasInitialized.current) {
+            return
+        }
+
+        dispatch(getProductsThunk({
+            collection,
+            name: apiSearchText,
+            clothingType: filterData.selectedClothingType,
+            page: currentPage,
+            includeOldProducts: true,
+            resetProducts: false,
+        }))
+    }, [currentPage, dispatch, filtersChanged])
 
     useEffect(() => {
         dispatch(getProductsThunk({
@@ -28,10 +54,14 @@ export default function AeCollectionPage() {
             name: apiSearchText,
             clothingType: filterData.selectedClothingType,
             page: currentPage,
-            includeOldProducts: true,
+            includeOldProducts: false,
+            resetProducts: false,
         }))
 
-    }, [currentPage, collection, dispatch, apiSearchText, filterData.selectedClothingType])
+        if (!hasInitialized.current) {
+            hasInitialized.current = true
+        }
+    }, [dispatch])
 
     return (
         <section className='drop'>
@@ -58,18 +88,12 @@ export default function AeCollectionPage() {
                                         ...prev,
                                         selectedClothingType: value
                                     }))
-
-                                    setCurrentPage(0)
-                                    dispatch(changeResetProducts(true))
                                 }}
                                 onSearchTextValueChange={(value) => {
                                     setFilterData((prev) => ({
                                         ...prev,
                                         searchText: value
                                     }))
-
-                                    setCurrentPage(0)
-                                    dispatch(changeResetProducts(true))
                                 }}
                             />
                         </div>

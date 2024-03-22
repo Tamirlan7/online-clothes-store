@@ -1,7 +1,7 @@
 import React from 'react';
 import c from './Loader.module.scss'
 
-function Loader({rootClassName, loaderClassName, loading, color}) {
+function Loader({rootClassName, text, loaderClassName, loading, color}) {
     color = color ?? 'black'
     loading = loading ?? true
 
@@ -13,6 +13,9 @@ function Loader({rootClassName, loaderClassName, loading, color}) {
         return (
             <div className={`${c['white-wrapper']} ${c.wrapper} ${rootClassName}`}>
                 <div className={`${c['white-loader']} ${loaderClassName} ${c.loader}`}></div>
+                {text && (
+                    <span>{text}</span>
+                )}
             </div>
         )
     }
@@ -20,6 +23,9 @@ function Loader({rootClassName, loaderClassName, loading, color}) {
     return (
         <div className={`${c.wrapper} ${rootClassName}`}>
             <div className={`${loaderClassName} ${c.loader}`}></div>
+            {text && (
+                <span>{text}</span>
+            )}
         </div>
     );
 }

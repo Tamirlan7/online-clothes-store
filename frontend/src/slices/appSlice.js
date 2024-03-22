@@ -7,6 +7,9 @@ const initialState = {
     },
     cart: {
         visible: false,
+    },
+    footer: {
+        visible: true,
     }
 }
 
@@ -26,9 +29,14 @@ const appSlice = createSlice({
             state.device.width = action.payload['width']
             state.device.height = action.payload['height']
         },
+        changeFooterVisible(state, action) {
+            if (typeof action.payload === 'boolean') {
+                state.footer.visible = action.payload
+            }
+        }
     }
 })
 
 
-export const {changeDeviceSize} = appSlice.actions
+export const {changeDeviceSize, changeFooterVisible} = appSlice.actions
 export default appSlice.reducer

@@ -13,6 +13,7 @@ const AppRoute = ({metaData, children}) => {
     const {showAuthenticationPopup} = useSelector(state => state.user)
     const [api, contextHolder] = notificationApi.useNotification();
     const {notification} = useSelector(state => state.notification)
+    const {visible: cartVisible} = useSelector(state => state.cart)
 
     useInitialize()
 
@@ -79,7 +80,9 @@ const AppRoute = ({metaData, children}) => {
                 <main style={{ position: 'relative', zIndex: 999 }}>
                     <div>{children}</div>
 
-                    <Cart />
+                    {cartVisible && (
+                        <Cart />
+                    )}
                 </main>
 
                 {metaData.footerEnabled && (

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import c from './Cart.module.scss'
 import {ReactComponent as Close} from '../../assets/icons/close.svg'
 import {useDispatch, useSelector} from "react-redux";
@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {RoutePaths} from "../../router/RouteConstants";
 import {Empty} from "antd";
 import OrderForm from "../OrderForm/OrderForm";
+import {changeFooterVisible} from "../../slices/appSlice";
 
 function Cart() {
     const dispatch = useDispatch()
@@ -16,8 +17,13 @@ function Cart() {
     const { device } = useSelector(state => state.app)
     const [showOrderForm, setShowOrderForm] = useState(false)
 
+    useEffect(() => {
+        dispatch(changeFooterVisible(false))
+    }, [dispatch])
+
     const onClose = () => {
         dispatch(hideCart())
+        dispatch(changeFooterVisible(true))
 
         if (showOrderForm) {
             setShowOrderForm(false)

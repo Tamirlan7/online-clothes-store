@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import c from './UncCollectionPage.module.scss'
-import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch} from "react-redux";
 import {collections} from "../../data/collections";
 import useDebounce from "../../hooks/useDebounce";
 import {getProductsThunk} from "../../thunks/productThunks";
@@ -10,6 +9,7 @@ import logo from "../../assets/images/uncBottomLogo.svg";
 import Container from "../../components/Container/Container";
 import CollectionFilterButtons from "../../components/CollectionFilterButtons/CollectionFilterButtons";
 import Products from "../../components/Products/Products";
+import {resetProducts} from "../../slices/productSlice";
 
 function UncCollectionPage() {
     const dispatch = useDispatch()
@@ -18,15 +18,50 @@ function UncCollectionPage() {
         selectedClothingType: '',
         searchText: '',
     })
+
+    const [currentPage, setCurrentPage] = useState(0)
     const apiSearchText = useDebounce(filterData.searchText)
+    const hasInitialized = useRef(false)
+    const [filtersChanged, setFiltersChanged] = useState(false)
+
+    useEffect(() => {
+        if (!hasInitialized.current) {
+            return
+        }
+        dispatch(resetProducts())
+        setCurrentPage(0)
+        setFiltersChanged(prev => !prev)
+    }, [dispatch, filterData.clothingType, apiSearchText]);
+
+    useEffect(() => {
+        if (!hasInitialized.current) {
+            return
+        }
+
+        dispatch(getProductsThunk({
+            collection,
+            name: apiSearchText,
+            clothingType: filterData.selectedClothingType,
+            page: currentPage,
+            includeOldProducts: true,
+            resetProducts: false,
+        }))
+    }, [currentPage, dispatch, filtersChanged])
 
     useEffect(() => {
         dispatch(getProductsThunk({
             collection,
             name: apiSearchText,
-            clothingType: filterData.selectedClothingType
+            clothingType: filterData.selectedClothingType,
+            page: currentPage,
+            includeOldProducts: false,
+            resetProducts: false,
         }))
-    }, [collection, dispatch, apiSearchText, filterData.selectedClothingType])
+
+        if (!hasInitialized.current) {
+            hasInitialized.current = true
+        }
+    }, [dispatch])
 
     return (
         <section className='drop'>
@@ -38,9 +73,9 @@ function UncCollectionPage() {
                 />
             </div>
 
-            <div className={'drop__separator'} />
+            <div className={'drop__separator'}/>
 
-            <Container style={{ padding: 0 }}>
+            <Container style={{padding: 0}}>
                 <div className={'drop__content'}>
 
                     <div className={`drop__inner__content`}>
@@ -48,18 +83,25 @@ function UncCollectionPage() {
                             <CollectionFilterButtons
                                 clothingType={filterData.selectedClothingType}
                                 searchTextValue={filterData.searchText}
-                                onClothingTypeChanged={(value) => setFilterData((prev) => ({
-                                    ...prev,
-                                    selectedClothingType: value
-                                }))}
-                                onSearchTextValueChange={(value) => setFilterData((prev) => ({
-                                    ...prev,
-                                    searchText: value
-                                }))}
+                                onClothingTypeChanged={(value) => {
+                                    setFilterData((prev) => ({
+                                        ...prev,
+                                        searchText: value
+                                    }))
+                                }}
+                                onSearchTextValueChange={(value) => {
+                                    setFilterData((prev) => ({
+                                        ...prev,
+                                        searchText: value
+                                    }))
+                                }}
                             />
                         </div>
 
-                        <Products />
+                        <Products
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
                     </div>
                 </div>
             </Container>

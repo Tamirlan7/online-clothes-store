@@ -11,6 +11,7 @@ export const getProductsThunk = createAsyncThunk(
             clothingType,
             page,
             size,
+            resetProducts,
             includeOldProducts,
         },
         {
@@ -34,6 +35,7 @@ export const getProductsThunk = createAsyncThunk(
             return {
                 data: res.data,
                 includeOldProducts,
+                resetProducts
             }
         } catch (err) {
             dispatch(raiseNotification({

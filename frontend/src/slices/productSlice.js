@@ -20,7 +20,6 @@ const initialState = {
     deleteLoading: false,
     showConfirmAction: false,
     size: null,
-    resetProducts: false,
     adminProductsPage: null,
 }
 
@@ -38,11 +37,9 @@ const productSlice = createSlice({
                 state.adminProductsPage = action.payload
             }
         },
-        changeResetProducts(state, action) {
-            if (typeof action.payload === 'boolean') {
-                state.resetProducts = action.payload
-            }
-        }
+        resetProducts(state) {
+            state.products = []
+        },
     },
     extraReducers: builder =>
         builder
@@ -51,14 +48,19 @@ const productSlice = createSlice({
             })
             .addCase(getProductsThunk.fulfilled, (state, action) => {
                 state.loading = false
+
+                if (action.payload.resetProducts) {
+                    state.products = []
+                }
+
                 if (Array.isArray(action.payload.data?.content)) {
-                    if (action.payload.includeOldProducts && !state.resetProducts && action.payload.data.content.length) {
-                        state.products = [...new Set([...state.products, ...action.payload.data.content])]
+                    if (action.payload.includeOldProducts) {
+                        state.products = [...[...state.products, ...action.payload.data.content]]
                     } else {
-                        state.products = action.payload.data.content
-                        state.resetProducts = false
+                        state.products = action.payload.data.content ?? []
                     }
                 }
+
                 state.totalPages = action.payload.data?.totalPages
                 state.size = action.payload.data?.size;
             })
@@ -151,5 +153,5 @@ const productSlice = createSlice({
 
 })
 
-export const {changeShowConfirmAction, changeAdminProductsPage, changeResetProducts} = productSlice.actions
+export const {changeShowConfirmAction, changeAdminProductsPage, resetProducts} = productSlice.actions
 export default productSlice.reducer
