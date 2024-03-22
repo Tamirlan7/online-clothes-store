@@ -1,20 +1,20 @@
 import React, {useMemo} from 'react';
 import c from './ProductsTableRow.module.scss'
 import cTable from '../ProductsTable/ProductsTable.module.scss'
-import { ReactComponent as TableDots } from "../../../assets/icons/table-dots.svg";
-import { ReactComponent as Copy } from "../../../assets/icons/copy.svg";
-import { ReactComponent as Trash } from "../../../assets/icons/trash.svg";
+import {ReactComponent as TableDots} from "../../../assets/icons/table-dots.svg";
+import {ReactComponent as Copy} from "../../../assets/icons/copy.svg";
+import {ReactComponent as Trash} from "../../../assets/icons/trash.svg";
 import Switch from "../../../UI/Switch/Switch";
 import {API_URL} from "../../../constants/AppConstants";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {copyProductThunk} from "../../../thunks/productThunks";
-import {Input} from "antd";
-import {changeProductDescription, showProductDescriptionModal} from "../../../slices/appSlice";
+import {Input, Select} from "antd";
 import TextArea from "antd/es/input/TextArea";
 
 
 function ProductsTableRow(product) {
     const dispatch = useDispatch()
+    const {collections} = useSelector(state => state.collection)
 
     const {
         id,
@@ -35,6 +35,7 @@ function ProductsTableRow(product) {
         onPriceWithDiscountChanged,
         onDescriptionClicked,
         onNameChanged,
+        onCollectionChanged,
     } = product ?? {}
 
     const quantity = useMemo(() => {
@@ -42,7 +43,7 @@ function ProductsTableRow(product) {
     }, [productSizes])
 
     const onCopy = () => {
-        dispatch(copyProductThunk({ id }))
+        dispatch(copyProductThunk({id}))
     }
 
     return (
@@ -68,7 +69,7 @@ function ProductsTableRow(product) {
                                 onNameChanged(product, val)
                             }
                         }}
-                        style={{ fontFamily: 'inherit', resize: 'none', padding: 0, overflow: 'hidden' }}
+                        style={{fontFamily: 'inherit', resize: 'none', padding: 0, overflow: 'hidden'}}
                     />
                     <div className={c.options}>
                         <div>4 варианта</div>
@@ -77,10 +78,25 @@ function ProductsTableRow(product) {
                 </div>
             </td>
             <td className={`${c.cell} ${cTable['priority-cell']}`}>
-                <button className={c['description-btn']} onClick={() => onDescriptionClicked(product)}>Открыть описание</button>
+                <button className={c['description-btn']} onClick={() => onDescriptionClicked(product)}>Открыть
+                    описание
+                </button>
             </td>
             <td className={c.cell}>
-                <div className={c.dropdown}>{collection?.name}</div>
+                <Select
+                    style={{width: '100%'}}
+                    onChange={(val) => {
+                        if (onCollectionChanged) {
+                            onCollectionChanged(product, val)
+                        }
+                    }}
+                    suffixIcon={<></>}
+                    value={collection?.name ?? 'Не выбран'}
+                    variant={'borderless'}
+                    options={[
+                        ...collections.map(c => ({label: c?.name, value: c?.name}))
+                    ]}
+                />
             </td>
             <td className={`${c.cell} ${cTable['centered-cell']}`}>
                 <Input
@@ -91,7 +107,7 @@ function ProductsTableRow(product) {
                             onPriceChanged(product, val)
                         }
                     }}
-                    style={{ fontFamily: 'inherit', textAlign: 'center' }}
+                    style={{fontFamily: 'inherit', textAlign: 'center'}}
                 />
             </td>
             <td className={`${c.cell} ${cTable['centered-cell']}`}>
@@ -103,14 +119,14 @@ function ProductsTableRow(product) {
                             onPriceWithDiscountChanged(product, val)
                         }
                     }}
-                    style={{ fontFamily: 'inherit', textAlign: 'center' }}
+                    style={{fontFamily: 'inherit', textAlign: 'center'}}
                 />
             </td>
             <td className={`${c.cell} ${cTable['centered-cell']}`}>
                 <div>{quantity}</div>
             </td>
             <td className={`${c.cell} ${cTable['limited-cell-83']} ${cTable['centered-cell']}`}>
-                <figure style={{ cursor: "pointer" }} onClick={onCopy}><Copy/></figure>
+                <figure style={{cursor: "pointer"}} onClick={onCopy}><Copy/></figure>
             </td>
             <td className={`${c.cell} ${cTable['limited-c ell-83']} ${cTable['centered-cell']}`}>
                 <Switch onSwitch={(val) => {
@@ -126,8 +142,9 @@ function ProductsTableRow(product) {
                     }
                 }} switched={visible}/>
             </td>
-            <td className={`${c.cell} ${cTable['limited-cell-83']} ${cTable['centered-cell']}`} onClick={() => onDeleteProduct(product)}>
-                <figure style={{ cursor: "pointer" }}><Trash/></figure>
+            <td className={`${c.cell} ${cTable['limited-cell-83']} ${cTable['centered-cell']}`}
+                onClick={() => onDeleteProduct(product)}>
+                <figure style={{cursor: "pointer"}}><Trash/></figure>
             </td>
         </tr>
     );

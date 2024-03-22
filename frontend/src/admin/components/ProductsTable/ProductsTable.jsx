@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import c from './ProductsTable.module.scss'
-import ProductsTableRow from "../ProductsTableRow/ProductsTableRow";
 import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../../UI/Loader/Loader";
 import Message from "../../../UI/Message/Message";
@@ -9,6 +8,7 @@ import ConfirmAction from "../ConfirmAction/ConfirmAction";
 import {updateProductsThunk} from "../../../thunks/productThunks";
 import ProductDeleteModal from "../../modals/ProductDeleteModal/ProductDeleteModal";
 import ProductDescriptionModal from "../../modals/ProductDescriptionModal/ProductDescriptionModal";
+import ProductsTableRow from "../ProductsTableRow/ProductsTableRow";
 
 
 function ProductsTable({products}) {
@@ -50,7 +50,8 @@ function ProductsTable({products}) {
                         tp.preOrder !== p.preOrder ||
                         tp.price !== p.price ||
                         tp.priceWithDiscount !== p.priceWithDiscount ||
-                        tp.name !== p.name
+                        tp.name !== p.name ||
+                        tp['collection']['name'] !== p['collection']['name']
                     ) {
                         return true
                     }
@@ -149,11 +150,17 @@ function ProductsTable({products}) {
                         updatedProduct.name = tp.name
                     }
 
+                    if (tp.collection.name !== p.collection.name) {
+                        updatedProduct.collectionName = tp['collection']['name']
+                    }
+
 
                     if (Object.keys(updatedProduct).length) {
                         updatedProduct.id = tp.id
                         data.push(updatedProduct)
                     }
+
+                    console.log(updatedProduct)
                 }
             }
         }
@@ -177,6 +184,19 @@ function ProductsTable({products}) {
     const onDescriptionClicked = (p) => {
         setDescriptionModal(true)
         setDescriptionModalProduct(p)
+    }
+
+    const onCollectionChanged = (p, val) => {
+        setTransformedProducts((prev) => [...prev.map(cp => {
+            if (cp.id === p.id) {
+                cp.collection = {
+                    ...cp.collection,
+                    name: val,
+                }
+            }
+
+            return cp
+        })])
     }
 
     return (
@@ -217,6 +237,7 @@ function ProductsTable({products}) {
                             onPriceWithDiscountChanged={onPriceWithDiscountChanged}
                             onDescriptionClicked={onDescriptionClicked}
                             onNameChanged={onNameChanged}
+                            onCollectionChanged={onCollectionChanged}
                             {...p}
                         />
                     ))}</>
