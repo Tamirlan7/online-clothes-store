@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 import java.time.Instant;
+import java.util.Date;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationConverter implements AuthenticationConverter {
@@ -26,8 +27,8 @@ public class JwtAuthenticationConverter implements AuthenticationConverter {
             String strFormatToken = header.substring(7);
             AccessToken token = accessTokenDeserializer.deserialize(strFormatToken);
 
-            if (token != null && Instant.now().isBefore(token.expiresAt().toInstant())) {
-                return new PreAuthenticatedAuthenticationToken(
+            if (token != null && new Date(System.currentTimeMillis()).before(token.expiresAt())) {
+                    return new PreAuthenticatedAuthenticationToken(
                         token,
                         strFormatToken,
                         token.authorities().stream().map(SimpleGrantedAuthority::new).toList()
