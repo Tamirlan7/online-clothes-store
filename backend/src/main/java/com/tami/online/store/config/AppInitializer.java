@@ -30,7 +30,7 @@ public class AppInitializer implements CommandLineRunner {
                     User.builder()
                             .username("admin")
                             .password(passwordEncoder.encode("admin"))
-                            .role(Role.ROLE_ADMIN)
+                            .role(Role.ROLE_SUPER_ADMIN)
                             .build()
             );
         }

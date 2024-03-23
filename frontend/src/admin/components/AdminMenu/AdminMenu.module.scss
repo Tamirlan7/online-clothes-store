@@ -44,6 +44,12 @@
   justify-content: center;
   align-items: center;
   object-position: center;
+
+  &:not(.icon-selected) {
+    * {
+      fill: black;
+    }
+  }
 }
 
 .menu-item {

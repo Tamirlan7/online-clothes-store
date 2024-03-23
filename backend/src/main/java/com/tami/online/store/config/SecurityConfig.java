@@ -35,10 +35,7 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint((request, response, authException) ->
                                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User is not authorized")
-                        )
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                                throw new CustomAccessDeniedException(accessDeniedException.getMessage());
-                        }));
+                        ));
 
 
         return http.build();

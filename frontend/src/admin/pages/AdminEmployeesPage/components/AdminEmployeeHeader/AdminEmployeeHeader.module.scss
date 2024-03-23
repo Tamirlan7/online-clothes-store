@@ -1,0 +1,42 @@
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: max-content;
+  gap: 20px;
+}
+
+.btn {
+  width: 100%;
+  box-shadow: 0 1px 2px 0 #1018280D;
+  border: none;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  border-radius: 8px;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: white;
+  background: #232323;
+}

@@ -8,8 +8,8 @@ import {userRole} from "../data/userRole";
 import OrderPage from "../pages/OrderPage/OrderPage";
 import UncCollectionPage from "../pages/UncCollectionPage/UncCollectionPage";
 import AgCollectionPage from "../pages/AgCollectionPage/AgCollectionPage";
-import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import ContactsPage from "../pages/ContanctsPage/ContactsPage";
+import AdminEmployeesPage from "../admin/pages/AdminEmployeesPage/AdminEmployeesPage";
 const AdminPage = lazy(() => import("../admin/pages/AdminCatalogPage/AdminCatalogPage"))
 
 /* only user routes */
@@ -17,12 +17,21 @@ export const protectedRoutes = [
     {
         path: RoutePaths.ADMIN_CATALOG,
         component: <AdminPage />,
-        enabledRoles: [userRole.admin],
+        enabledRoles: [userRole.admin, userRole.superAdmin],
         meta: {
             headerEnabled: false,
             footerEnabled: false,
         }
-    }
+    },
+    {
+        path: RoutePaths.ADMIN_EMPLOYEES,
+        component: <AdminEmployeesPage />,
+        enabledRoles: [userRole.admin, userRole.superAdmin],
+        meta: {
+            headerEnabled: false,
+            footerEnabled: false,
+        }
+    },
 ]
 
 // meta default data

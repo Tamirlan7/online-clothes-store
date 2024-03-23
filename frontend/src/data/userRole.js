@@ -1,4 +1,4 @@
 export const userRole = {
     admin: 'ROLE_ADMIN',
-    superAdmin: 'SUPER_ADMIN'
+    superAdmin: 'ROLE_SUPER_ADMIN'
 }

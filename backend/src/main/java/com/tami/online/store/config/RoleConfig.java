@@ -13,6 +13,7 @@ public class RoleConfig {
     static RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
         hierarchy.setHierarchy("""
+                ROLE_SUPER_ADMIN > ROLE_ADMIN
                 ROLE_ADMIN > ROLE_USER
                 """);
 
