@@ -1,10 +1,11 @@
 import React, {useMemo, useRef, useState} from 'react';
 import c from './Select.module.scss'
-import {ReactComponent as ArrayDown} from "../../assets/icons/arrow-down.svg";
+import {ReactComponent as ArrowDown} from "../../assets/icons/arrow-down.svg";
 import {useOutsideClick} from "../../hooks/useOutsideClick";
 import Loader from "../Loader/Loader";
+import close from '../../assets/icons/close.svg'
 
-function Select({options, value, onChange, loading, disabledClassName, onAddClicked, disabled, rootClassName, addMoreEnabled = false, optionHeight = 42, maxItems = 7}) {
+function Select({allowDelete, onDelete, options, value, onChange, loading, disabledClassName, onAddClicked, disabled, rootClassName, addMoreEnabled = false, optionHeight = 42, maxItems = 7}) {
     const [isOptionsVisible, setIsOptionsVisible] = useState(false)
     const [isFocused, setIsFocused] = useState(false)
     const [addMoreClicked, setAddMoreClicked] = useState(false)
@@ -115,11 +116,26 @@ function Select({options, value, onChange, loading, disabledClassName, onAddClic
                 {currentValue}
             </div>
 
-            <div style={{ height: optionHeight * transformedMaxItems }} onClick={(e) => e.stopPropagation()}
+            <div style={{ height: optionHeight * transformedMaxItems }}
                  className={isOptionsVisible ? `${c.options} ${c['options-visible']}` : `${c.options} ${c['options-hidden']}`}>
                 {Array.isArray(transformedOptions) && transformedOptions.map((option, idx) => (
                     <div className={c.option} onClick={() => handleOnChange(option?.value)}
-                         key={idx}>{option?.text}</div>
+                         key={idx}>
+                        <div>{option?.text}</div>
+                        {allowDelete && (
+                            <div className={c.delete}>
+                                <span onClick={(e) => {
+                                    e.stopPropagation()
+                                    console.log(e)
+
+                                    if (onDelete) {
+                                        onDelete(option?.value)
+                                    }
+                                }}></span>
+                                <figure><img src={close} alt="close"/></figure>
+                            </div>
+                        )}
+                    </div>
                 ))}
                 {addMoreClicked && (
                     <input ref={inputRef} onChange={(e) => setInputValue(e.target.value)} value={inputValue} type="text" className={`${c.option} ${c.add} ${c.input}`} />
@@ -130,7 +146,7 @@ function Select({options, value, onChange, loading, disabledClassName, onAddClic
             </div>
 
             <figure className={c.icon}>
-                <ArrayDown/>
+                <ArrowDown/>
             </figure>
         </div>
     );

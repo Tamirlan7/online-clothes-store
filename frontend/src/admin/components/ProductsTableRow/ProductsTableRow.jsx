@@ -69,6 +69,7 @@ function ProductsTableRow(product) {
                                 onNameChanged(product, val)
                             }
                         }}
+                        rootClassName={c['textarea-name']}
                         style={{fontFamily: 'inherit', resize: 'none', padding: 0, overflow: 'hidden'}}
                     />
                     <div className={c.options}>

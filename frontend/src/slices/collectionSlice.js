@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addCollectionThunk, getAllCollectionsThunk} from "../thunks/collectionThunks";
+import {addCollectionThunk, deleteCollectionThunk, getAllCollectionsThunk} from "../thunks/collectionThunks";
 
 const initialState = {
     collections: [],
@@ -42,6 +42,19 @@ const collectionSlice = createSlice({
                 }
             })
             .addCase(addCollectionThunk.rejected, (state, action) => {
+                state.loading = false
+                state.error = true
+                state.errorMessage = action.payload
+            })
+
+            .addCase(deleteCollectionThunk.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(deleteCollectionThunk.fulfilled, (state, action) => {
+                state.loading = false
+                state.collections = state.collections.filter(c => c.id !== action.payload)
+            })
+            .addCase(deleteCollectionThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = true
                 state.errorMessage = action.payload

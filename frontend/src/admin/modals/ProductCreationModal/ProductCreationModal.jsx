@@ -9,7 +9,7 @@ import AdminSizes from "../../UI/AdminSizes/AdminSizes";
 import ModalBtns from "../../../UI/ModalBtns/ModalBtns";
 import {useDispatch, useSelector} from "react-redux";
 import Form from "../../../UI/Form/Form";
-import {addClothingTypeThunk} from "../../../thunks/clothingTypeThunks";
+import {addClothingTypeThunk, deleteClothingTypeThunk} from "../../../thunks/clothingTypeThunks";
 import {addCollectionThunk} from "../../../thunks/collectionThunks";
 
 function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormData}) {
@@ -18,7 +18,6 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
     const {
         clothingTypes,
         loading: clothingTypesLoading,
-        error: clothingTypeError
     } = useSelector(state => state.clothingType)
     const inputRef = useRef(null)
 
@@ -43,6 +42,22 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
             setFormData(prev => ({...prev, clothingType: clothingTypes[0].name}))
         }
     }, [clothingTypes, setFormData]);
+
+    const onClothingTypeDelete = (clothingType) => {
+        const cId = clothingTypes.find(c => c.name.trim() === clothingType.trim())?.id
+
+        if (cId) {
+            dispatch(deleteClothingTypeThunk({id: cId}))
+        }
+    }
+
+    const onCollectionDelete = (collection) => {
+        const cId = collections.find(c => c.name === collection)?.id
+
+        if (cId) {
+            dispatch(deleteClothingTypeThunk({id: cId}))
+        }
+    }
 
     const isFormValid = useMemo(() => {
         const sizesQuantity = Object.values(formData.sizes).reduce((sum, sizeQuantity) => sum + Number(sizeQuantity), 0)
@@ -102,6 +117,8 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                                 value={formData.clothingType}
                                 onAddClicked={onAddClothingType}
                                 addMoreEnabled
+                                allowDelete
+                                onDelete={onClothingTypeDelete}
                                 maxItems={clothingTypes.length > 7 ? 7 : clothingTypes.length + 1}
                                 options={clothingTypes?.map((c) => ({
                                     value: c?.name,
@@ -112,6 +129,8 @@ function ProductCreationModal({onNext, isActive, setIsActive, formData, setFormD
                         <Select loading={collectionsLoading}
                                 onAddClicked={onAddCollection}
                                 addMoreEnabled
+                                allowDelete
+                                onDelete={onCollectionDelete}
                                 maxItems={collections.length > 7 ? 7 : collections.length + 1}
                                 onChange={(value) => setFormData((prev) => ({...prev, collection: value}))}
                                 value={formData.collection}

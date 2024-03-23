@@ -12,4 +12,8 @@ collectionService.addCollection = (collection) => {
     return axiosAdmin.post('/collection', {collectionName: collection})
 }
 
+collectionService.deleteCollection = (id) => {
+    return axiosAdmin.delete(`/collection/${id}`)
+}
+
 export default collectionService

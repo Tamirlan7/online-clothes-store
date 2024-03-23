@@ -12,6 +12,20 @@
   text-align: center;
 }
 
+.textarea-name {
+  resize: none !important;
+  overflow-y: scroll !important;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-ms-overflow-style {
+    display: none;
+  }
+}
+
 .cell {
   padding: 16px 8px;
   flex: 1;

@@ -38,3 +38,20 @@ export const addCollectionThunk = createAsyncThunk(
     }
 )
 
+export const deleteCollectionThunk = createAsyncThunk(
+    'collection/deleteCollectionThunk',
+    async ({id}, {dispatch, rejectWithValue}) => {
+        try {
+            await collectionService.deleteCollection(id);
+            return id
+        } catch (err) {
+            dispatch(raiseNotification({
+                message: err.message,
+                description: 'Произошла ошибка при попытке удаления коллекций',
+                type: 'error'
+            }))
+
+            return rejectWithValue(err.message)
+        }
+    }
+)

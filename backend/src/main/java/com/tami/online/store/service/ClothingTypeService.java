@@ -1,6 +1,7 @@
 package com.tami.online.store.service;
 
 import com.tami.online.store.dto.ClothingTypeDtoRequest;
+import com.tami.online.store.exception.CustomBadRequestException;
 import com.tami.online.store.exception.NotFoundException;
 import com.tami.online.store.model.ClothingType;
 import com.tami.online.store.repository.ClothingTypeRepository;
@@ -46,7 +47,13 @@ public class ClothingTypeService {
     }
 
     public void deleteClothingType(Long id) {
-        clothingTypeRepository.deleteById(id);
+        clothingTypeRepository.findById(id).ifPresent(c -> {
+            if (!c.getProducts().isEmpty()) {
+                throw new CustomBadRequestException("Перед тем как удалить тип одежды, нужно удалить продукты имеющий данный тип одежды");
+            }
+
+            clothingTypeRepository.deleteById(id);
+        });
     }
 
 }

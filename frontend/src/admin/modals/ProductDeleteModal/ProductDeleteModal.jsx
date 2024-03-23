@@ -39,12 +39,12 @@ function ProductDeleteModal({isActive, setIsActive, product}) {
         >
             <div className={c.block}>
                 <div>
-                    <ModalTitle>Удалить товар {product.name}?</ModalTitle>
+                    <ModalTitle>Удалить товар {product.name?.length > 30 ? `${product.name?.slice(0, 30)}...` : product.name}?</ModalTitle>
                 </div>
 
                 <div className={c.content}>
                     <p className={c.text}>Вы действительно хотите
-                        безвозвратно <span>удалить товар {product.name}?</span></p>
+                        безвозвратно <span>удалить товар {product.name?.length > 30 ? `${product.name?.slice(0, 30)}...` : product.name}?</span></p>
                     <p className={c.note}>Отменить это действие будет невозможно</p>
                 </div>
 

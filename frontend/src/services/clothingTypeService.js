@@ -11,4 +11,8 @@ clothingTypeService.addClothingType = (clothingType) => {
     return axiosAdmin.post('/product/clothing-type', {clothingType})
 }
 
+clothingTypeService.deleteClothingType = (id) => {
+    return axiosAdmin.delete(`/product/clothing-type/${id}`)
+}
+
 export default clothingTypeService

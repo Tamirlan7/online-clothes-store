@@ -37,3 +37,22 @@ export const addClothingTypeThunk = createAsyncThunk(
         }
     }
 )
+
+
+export const deleteClothingTypeThunk = createAsyncThunk(
+    'clothingType/deleteClothingType',
+    async ({id}, {dispatch, rejectWithValue}) => {
+        try {
+            await clothingTypeService.deleteClothingType(id);
+            return id
+        } catch (err) {
+            dispatch(raiseNotification({
+                message: err.message,
+                description: 'Произошла ошибка при попытке удаления типа одежды',
+                type: 'error'
+            }))
+
+            return rejectWithValue(err.message)
+        }
+    }
+)

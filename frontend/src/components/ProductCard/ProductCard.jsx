@@ -24,7 +24,7 @@ function ProductCard({
                 className='card__img'
             />
             <div className='card__container'>
-                <p className='card__title'>{name}</p>
+                <p className='card__title'>{name?.length > 35 ? `${name?.slice(0, 35)}...` : name}</p>
                 <div className="card__price-container">
                     <p className='card__price'>{price}р.</p>
                     {priceWithDiscount > 0 && (
