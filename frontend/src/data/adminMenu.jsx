@@ -14,6 +14,11 @@ const adminMenu =  [
         link: RoutePaths.ADMIN_EMPLOYEES,
         suffixIcon: <EmployeeIcon />
     },
+    {
+        text: 'Логи',
+        link: RoutePaths.ADMIN_LOGS,
+        suffixIcon: <EmployeeIcon />
+    },
 ]
 
 export default adminMenu

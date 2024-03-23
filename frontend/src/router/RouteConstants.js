@@ -14,4 +14,5 @@ export const RoutePaths = {
     ORDER: '/order',
     ADMIN_ORDERS: '/admin/orders',
     ADMIN_EMPLOYEES: '/admin/employees',
+    ADMIN_LOGS: '/admin/logs'
 }

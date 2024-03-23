@@ -10,6 +10,7 @@ import UncCollectionPage from "../pages/UncCollectionPage/UncCollectionPage";
 import AgCollectionPage from "../pages/AgCollectionPage/AgCollectionPage";
 import ContactsPage from "../pages/ContanctsPage/ContactsPage";
 import AdminEmployeesPage from "../admin/pages/AdminEmployeesPage/AdminEmployeesPage";
+import AdminLogsPage from "../admin/pages/AdminLogsPage/AdminLogsPage";
 const AdminPage = lazy(() => import("../admin/pages/AdminCatalogPage/AdminCatalogPage"))
 
 /* only user routes */
@@ -26,6 +27,15 @@ export const protectedRoutes = [
     {
         path: RoutePaths.ADMIN_EMPLOYEES,
         component: <AdminEmployeesPage />,
+        enabledRoles: [userRole.admin, userRole.superAdmin],
+        meta: {
+            headerEnabled: false,
+            footerEnabled: false,
+        }
+    },
+    {
+        path: RoutePaths.ADMIN_LOGS,
+        component: <AdminLogsPage />,
         enabledRoles: [userRole.admin, userRole.superAdmin],
         meta: {
             headerEnabled: false,
